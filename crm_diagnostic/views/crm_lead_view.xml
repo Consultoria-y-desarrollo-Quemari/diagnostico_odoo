@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="iuv_crm_diagnostic_lead_form_view" model="ir.ui.view">
+        <field name="name">iuv_crm_diagnostic_lead_form_view</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/div/button[@name='action_schedule_meeting']" position="before">
+                <button name="action_crm_diagnostic_view" type="object" icon="fa-file-text-o" class="oe_stat_button">
+                    <span class="o_stat_text"> Realizar Diagnostico </span>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -15,7 +15,6 @@ class CrmLead(models.Model):
 
 
     def action_crm_diagnostic_view(self):
-        # import pdb; pdb.set_trace()
         for record in self:
             search_view = self.env.ref('crm_diagnostic.crm_diagnostic_view')
             return {
@@ -28,5 +27,6 @@ class CrmLead(models.Model):
                 'target': 'current',
                 'context': {
                     'default_partner_id': self.id,
+                    'default_lead_id': self.id
                 },
             }

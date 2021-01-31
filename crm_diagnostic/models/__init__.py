@@ -2,3 +2,4 @@
 
 from . import crm_lead
 from . import crm_diagnostic
+from . import crm_diagnostic_line

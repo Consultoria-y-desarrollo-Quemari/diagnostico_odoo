@@ -32,7 +32,7 @@
                             </div>
                             <div>
                                 <div>
-                                    <group name="center_right">                                    
+                                    <group name="center_right">
                                         <field name="valoracion_micronegocio" string="Valoracion del Micronegocio"/>
                                         <field name="fecha" string="Fecha"/>
                                     </group>
@@ -40,7 +40,7 @@
                             </div>
                             <div>
                                 <div>
-                                    <group name="center_data">                                    
+                                    <group name="center_data">
                                         <field name="actividad_micronegocio" string="Actividad del micronegocio"/>
                                         <field name="tipo_micronegocio" string="Tipo de micronegocio"/>
                                         <field name="numero_identificacion" string="Numero de indentificacion"/>
@@ -58,10 +58,29 @@
                                 </group>
                             </div>
                         </group>
+                        <notebook>
+                            <page string="Líneas de diagnostico" name="diagnostic_line_page">
+                                <field name="crm_diagnostic_line_ids" widget="section_and_note_one2many" mode="tree">
+                                    <tree editable="bottom">
+                                        <control>
+                                            <create name="add_line_control" string="Agregar una línea"/>
+                                            <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                        </control>
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="display_type" force_save="1" invisible="1"/>
+                                        <field name="name" widget="section_and_note_text"/>
+                                        <field name="respuesta"/>
+                                        <field name="puntaje"/>
+                                        <field name="area"/>
+                                        <field name="sugerencia"/>
+                                        <field name="valoracion"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
-    
     </data>
 </odoo>

@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 
 class CrmDiagnostic(models.Model):
     _name = 'crm.diagnostic'
-    _rec_name = 'diagnostico'
+    _rec_name = 'nombre_negocio'
 
 
     lead_id = fields.Many2one('crm.lead')

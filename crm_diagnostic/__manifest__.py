@@ -9,7 +9,9 @@ CRM Diagnostic
 ==============
     """,
     'depends': [
-        'base', 'crm',
+        'base',
+        'crm',
+        'crm_uni_forms'
     ],
     'data': [
         'security/ir.model.access.csv',

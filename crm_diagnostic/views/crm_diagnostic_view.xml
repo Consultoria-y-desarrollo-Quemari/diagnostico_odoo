@@ -5,79 +5,70 @@
             <field name="name">crm_diagnostic_view</field>
             <field name="model">crm.diagnostic</field>
             <field name="arch" type="xml">
-                <form string="CRM Diagnostic">
+                <form string="CRM Diagnostic" edit="0" create="0" delete="0">
                     <header>
-                        <!-- <field name="status" widget="statusbar" statusbar_visible="draft,start,done,cancel"/> -->
                     </header>
                     <sheet>
-                        <!-- <div class="oe_title">
+                        <div class="oe_title text-center">
                             <h1>
-                                <field name="name" readonly="1"/>
+                                <span>Ruta de solución</span>
                             </h1>
-                        </div> -->
-                        <group>
-                            <div>
-                                <!-- <group> -->
-                                    <!-- <field name="lead_id" string="Order type" readonly='1'/> -->
-                                <div>
+                        </div>
+                        <group  col='4'>
                                     <group name="left data">
-                                        <field name="lead_id"/>
+                                        <field name="lead_id" invisible="1"/>
                                         <field name="nombre_negocio" string="Nombre del Negocio" />
                                         <field name="nombre_propietario" string="Nombre del Propietario" />
                                         <field name="tipo_documento" string="Tipo de documento" />
                                         <field name="ubicacion" string="Ubicacion" />
+                                        
                                     </group>
-                                </div>
-                                <!-- </group> -->
-                            </div>
-                            <div>
-                                <div>
-                                    <group name="center_right">
-                                        <field name="valoracion_micronegocio" string="Valoracion del Micronegocio"/>
-                                        <field name="fecha" string="Fecha"/>
-                                    </group>
-                                </div>
-                            </div>
-                            <div>
-                                <div>
+                                    
+                                    
                                     <group name="center_data">
                                         <field name="actividad_micronegocio" string="Actividad del micronegocio"/>
                                         <field name="tipo_micronegocio" string="Tipo de micronegocio"/>
                                         <field name="numero_identificacion" string="Numero de indentificacion"/>
                                         <field name="codigo_formulario" string="Codigo del formulario"/>
                                     </group>
-                                </div>
-                            </div>
-                            <!-- <div>
-                            </div> -->
-                        </group>
-                        <group>
-                            <div>
-                                <group>
+
+                                    <group name="center_right">
+                                        <field name="valoracion_micronegocio" string="Valoracion del Micronegocio"/>
+                                        <field name="fecha" string="Fecha"/>
+                                    </group>
+                                    <group>
                                     <field name="diagnostico"/>
-                                </group>
-                            </div>
+                                    </group>
                         </group>
-                        <notebook>
-                            <page string="Líneas de diagnostico" name="diagnostic_line_page">
-                                <field name="crm_diagnostic_line_ids" widget="section_and_note_one2many" mode="tree">
-                                    <tree editable="bottom">
-                                        <control>
-                                            <create name="add_line_control" string="Agregar una línea"/>
-                                            <create name="add_section_control" string="Agregar una sección" context="{'default_display_type': 'line_section'}"/>
-                                        </control>
-                                        <field name="sequence" widget="handle"/>
-                                        <field name="display_type" force_save="1" invisible="1"/>
-                                        <field name="name" widget="section_and_note_text"/>
-                                        <field name="respuesta"/>
-                                        <field name="puntaje"/>
-                                        <field name="area"/>
-                                        <field name="sugerencia"/>
-                                        <field name="valoracion"/>
-                                    </tree>
-                                </field>
-                            </page>
-                        </notebook>
+                        <div class="alert alert-success text-center" role="alert">
+                            <h3>Orientaciones de bioseguridad</h3>
+                        </div>
+                        
+                        <field name="crm_diagnostic_line_ids" widget="section_and_note_one2many" mode="tree">
+                            <tree editable="bottom">
+
+                                <field name="sugerencia"/>
+                            </tree>
+                        </field>
+                        <div class="alert alert-success text-center" role="alert">
+                            <h3>Hábitos positivos</h3>
+                        </div>
+                        <div class="alert alert-success text-center" role="alert">
+                            <h3>Mentorias</h3>
+                        </div>
+                        <div class="alert alert-primary text-center" role="alert">
+                            <h3>Innovación en modelo de negocio</h3>
+                        </div>
+                        <div class="alert alert-primary text-center" role="alert">
+                            <h3>Formalización</h3>
+                        </div>
+                        <div class="alert alert-primary text-center" role="alert">
+                            <h3>Mercadeo y comercialización</h3>
+                        </div>
+                        <div class="alert alert-primary text-center" role="alert">
+                            <h3>Financiero</h3>
+                        </div>
+                          
                     </sheet>
                 </form>
             </field>

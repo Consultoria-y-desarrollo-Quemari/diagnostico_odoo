@@ -25,6 +25,7 @@ class CrmLead(models.Model):
                 'views': [(search_view.id, 'form')],
                 'view_id': search_view.id,
                 'target': 'current',
+                'flags': {'mode': 'readonly', 'action_buttons': True},
                 'context': {
                     'default_partner_id': self.id,
                     'default_lead_id': self.id

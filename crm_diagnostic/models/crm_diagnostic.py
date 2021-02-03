@@ -9,6 +9,7 @@ _logger = logging.getLogger(__name__)
 
 class CrmDiagnostic(models.Model):
     _name = 'crm.diagnostic'
+    _rec_name = 'nombre_negocio'
 
 
     lead_id = fields.Many2one('crm.lead')
@@ -23,12 +24,15 @@ class CrmDiagnostic(models.Model):
     codigo_formulario = fields.Char(string="Codigo de formulario")
     valoracion_micronegocio = fields.Char(string="Valoracion del Micronegocio")
     diagnostico = fields.Text(string="Diagnostico")
+    crm_diagnostic_line_ids = fields.One2many(
+        'crm.diagnostic.line',
+        'diagnostic_id'
+    )
+
 
     @api.model
     def create(self, vals):
-        # import pdb; pdb.set_trace()
         context = dict(self.env.context)
-        lead_id =  context.get('active_id')
-        res = super(ProjectTask, self.with_context(context)).create(vals)
+        res = super(CrmDiagnostic, self.with_context(context)).create(vals)
         return res
 

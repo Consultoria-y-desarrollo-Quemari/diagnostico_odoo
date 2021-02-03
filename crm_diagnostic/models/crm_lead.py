@@ -33,6 +33,14 @@ TEXT_VALUATION = {
         5: 'Excelencia'
     }
 
+SUGGETS_VALUATION = {
+        1: 'Sugerencia 1',
+        2: 'Sugerencia 2',
+        3: 'Sugerencia 3',
+        4: 'Sugerencia 4',
+        5: 'Sugerencia 5'
+    }
+
 class CrmLead(models.Model):
     _inherit = 'crm.lead'
 
@@ -107,7 +115,7 @@ class CrmLead(models.Model):
                         'respuesta': answer,
                         'puntaje': rate,
                         'area': False,
-                        'sugerencia': 'sugerencia',
+                        'sugerencia': SUGGETS_VALUATION.get(rate),
                         'valoracion': valuation,
                         }))
         return lines

@@ -7,6 +7,7 @@ from odoo.exceptions import ValidationError
 class CrmDiagnosticLine(models.Model):
     _name = 'crm.diagnostic.line'
     _description = 'Líneas de diagnostico'
+    _rec_name = 'area'
 
     ANSWER_VALUES = {
         'si': 5,

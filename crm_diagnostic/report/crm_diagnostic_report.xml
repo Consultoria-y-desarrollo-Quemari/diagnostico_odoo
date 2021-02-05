@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="paperformat_crm_diagnostic" model="report.paperformat">
+            <field name="name">CRM diagnostico</field>
+            <field name="default" eval="True" />
+            <field name="format">Letter</field>
+            <field name="orientation">Landscape</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+            id="action_report_crm_diagnostic"
+            string="Instrumento de Valoración y Diagnostico"
+            model="crm.diagnostic"
+            report_type="qweb-pdf"
+            file="crm_diagnostic.report_crm_diagnostic_template"
+            name="crm_diagnostic.report_crm_diagnostic_template"
+            print_report_name="'Reporte de diagnostico - %s' % (object.nombre_negocio)"
+            paperformat="paperformat_crm_diagnostic"/>
+        />
+    </data>
+</odoo>

@@ -32,7 +32,7 @@
                             <group name="center_right">
                                 <field name="valoracion_micronegocio" string="Valoracion del Micronegocio"/>
                                 <field name="fecha" string="Fecha"/>
-                                <field name="company_id"/>
+                                <field name="company_id" invisible="1"/>
                             </group>
                             <group>
                                 <field name="diagnostico"/>

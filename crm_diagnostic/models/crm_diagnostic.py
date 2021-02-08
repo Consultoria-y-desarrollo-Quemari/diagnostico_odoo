@@ -4,6 +4,10 @@ from odoo.exceptions import ValidationError
 from datetime import datetime, date, time, timedelta
 import logging
 
+import plotly.express as px
+import pandas as pd
+import base64
+
 _logger = logging.getLogger(__name__)
 
 
@@ -65,6 +69,9 @@ class CrmDiagnostic(models.Model):
         'crm.diagnostic.line',
         compute='_get_lines_for_areas')
 
+    diagnostic_chart = fields.Binary(
+        compute='_get_chart')
+
     @api.depends('crm_diagnostic_line_ids')
     def _get_lines_for_areas(self):
         for record in self:
@@ -85,7 +92,17 @@ class CrmDiagnostic(models.Model):
             record.crm_diagnostic_line_finance_ids = record.crm_diagnostic_line_ids.filtered(
                 lambda line : line.area == 'FINANZAS')
 
-
+    @api.depends('crm_diagnostic_line_ids')
+    def _get_chart(self):
+        for diagnostic in self:
+            data_chart = [1, 5, 2, 2, 3]
+            df = pd.DataFrame(dict(
+                r=data_chart,
+                theta=['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
+                    'Mercadeo y Comercializacion ', 'Finanzas']))
+            fig = px.line_polar(df, r='r', theta='theta', line_close=True)
+            image_data = fig.to_image("png")
+            diagnostic.diagnostic_chart = base64.b64encode(image_data)
 
     @api.model
     def create(self, vals):

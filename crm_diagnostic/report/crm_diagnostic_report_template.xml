@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- template body -->
+        <template id="crm_diagnostic_template_boy">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                        <table style="border-spacing:0;margin-bottom:0;" class="table">
+                            <thead>
+                                <tr>
+                                    <td style="width:20%; border-left:1px solid; border-top: 1px solid; border-bottom: 1px solid;" >
+                                        <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 70px;" alt="Logo"/>
+                                    </td>
+                                    <td style="width:60%; border-top: 1px solid; border-bottom: 1px solid; border-right: 1px solid; text-align: center;">
+                                        <strong><span>"Acompañamiento para la reactivación de micronegocios"</span></strong>
+                                    </td>
+                                    <td style="width:10%; border-left: 1px solid; border-top: 1px solid; border-bottom: 1px solid; border-right: 1px solid; text-align: right;">
+                                        <span>Fecha:</span>
+                                    </td>
+                                    <td style="width:10%; border-left: 1px solid; border-top: 1px solid; border-right: 1px solid; border-bottom: 1px solid;">
+                                        <span t-esc="o.fecha"/>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table style="border-spacing:0;margin-bottom:0;" class="table">
+                            <thead>
+                                <tr>
+                                    <td style="width: 20%; border-left: 1px solid;border-bottom: 1px solid; border-right: 1px solid; text-align: right;">
+                                        <span style="font-size: 14px;">Nombre del negocio:</span>
+                                    </td>
+                                    <td style="width: 20%; border-bottom: 1px solid; border-right: 1px solid;">
+                                        <span style="font-size: 14px;" t-esc="o.nombre_negocio"/>
+                                    </td>
+                                    <td style="width: 20%; border-bottom: 1px solid; border-right: 1px solid; text-align: right;" >
+                                        <span style="font-size: 14px;">Actividad del micronegocio:</span>
+                                    </td>
+                                    <td style="width: 20%; border-bottom: 1px solid; border-right: 1px solid;">
+                                        <span style="font-size: 14px;" t-esc="o.actividad_micronegocio"/>
+                                    </td>
+                                    <td style="width:10%; border-bottom: 1px solid; border-right: 1px solid; vertical-align:middle; horizontal-align:middle;" rowspan="4">
+                                        <span style="font-size: 14px;">Valoracion del micronegocio:</span>
+                                    </td>
+                                    <td style="width:10%; border-bottom: 1px solid; vertical-align:middle; border-right: 1px solid; horizontal-align:middle;" rowspan="4">
+                                        <span style="font-size: 14px;" t-esc="o.valoracion_micronegocio"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; border-left: 1px solid; border-bottom: 1px solid; border-right: 1px solid; text-align: right;">
+                                        <span style="font-size: 14px;">Nombre del propietario:</span>
+                                    </td>
+                                    <td style="width: 20%; border-bottom: 1px solid; border-right: 1px solid;">
+                                        <span style="font-size: 14px;" t-esc="o.nombre_propietario"/>
+                                    </td>
+                                    <td style="width: 20%; border-bottom: 1px solid; border-right: 1px solid; text-align: right;" >
+                                        <span style="font-size: 14px;">Tipo de micronegocio:</span>
+                                    </td>
+                                    <td style="width: 20%; border-bottom: 1px solid; border-right: 1px solid;">
+                                        <span style="font-size: 14px;" t-esc="o.tipo_micronegocio"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; border-left: 1px solid; border-bottom: 1px solid; border-right: 1px solid; text-align: right;">
+                                        <span style="font-size: 14px;">Tipo de documento:</span>
+                                    </td>
+                                    <td style="width: 20%; border-bottom: 1px solid; border-right: 1px solid;">
+                                        <span style="font-size: 14px;" t-esc="o.tipo_documento"/>
+                                    </td>
+                                    <td style="width: 20%; border-bottom: 1px solid; border-right: 1px solid; text-align: right;" >
+                                        <span style="font-size: 14px;">Número de indentificación:</span>
+                                    </td>
+                                    <td style="width: 20%; border-bottom: 1px solid; border-right: 1px solid;">
+                                        <span style="font-size: 14px;" t-esc="o.numero_identificacion"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; border-left: 1px solid; border-bottom: 1px solid; border-right: 1px solid; text-align: right;">
+                                        <span style="font-size: 14px;">Ubicación:</span>
+                                    </td>
+                                    <td style="width: 20%; border-bottom: 1px solid; border-right: 1px solid;">
+                                        <span style="font-size: 14px;" t-esc="o.ubicacion"/>
+                                    </td>
+                                    <td style="width: 20%; border-bottom: 1px solid; border-right: 1px solid; text-align: right;" >
+                                        <span style="font-size: 14px;">Código formulario:</span>
+                                    </td>
+                                    <td style="width: 20%; border-bottom: 1px solid; border-right: 1px solid;">
+                                        <span style="font-size: 14px;" t-esc="o.codigo_formulario"/>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="container-fluid" style="border-top: 1px solid; border-bottom: 1px solid; border-right: 1px solid; border-left: 1px solid">
+                            <span>Diagnostico:</span>
+                            <p t-esc="o.diagnostico"/>
+                        </div>
+                        <div class="container-fluid" style="border-top: 1px solid; border-bottom: 1px solid; border-right: 1px solid; border-left: 1px solid">
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="background-color: #a9d08e; text-align: center;">Orientaciones de bioseguridad</div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
+                                <div class="col-12">
+                                    <table class="table borderless">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"><span>Sugerencia</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <t t-foreach="o.crm_diagnostic_line_orientation_ids.filtered(lambda x: x.sugerencia not in (False, ''))" t-as="o_line">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-field="o_line.sugerencia"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="background-color: #999999; text-align: center; border-top: 1px solid;">Hábitos positivos</div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="page-break-inside: avoid;">
+                                    <table class="table borderless" style="page-break-inside: avoid;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"><span></span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <tr>
+                                                <td class="text-left">
+                                                    <span/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
+                                <div class="col-12" style="page-break-inside: avoid;">
+                                    <table class="table borderless" style="page-break-inside: avoid;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"><span></span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <tr>
+                                                <td class="text-left">
+                                                    <span/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="background-color: #999999; text-align: center; border-top: 1px solid;">Programas y proyectos públicos y privados </div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
+                                <div class="col-12" style="page-break-inside: avoid;">
+                                    <table class="table borderless" style="page-break-inside: avoid;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"><span></span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <tr>
+                                                <td class="text-left">
+                                                    <span/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="background-color: #a9d08e; text-align: center; border-top: 1px solid;">Mentorias</div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Modelo de negocio</div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
+                                <div class="col-12">
+                                    <table class="table borderless" style="page-break-inside: avoid;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"><span>Sugerencia</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <t t-foreach="o.crm_diagnostic_line_business_model_ids.filtered(lambda v: v.sugerencia not in (False, ''))" t-as="line_model">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-field="line_model.sugerencia"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Producción</div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
+                                <div class="col-12">
+                                    <table class="table borderless" style="page-break-inside: avoid;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"><span>Sugerencia</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <t t-foreach="o.crm_diagnostic_line_production_ids.filtered(lambda p: p.sugerencia not in (False, ''))" t-as="p_line">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-field="p_line.sugerencia"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Innovación</div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
+                                <div class="col-12" style="page-break-inside: avoid;">
+                                    <table class="table borderless" style="page-break-inside: avoid;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"><span>Sugerencia</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <t t-foreach="o.crm_diagnostic_line_innovation_ids.filtered(lambda i: i.sugerencia not in (False, ''))" t-as="i_line">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-field="i_line.sugerencia"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Formalización</div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
+                                <div class="col-12" style="page-break-inside: avoid;">
+                                    <table class="table borderless" style="page-break-inside: avoid;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"><span>Sugerencia</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <t t-foreach="o.crm_diagnostic_line_formalization_ids.filtered(lambda f: f.sugerencia not in (False, ''))" t-as="f_line">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-field="f_line.sugerencia"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Organización</div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
+                                <div class="col-12" style="page-break-inside: avoid;">
+                                    <table class="table borderless" style="page-break-inside: avoid;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"><span>Sugerencia</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <t t-foreach="o.crm_diagnostic_line_organization_ids.filtered(lambda g: g.sugerencia not in (False, ''))" t-as="g_line">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-field="g_line.sugerencia"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Mercadeo y Comercialización</div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
+                                <div class="col-12" style="page-break-inside: avoid;">
+                                    <table class="table borderless" style="page-break-inside: avoid;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"><span>Sugerencia</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <t t-foreach="o.crm_diagnostic_line_marketing_ids.filtered(lambda m: m.sugerencia not in (False, ''))" t-as="m_line">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-field="m_line.sugerencia"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Financiero</div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
+                                <div class="col-12" style="page-break-inside: avoid;">
+                                    <table class="table borderless" style="page-break-inside: avoid;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"><span>Sugerencia</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <t t-foreach="o.crm_diagnostic_line_finance_ids.filtered(lambda f: f.sugerencia not in (False, ''))" t-as="f_line">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-field="f_line.sugerencia"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <table style="border-spacing:0;margin-bottom:0;" class="table">
+                            <thead>
+                                <tr>
+                                    <td style="width: 20%; border-top: 1px solid; border-left: 1px solid;border-bottom: 1px solid; border-right: 1px solid; text-align: right;">
+                                        <strong><span style="font-size: 14px;">Facilitador:</span></strong>
+                                    </td>
+                                     <td style="width: 60%; border-top: 1px solid; border-left: 1px solid;border-bottom: 1px solid; border-right: 1px solid; text-align: right;">
+                                        <span></span>
+                                    </td>
+                                    <td style="border-top:1px solid; border-bottom: 1px solid; vertical-align:middle; border-right: 1px solid; horizontal-align:middle; border-top: 1px solid;" rowspan="3">
+                                        <span></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%; border-left: 1px solid; border-bottom: 1px solid; border-right: 1px solid; text-align: right;">
+                                        <strong><span style="font-size: 14px;">Diseñador:</span></strong>
+                                    </td>
+                                    <td style="width: 60%; border-bottom: 1px solid; border-right: 1px solid; text-align: right;" >
+                                        <span></span>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                </div>
+            </t>
+        </template>
+
+        <!-- principal templated called since action -->
+        <template id="report_crm_diagnostic_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="crm_diagnostic.crm_diagnostic_template_boy"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

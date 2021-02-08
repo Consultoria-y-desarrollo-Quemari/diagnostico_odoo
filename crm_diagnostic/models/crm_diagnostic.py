@@ -4,6 +4,13 @@ from odoo.exceptions import ValidationError
 from datetime import datetime, date, time, timedelta
 import logging
 
+import plotly.express as px
+import pandas as pd
+import base64
+
+# import io
+
+
 _logger = logging.getLogger(__name__)
 
 
@@ -24,11 +31,84 @@ class CrmDiagnostic(models.Model):
     codigo_formulario = fields.Char(string="Codigo de formulario")
     valoracion_micronegocio = fields.Char(string="Valoracion del Micronegocio")
     diagnostico = fields.Text(string="Diagnostico")
+    company_id = fields.Many2one(
+        'res.company',
+        default=lambda self : self.env.company)
+    # principal records
     crm_diagnostic_line_ids = fields.One2many(
         'crm.diagnostic.line',
-        'diagnostic_id'
+        'diagnostic_id',
     )
+    # records for Orientaciones de bioseguridad
+    crm_diagnostic_line_orientation_ids = fields.One2many(
+        'crm.diagnostic.line',
+        compute='_get_lines_for_areas')
+    # records for Modelo de Negocio
+    crm_diagnostic_line_business_model_ids = fields.One2many(
+        'crm.diagnostic.line',
+        compute='_get_lines_for_areas')
+    # records for Producción
+    crm_diagnostic_line_production_ids = fields.One2many(
+        'crm.diagnostic.line',
+        compute='_get_lines_for_areas')
+    # records for Innovación
+    crm_diagnostic_line_innovation_ids = fields.One2many(
+        'crm.diagnostic.line',
+        compute='_get_lines_for_areas')
+    # records for Formalización
+    crm_diagnostic_line_formalization_ids = fields.One2many(
+        'crm.diagnostic.line',
+        compute='_get_lines_for_areas')
+    # records for Organización
+    crm_diagnostic_line_organization_ids = fields.One2many(
+        'crm.diagnostic.line',
+        compute='_get_lines_for_areas')
+    # records for Mercadeo y Comercialización
+    crm_diagnostic_line_marketing_ids = fields.One2many(
+        'crm.diagnostic.line',
+        compute='_get_lines_for_areas')
+    # records for Finanzas
+    crm_diagnostic_line_finance_ids = fields.One2many(
+        'crm.diagnostic.line',
+        compute='_get_lines_for_areas')
 
+    # diagnostic_chart = fields.Binary(
+    #     compute='_get_chart', store=False)
+
+    @api.depends('crm_diagnostic_line_ids')
+    def _get_lines_for_areas(self):
+        for record in self:
+            record.crm_diagnostic_line_orientation_ids = record.crm_diagnostic_line_ids.filtered(
+                lambda line : line.area == 'PROTOCOLOS DE BIOSEGURIDAD')
+            record.crm_diagnostic_line_business_model_ids = record.crm_diagnostic_line_ids.filtered(
+                lambda line : line.area == 'MODELO DE NEGOCIO')
+            record.crm_diagnostic_line_production_ids = record.crm_diagnostic_line_ids.filtered(
+                lambda line : line.area == 'PRODUCCIÓN')
+            record.crm_diagnostic_line_innovation_ids = record.crm_diagnostic_line_ids.filtered(
+                lambda line : line.area == 'INNOVACIÓN')
+            record.crm_diagnostic_line_formalization_ids = record.crm_diagnostic_line_ids.filtered(
+                lambda line : line.area == 'FORMALIZACION')
+            record.crm_diagnostic_line_organization_ids = record.crm_diagnostic_line_ids.filtered(
+                lambda line : line.area == 'ORGANIZACIÓN')
+            record.crm_diagnostic_line_marketing_ids = record.crm_diagnostic_line_ids.filtered(
+                lambda line : line.area == 'MERCADEO Y COMERCIALIZACION')
+            record.crm_diagnostic_line_finance_ids = record.crm_diagnostic_line_ids.filtered(
+                lambda line : line.area == 'FINANZAS')
+
+    # @api.depends('crm_diagnostic_line_ids')
+    # def _get_chart(self):
+    #     for diagnostic in self:
+    #         data_chart = [1, 5, 2, 2, 3]
+    #         df = pd.DataFrame(dict(
+    #             r=data_chart,
+    #             theta=['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
+    #                 'Mercadeo y Comercializacion ', 'Finanzas']))
+    #         output = io.StringIO()
+    #         fig = px.line_polar(df, r='r', theta='theta', line_close=True)
+    #         print("*" * 100)
+    #         image_data = fig.write_image("/home/alex/Escritorio/nombre.png")
+    #         print(image_data)
+    #         diagnostic.diagnostic_chart = base64.b64encode(image_data)
 
     @api.model
     def create(self, vals):

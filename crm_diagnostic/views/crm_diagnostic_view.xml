@@ -15,54 +15,94 @@
                             </h1>
                         </div>
                         <group  col='4'>
-                                    <group name="left data">
-                                        <field name="lead_id" invisible="1"/>
-                                        <field name="nombre_negocio" string="Nombre del Negocio" />
-                                        <field name="nombre_propietario" string="Nombre del Propietario" />
-                                        <field name="tipo_documento" string="Tipo de documento" />
-                                        <field name="ubicacion" string="Ubicacion" />
-                                    </group>
-                                    <group name="center_data">
-                                        <field name="actividad_micronegocio" string="Actividad del micronegocio"/>
-                                        <field name="tipo_micronegocio" string="Tipo de micronegocio"/>
-                                        <field name="numero_identificacion" string="Numero de indentificacion"/>
-                                        <field name="codigo_formulario" string="Codigo del formulario"/>
-                                    </group>
+                            <group name="left data">
+                                <field name="lead_id" invisible="1"/>
+                                <field name="nombre_negocio" string="Nombre del Negocio" />
+                                <field name="nombre_propietario" string="Nombre del Propietario" />
+                                <field name="tipo_documento" string="Tipo de documento" />
+                                <field name="ubicacion" string="Ubicacion" />
+                            </group>
+                            <group name="center_data">
+                                <field name="actividad_micronegocio" string="Actividad del micronegocio"/>
+                                <field name="tipo_micronegocio" string="Tipo de micronegocio"/>
+                                <field name="numero_identificacion" string="Numero de indentificacion"/>
+                                <field name="codigo_formulario" string="Codigo del formulario"/>
+                            </group>
 
-                                    <group name="center_right">
-                                        <field name="valoracion_micronegocio" string="Valoracion del Micronegocio"/>
-                                        <field name="fecha" string="Fecha"/>
-                                    </group>
-                                    <group>
-                                    <field name="diagnostico"/>
-                                    </group>
+                            <group name="center_right">
+                                <field name="valoracion_micronegocio" string="Valoracion del Micronegocio"/>
+                                <field name="fecha" string="Fecha"/>
+                                <field name="company_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="diagnostico"/>
+                            </group>
                         </group>
+                        <field name="diagnostic_chart"/>
                         <div class="alert alert-success text-center" role="alert">
                             <h3>Orientaciones de bioseguridad</h3>
                         </div>
-                        <field name="crm_diagnostic_line_ids" widget="section_and_note_one2many" mode="tree">
-                            <tree editable="bottom">
+                        <field name="crm_diagnostic_line_orientation_ids" mode="tree">
+                            <tree>
                                 <field name="sugerencia"/>
                             </tree>
                         </field>
                         <div class="alert alert-success text-center" role="alert">
-                            <h3>Hábitos positivos</h3>
+                            <h3>Modelo de Negocio</h3>
                         </div>
+                        <field name="crm_diagnostic_line_business_model_ids" mode="tree">
+                            <tree>
+                                <field name="sugerencia"/>
+                            </tree>
+                        </field>
                         <div class="alert alert-success text-center" role="alert">
-                            <h3>Mentorias</h3>
+                            <h3>Producción</h3>
                         </div>
-                        <div class="alert alert-primary text-center" role="alert">
-                            <h3>Innovación en modelo de negocio</h3>
+                        <field name="crm_diagnostic_line_production_ids" mode="tree">
+                            <tree>
+                                <field name="sugerencia"/>
+                            </tree>
+                        </field>
+                        <div class="alert alert-success text-center" role="alert">
+                            <h3>Innvación</h3>
                         </div>
-                        <div class="alert alert-primary text-center" role="alert">
+                        <field name="crm_diagnostic_line_innovation_ids" mode="tree">
+                            <tree>
+                                <field name="sugerencia"/>
+                            </tree>
+                        </field>
+                        <div class="alert alert-success text-center" role="alert">
                             <h3>Formalización</h3>
                         </div>
+                        <field name="crm_diagnostic_line_formalization_ids" mode="tree">
+                            <tree>
+                                <field name="sugerencia"/>
+                            </tree>
+                        </field>
                         <div class="alert alert-primary text-center" role="alert">
-                            <h3>Mercadeo y comercialización</h3>
+                            <h3>Organización</h3>
                         </div>
+                        <field name="crm_diagnostic_line_organization_ids" mode="tree">
+                            <tree>
+                                <field name="sugerencia"/>
+                            </tree>
+                        </field>
+                        <div class="alert alert-primary text-center" role="alert">
+                            <h3>Mercadeo y Comercialización</h3>
+                        </div>
+                        <field name="crm_diagnostic_line_marketing_ids" mode="tree">
+                            <tree>
+                                <field name="sugerencia"/>
+                            </tree>
+                        </field>
                         <div class="alert alert-primary text-center" role="alert">
                             <h3>Financiero</h3>
                         </div>
+                        <field name="crm_diagnostic_line_finance_ids" mode="tree">
+                            <tree>
+                                <field name="sugerencia"/>
+                            </tree>
+                        </field>
                     </sheet>
                 </form>
             </field>

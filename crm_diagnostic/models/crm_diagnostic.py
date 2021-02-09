@@ -72,8 +72,11 @@ class CrmDiagnostic(models.Model):
         'crm.diagnostic.line',
         compute='_get_lines_for_areas')
 
-    # diagnostic_chart = fields.Binary(
-    #     compute='_get_chart', store=False)
+    #diagnostic_chart = fields.Char(
+    #    compute='_get_chart', store=False)
+
+    diagnostic_chart = fields.Char(
+        compute='_get_chart', store=True)
 
     @api.depends('crm_diagnostic_line_ids')
     def _get_lines_for_areas(self):
@@ -95,20 +98,35 @@ class CrmDiagnostic(models.Model):
             record.crm_diagnostic_line_finance_ids = record.crm_diagnostic_line_ids.filtered(
                 lambda line : line.area == 'FINANZAS')
 
-    # @api.depends('crm_diagnostic_line_ids')
-    # def _get_chart(self):
-    #     for diagnostic in self:
-    #         data_chart = [1, 5, 2, 2, 3]
-    #         df = pd.DataFrame(dict(
-    #             r=data_chart,
-    #             theta=['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
-    #                 'Mercadeo y Comercializacion ', 'Finanzas']))
-    #         output = io.StringIO()
-    #         fig = px.line_polar(df, r='r', theta='theta', line_close=True)
-    #         print("*" * 100)
-    #         image_data = fig.write_image("/home/alex/Escritorio/nombre.png")
-    #         print(image_data)
-    #         diagnostic.diagnostic_chart = base64.b64encode(image_data)
+    @api.depends('crm_diagnostic_line_ids')
+    def _get_chart(self):
+        for diagnostic in self:
+            modelonegocio = 0
+            bioseguridad = 0
+            formalizacon = 0
+            mercadeo = 0
+            finanzas = 0
+
+            for line in diagnostic.crm_diagnostic_line_business_model_ids:
+                modelonegocio += int(line.puntaje)
+            for line in diagnostic.crm_diagnostic_line_orientation_ids:
+                bioseguridad += int(line.puntaje)
+            for line in diagnostic.crm_diagnostic_line_formalization_ids:
+                formalizacon += int(line.puntaje)
+            for line in diagnostic.crm_diagnostic_line_marketing_ids:
+                mercadeo += int(line.puntaje)
+            for line in diagnostic.crm_diagnostic_line_finance_ids:
+                finanzas += int(line.puntaje)
+
+            data_chart = [(modelonegocio/.80), (bioseguridad/.85), (formalizacon/.45), (mercadeo/.60), (finanzas/.65)] 
+            print(data_chart)
+            df = pd.DataFrame(dict(
+                r=data_chart,
+                theta=['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
+                    'Mercadeo y Comercializacion ', 'Finanzas']))
+            fig = px.line_polar(df, r='r', theta='theta', line_close=True)
+            image_data = fig.to_html()
+            diagnostic.diagnostic_chart = image_data
 
     @api.model
     def create(self, vals):

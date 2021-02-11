@@ -38,7 +38,14 @@
                                 <field name="diagnostico"/>
                             </group>
                         </group>
-                        <field name="diagnostic_chart" widget="html"/>
+                        <group>
+                            <group>
+                                <field name="diagnostic_chart" widget="html" nolabel="1"/>
+                            </group>
+                            <group>
+                                <field name="diagnostic_chart_two" widget="html" nolabel="1"/>
+                            </group>
+                        </group>
                         <div class="alert alert-success text-center" role="alert">
                             <h3>Orientaciones de bioseguridad</h3>
                         </div>

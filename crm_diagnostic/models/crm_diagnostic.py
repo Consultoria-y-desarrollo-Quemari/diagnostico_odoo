@@ -6,6 +6,7 @@ import logging
 
 import plotly.express as px
 import pandas as pd
+import plotly.graph_objects as go
 import base64
 
 # import io
@@ -77,6 +78,8 @@ class CrmDiagnostic(models.Model):
 
     diagnostic_chart = fields.Char(
         compute='_get_chart', store=True)
+    diagnostic_chart_two = fields.Char(
+    compute='_get_chart', store=True)
 
     @api.depends('crm_diagnostic_line_ids')
     def _get_lines_for_areas(self):
@@ -118,15 +121,23 @@ class CrmDiagnostic(models.Model):
             for line in diagnostic.crm_diagnostic_line_finance_ids:
                 finanzas += int(line.puntaje)
 
-            data_chart = [(modelonegocio/.80), (bioseguridad/.85), (formalizacon/.45), (mercadeo/.60), (finanzas/.65)] 
+            data_chart = [modelonegocio, bioseguridad, formalizacon, mercadeo, finanzas] 
             print(data_chart)
             df = pd.DataFrame(dict(
-                r=data_chart,
+                r=[80,85,45,60,65],
                 theta=['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
                     'Mercadeo y Comercializacion ', 'Finanzas']))
             fig = px.line_polar(df, r='r', theta='theta', line_close=True)
+            fig.add_trace(go.Scatterpolargl(
+                r = data_chart,
+                theta = ['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
+                    'Mercadeo y Comercializacion ', 'Finanzas'],
+                fill = 'tonext',
+            ))
+
             image_data = fig.to_html()
             diagnostic.diagnostic_chart = image_data
+            diagnostic.diagnostic_chart_two = image_data
 
     @api.model
     def create(self, vals):

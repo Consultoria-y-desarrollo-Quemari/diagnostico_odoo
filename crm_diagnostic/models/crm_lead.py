@@ -741,6 +741,9 @@ class CrmLead(models.Model):
             # TODO
             # validating if the field value is in ANSWER_VALUES
             # we obtain certain values from lead on its field what is iterating
+            _logger.info("-"*100)
+            _logger.info(field_value)
+            _logger.info(ANSWER_VALUES)
             if field_value in ANSWER_VALUES:
                 answer = dict(lead._fields[field.name].selection).get(getattr(lead, field.name))
                 score = ANSWER_VALUES.get(field_value)

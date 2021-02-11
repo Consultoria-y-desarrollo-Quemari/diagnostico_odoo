@@ -691,12 +691,12 @@ class CrmLead(models.Model):
     def action_crm_diagnostic_view(self):
         for record in self:
             # validating if it is necessary to create a new diagnistic record or return the first on the list
-            if len(record.crm_lead_id) > 0:
-                return record.action_to_return_to_crm_diagnostic(record.crm_lead_id[0])
-            else:
-                crm_diagnostic_vals = record.getting_values_to_crm_diagnostic()
-                crm_diagnostic_id = self.env['crm.diagnostic'].create(crm_diagnostic_vals)
-                return record.action_to_return_to_crm_diagnostic(crm_diagnostic_id)
+            #if len(record.crm_lead_id) > 0:
+            #    return record.action_to_return_to_crm_diagnostic(record.crm_lead_id[0])
+            #else:
+            crm_diagnostic_vals = record.getting_values_to_crm_diagnostic()
+            crm_diagnostic_id = self.env['crm.diagnostic'].create(crm_diagnostic_vals)
+            return record.action_to_return_to_crm_diagnostic(crm_diagnostic_id)
 
     # return a dic values for crm.diagnostic
     def getting_values_to_crm_diagnostic(self):
@@ -744,6 +744,21 @@ class CrmLead(models.Model):
             if field_value in ANSWER_VALUES:
                 answer = dict(lead._fields[field.name].selection).get(getattr(lead, field.name))
                 score = ANSWER_VALUES.get(field_value)
+                valuation = TEXT_VALUATION.get(score)
+                suggestion, area = self.get_sugestion(field.name, score)
+                lines.append(
+                    (0, 0, {
+                        'name': field.field_description,
+                        'respuesta': answer,
+                        'puntaje': score,
+                        'area': area,
+                        'sugerencia': suggestion,
+                        'valoracion': valuation,
+                        }))
+            else:
+                answer = dict(lead._fields[field.name].selection).get(getattr(lead, field.name))
+                score = ANSWER_VALUES.get(field_value)
+                print(field_value)
                 valuation = TEXT_VALUATION.get(score)
                 suggestion, area = self.get_sugestion(field.name, score)
                 lines.append(

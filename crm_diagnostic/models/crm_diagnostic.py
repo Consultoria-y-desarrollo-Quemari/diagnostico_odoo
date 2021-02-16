@@ -6,10 +6,14 @@ import logging
 
 import plotly.express as px
 import pandas as pd
+import plotly
 import plotly.graph_objects as go
 import base64
+import matplotlib.pyplot as plt
+import numpy as np
+from math import pi
 
-# import io
+import io
 
 
 _logger = logging.getLogger(__name__)
@@ -76,8 +80,10 @@ class CrmDiagnostic(models.Model):
     #diagnostic_chart = fields.Char(
     #    compute='_get_chart', store=False)
 
-    diagnostic_chart = fields.Char(
-        compute='_get_chart', store=True)
+    diagnostic_chart = fields.Html(
+        compute='_get_chart', store=True, sanitize=False)
+    char_img = fields.Binary(compute='_get_chart', store=True,)
+    char_img_bar = fields.Binary(compute='_get_chart', store=True,)
     diagnostic_chart_two = fields.Char(
     compute='_get_chart', store=True)
 
@@ -100,6 +106,45 @@ class CrmDiagnostic(models.Model):
                 lambda line : line.area == 'MERCADEO Y COMERCIALIZACION')
             record.crm_diagnostic_line_finance_ids = record.crm_diagnostic_line_ids.filtered(
                 lambda line : line.area == 'FINANZAS')
+    def make_chart_barh(self, data):
+        buf = io.BytesIO()
+        objects = ['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
+                     'Mercadeo y Comercializacion ', 'Finanzas']
+        y_pos = np.arange(len(objects))
+        performance = data
+
+        plt.barh(y_pos, performance, align='center', alpha=0.5)
+        plt.yticks(y_pos, objects)
+        plt.xlabel('Usage')
+        plt.title('Programming language usage')
+
+        plt.savefig(buf, format='png')
+        return buf.getvalue()
+
+    def make_chart_radar(self, data):
+        buf = io.BytesIO()
+        values = [80,85,45,60,65]
+        data += data[:1]
+        N = len(values)
+        values += values[:1]
+        angles = ['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
+                     'Mercadeo y Comercializacion ', 'Finanzas']
+        # angles += angles[:1]
+        plt.figure(figsize =(10, 6)) 
+        plt.subplot(polar = True)
+        theta = np.linspace(0, 2 * np.pi, len(values))
+        lines, labels = plt.thetagrids(range(0, 360, int(360/len(angles))), 
+                                                         (angles))
+        plt.plot(theta, values)
+        plt.fill(theta, values, 'b', alpha = 0.1)
+        plt.plot(theta, data)
+        plt.legend(labels =('Puntaje Maximo', 'Puntaje Micronegocio'), 
+           loc = 1) 
+        # plt.polar(angles, values)
+        # plt.xticks(angles[:-1], values)
+        plt.savefig(buf, format='png')
+        return buf.getvalue()
+        
 
     @api.depends('crm_diagnostic_line_ids')
     def _get_chart(self):
@@ -124,10 +169,10 @@ class CrmDiagnostic(models.Model):
             data_chart = [modelonegocio, bioseguridad, formalizacon, mercadeo, finanzas] 
             print(data_chart)
             df = pd.DataFrame(dict(
-                r=[80,85,45,60,65],
-                theta=['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
+                Valor=[80,85,45,60,65],
+                etiqueta=['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
                     'Mercadeo y Comercializacion ', 'Finanzas']))
-            fig = px.line_polar(df, r='r', theta='theta', line_close=True)
+            fig = px.line_polar(df, r='Valor', theta='etiqueta', line_close=True)
             fig.add_trace(go.Scatterpolargl(
                 r = data_chart,
                 theta = ['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
@@ -135,9 +180,34 @@ class CrmDiagnostic(models.Model):
                 fill = 'tonext',
             ))
 
-            image_data = fig.to_html()
+            image_data = fig.to_html(include_plotlyjs=False)
+            # im_data = fig.to_image()
+
+            # data = dict(
+            #     number=[modelonegocio/0.80, bioseguridad/0.85, formalizacon/0.45, mercadeo/0.60, finanzas/0.60],
+            #     stage=['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
+            #         'Mercadeo y Comercializacion ', 'Finanzas'])
+            fig2 = px.funnel_area(names=['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
+                    'Mercadeo y Comercializacion ', 'Finanzas'], values=[modelonegocio/0.80, bioseguridad/0.85, formalizacon/0.45, mercadeo/0.60, finanzas/0.60])
+            
+            # plt.polar(['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
+            #         'Mercadeo y Comercializacion ', 'Finanzas'], [80,85,45,60,65])
+            # plt.ylabel('some numbers')
+
+            # buf = io.BytesIO()
+            # self.make_chart_radar().savefig(buf, format='png')
+            _logger.info('^'*90)
+            data = self.make_chart_radar(data_chart)
+            data2 = self.make_chart_barh([modelonegocio/0.80, bioseguridad/0.85, formalizacon/0.45, mercadeo/0.60, finanzas/0.60])
+            _logger.info(data)
+            diagnostic.char_img = base64.b64encode(data)
+            diagnostic.char_img_bar = base64.b64encode(data2)
+            image_data = fig.to_html(full_html=False, include_plotlyjs=False)
+            image_data2 = fig2.to_html(full_html=False, include_plotlyjs=False)
+
+
             diagnostic.diagnostic_chart = image_data
-            diagnostic.diagnostic_chart_two = image_data
+            diagnostic.diagnostic_chart_two = image_data2
 
     @api.model
     def create(self, vals):

@@ -4,10 +4,7 @@ from odoo.exceptions import ValidationError
 from datetime import datetime, date, time, timedelta
 import logging
 
-import plotly.express as px
 import pandas as pd
-import plotly
-import plotly.graph_objects as go
 import base64
 import matplotlib.pyplot as plt
 import numpy as np
@@ -108,17 +105,18 @@ class CrmDiagnostic(models.Model):
                 lambda line : line.area == 'FINANZAS')
     def make_chart_barh(self, data):
         buf = io.BytesIO()
-        objects = ['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
-                     'Mercadeo y Comercializacion ', 'Finanzas']
+        objects = ['Innovacion \n en el Modelo \n de Negocio','Protocolo de \n Bioseguridad','Formalizacion',
+                     'Mercadeo \n y \n Comercializacion ', 'Finanzas']
         y_pos = np.arange(len(objects))
         performance = data
-
+        plt.figure(figsize =(10, 6)) 
         plt.barh(y_pos, performance, align='center', alpha=0.5)
         plt.yticks(y_pos, objects)
-        plt.xlabel('Usage')
-        plt.title('Programming language usage')
+        plt.xlabel('Porcentaje')
+        plt.title('Porcentaje de cumplimiento')
 
         plt.savefig(buf, format='png')
+        plt.close()
         return buf.getvalue()
 
     def make_chart_radar(self, data):
@@ -127,9 +125,8 @@ class CrmDiagnostic(models.Model):
         data += data[:1]
         N = len(values)
         values += values[:1]
-        angles = ['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
-                     'Mercadeo y Comercializacion ', 'Finanzas']
-        # angles += angles[:1]
+        angles = ['Innovacion \n en el Modelo \n de Negocio','Protocolo de \n Bioseguridad','Formalizacion',
+                     'Mercadeo \n y \n Comercializacion ', 'Finanzas']
         plt.figure(figsize =(10, 6)) 
         plt.subplot(polar = True)
         theta = np.linspace(0, 2 * np.pi, len(values))
@@ -139,10 +136,10 @@ class CrmDiagnostic(models.Model):
         plt.fill(theta, values, 'b', alpha = 0.1)
         plt.plot(theta, data)
         plt.legend(labels =('Puntaje Maximo', 'Puntaje Micronegocio'), 
-           loc = 1) 
-        # plt.polar(angles, values)
-        # plt.xticks(angles[:-1], values)
+           loc = 3) 
+        plt.title('Puntuación Diagnostico')
         plt.savefig(buf, format='png')
+        plt.close()
         return buf.getvalue()
         
 
@@ -167,47 +164,11 @@ class CrmDiagnostic(models.Model):
                 finanzas += int(line.puntaje)
 
             data_chart = [modelonegocio, bioseguridad, formalizacon, mercadeo, finanzas] 
-            print(data_chart)
-            df = pd.DataFrame(dict(
-                Valor=[80,85,45,60,65],
-                etiqueta=['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
-                    'Mercadeo y Comercializacion ', 'Finanzas']))
-            fig = px.line_polar(df, r='Valor', theta='etiqueta', line_close=True)
-            fig.add_trace(go.Scatterpolargl(
-                r = data_chart,
-                theta = ['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
-                    'Mercadeo y Comercializacion ', 'Finanzas'],
-                fill = 'tonext',
-            ))
 
-            image_data = fig.to_html(include_plotlyjs=False)
-            # im_data = fig.to_image()
-
-            # data = dict(
-            #     number=[modelonegocio/0.80, bioseguridad/0.85, formalizacon/0.45, mercadeo/0.60, finanzas/0.60],
-            #     stage=['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
-            #         'Mercadeo y Comercializacion ', 'Finanzas'])
-            fig2 = px.funnel_area(names=['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
-                    'Mercadeo y Comercializacion ', 'Finanzas'], values=[modelonegocio/0.80, bioseguridad/0.85, formalizacon/0.45, mercadeo/0.60, finanzas/0.60])
-            
-            # plt.polar(['Innovacion en el Modelo de Negocio','Protocolo de Bioseguridad','Formalizacion',
-            #         'Mercadeo y Comercializacion ', 'Finanzas'], [80,85,45,60,65])
-            # plt.ylabel('some numbers')
-
-            # buf = io.BytesIO()
-            # self.make_chart_radar().savefig(buf, format='png')
-            _logger.info('^'*90)
             data = self.make_chart_radar(data_chart)
             data2 = self.make_chart_barh([modelonegocio/0.80, bioseguridad/0.85, formalizacon/0.45, mercadeo/0.60, finanzas/0.60])
-            _logger.info(data)
             diagnostic.char_img = base64.b64encode(data)
             diagnostic.char_img_bar = base64.b64encode(data2)
-            image_data = fig.to_html(full_html=False, include_plotlyjs=False)
-            image_data2 = fig2.to_html(full_html=False, include_plotlyjs=False)
-
-
-            diagnostic.diagnostic_chart = image_data
-            diagnostic.diagnostic_chart_two = image_data2
 
     @api.model
     def create(self, vals):

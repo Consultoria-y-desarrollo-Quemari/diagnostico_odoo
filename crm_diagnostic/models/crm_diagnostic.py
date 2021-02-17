@@ -206,11 +206,8 @@ class CrmDiagnostic(models.Model):
             for line in diagnostic.crm_diagnostic_line_finance_ids:
                 finanzas += int(line.puntaje)
 
-<<<<<<< HEAD
             data_chart = [bioseguridad, modelonegocio, produccion, innovacion, formalizacon, organizacion, mercadeo, finanzas] 
-=======
-            data_chart = [modelonegocio, bioseguridad, formalizacon, mercadeo, finanzas]
->>>>>>> c2d4ed39762d179ff1eb95cea4ab06c2b1e90309
+
 
             data = self.make_chart_radar(data_chart)
             data2 = self.make_chart_barh([bioseguridad/0.75, modelonegocio/0.85, produccion/0.55, innovacion/0.25, formalizacon/0.30, organizacion/0.40, mercadeo/0.70, finanzas/0.45])

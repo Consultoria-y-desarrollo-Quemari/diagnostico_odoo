@@ -105,7 +105,7 @@ class CrmDiagnostic(models.Model):
                 lambda line : line.area == 'FINANZAS')
     def make_chart_barh(self, data):
         buf = io.BytesIO()
-        objects = ['Innovacion \n en el Modelo \n de Negocio','Protocolo de \n Bioseguridad','Formalizacion',
+        objects = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Producción', 'Innovación', 'Formalizacion', 'Organización',
                      'Mercadeo \n y \n Comercializacion ', 'Finanzas']
         y_pos = np.arange(len(objects))
         performance = data
@@ -121,11 +121,11 @@ class CrmDiagnostic(models.Model):
 
     def make_chart_radar(self, data):
         buf = io.BytesIO()
-        values = [80,85,45,60,65]
+        values = [75, 85, 55, 25, 30, 40, 70, 45]
         data += data[:1]
         N = len(values)
         values += values[:1]
-        angles = ['Innovacion \n en el Modelo \n de Negocio','Protocolo de \n Bioseguridad','Formalizacion',
+        angles = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Producción', 'Innovación', 'Formalizacion', 'Organización',
                      'Mercadeo \n y \n Comercializacion ', 'Finanzas']
         plt.figure(figsize =(10, 6)) 
         plt.subplot(polar = True)
@@ -146,27 +146,36 @@ class CrmDiagnostic(models.Model):
     @api.depends('crm_diagnostic_line_ids')
     def _get_chart(self):
         for diagnostic in self:
-            modelonegocio = 0
             bioseguridad = 0
+            modelonegocio = 0
+            produccion = 0
+            innovacion = 0
             formalizacon = 0
+            organizacion = 0
             mercadeo = 0
             finanzas = 0
 
-            for line in diagnostic.crm_diagnostic_line_business_model_ids:
-                modelonegocio += int(line.puntaje)
             for line in diagnostic.crm_diagnostic_line_orientation_ids:
                 bioseguridad += int(line.puntaje)
+            for line in diagnostic.crm_diagnostic_line_business_model_ids:
+                modelonegocio += int(line.puntaje)
+            for line in diagnostic.crm_diagnostic_line_production_ids:
+                produccion += int(line.puntaje)
+            for line in diagnostic.crm_diagnostic_line_innovation_ids:
+                innovacion += int(line.puntaje)
             for line in diagnostic.crm_diagnostic_line_formalization_ids:
                 formalizacon += int(line.puntaje)
+            for line in diagnostic.crm_diagnostic_line_organization_ids:
+                organizacion += int(line.puntaje)
             for line in diagnostic.crm_diagnostic_line_marketing_ids:
                 mercadeo += int(line.puntaje)
             for line in diagnostic.crm_diagnostic_line_finance_ids:
                 finanzas += int(line.puntaje)
 
-            data_chart = [modelonegocio, bioseguridad, formalizacon, mercadeo, finanzas] 
+            data_chart = [bioseguridad, modelonegocio, produccion, innovacion, formalizacon, organizacion, mercadeo, finanzas] 
 
             data = self.make_chart_radar(data_chart)
-            data2 = self.make_chart_barh([modelonegocio/0.80, bioseguridad/0.85, formalizacon/0.45, mercadeo/0.60, finanzas/0.60])
+            data2 = self.make_chart_barh([bioseguridad/0.75, modelonegocio/0.85, produccion/0.55, innovacion/0.25, formalizacon/0.30, organizacion/0.40, mercadeo/0.70, finanzas/0.45])
             diagnostic.char_img = base64.b64encode(data)
             diagnostic.char_img_bar = base64.b64encode(data2)
 

@@ -2,6 +2,8 @@
 from odoo import fields, models, api, SUPERUSER_ID, _
 from odoo.exceptions import ValidationError
 from datetime import datetime, date, time, timedelta
+from lxml import etree
+import json
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -686,6 +688,21 @@ class CrmLead(models.Model):
         'lead_id',
         string='CRM Diagnostic',
         copy=False)
+    mentors = fields.Many2many(
+        'res.users',
+        string='Mentores',
+        readonly=True
+    )
+    # computed fields
+    first_module_ready = fields.Boolean(
+        compute='compute_first_module'
+    )
+    second_module_read = fields.Boolean(
+        compute='compute_second_module'
+    )
+    third_module_ready = fields.Boolean(
+        compute='compute_third_module'
+    )
 
     # returning an action to go to crm.diagnostic form view related to lead
     def action_crm_diagnostic_view(self):
@@ -801,3 +818,343 @@ class CrmLead(models.Model):
             'target': 'current',
             'flags': {'mode': 'readonly', 'action_buttons': True},
         }
+
+    # return the field list to validate the module1
+    def fields_module1(self):
+        return [
+            'x_nombre_negocio', 'x_nombre', 'doctype', 'x_identification', 'x_sexo',
+            'x_etnia', 'x_edad', 'country_id', 'state_id', 'xcity', 'x_vereda', 'mobile',
+            'email_from', 'x_limitacion', 'x_escolaridad', 'x_grupos', 'x_grupos_cual',
+            'x_estrato', 'x_situacion', 'x_sector', 'x_actcomer', 'x_state_id', 'x_city_id',
+            'x_ubic', 'x_dir_neg', 'x_com_cuenta', 'x_merc78_form', 'x_merc80_form',
+            'x_merc79_form', 'x_merc81_form', 'x_que_por_ren', 'x_que_por_ren_ant',
+            'x_tien_dur', 'tie_us_cre', 'tie_ca_ide', 'x_cual_34', 'x_por_34', 'x_datos1']
+
+    # return the field list to validate the module2
+    def fields_module2(self):
+        return ['x_cont1', 'x_cont1_por', 'first_module_ready']
+
+    # methos that return list of fields by section
+    def fields_module3_generalities(self):
+        return [
+            'in_empleo', 'x_forma58_form', 'x_forma61_form', 'x_forma60_form',
+            'x_forma65_inf', 'x_datos3']
+
+    def fields_module3_biosecurity(self):
+        return [
+            'x_dcont1', 'x_proto1', 'x_proto2', 'x_proto3', 'x_proto4', 'x_proto6',
+            'x_proto7', 'x_proto8', 'x_proto9', 'x_proto10', 'x_proto11', 'x_proto12',
+            'x_proto13', 'x_proto14', 'x_proto15', 'x_proto16'
+        ]
+
+    def fields_module3_business_model(self):
+        return [
+            'x_model21', 'x_model22', 'x_model23', 'x_model24', 'x_model25',
+            'x_model26', 'x_model27', 'x_model28', 'x_model29', 'x_model30', 'x_model31',
+            'x_model32', 'x_model33', 'x_model34', 'x_model35', 'x_model36', 'x_model37',
+            'x_dcont2'
+        ]
+
+    def fields_module3_production(self):
+        return [
+            'x_dcont3', 'x_innova24', 'x_innova25', 'x_innova26', 'x_innova27', 'x_prodl42',
+            'x_prodl43', 'x_innova29', 'x_innova33', 'x_innova36', 'x_prodl47', 'x_innova39'
+        ]
+
+    def fields_module3_innovation(self):
+        return [
+            'x_dcont4', 'x_innova40', 'x_ninova50', 'x_innova43_inf', 'x_ninova52',
+            'x_ninova53', 'x_ninova54'
+        ]
+
+    def fields_module3_formalization(self):
+        return [
+            'x_dcont5', 'x_for55', 'x_forma50_inf', 'x_forma52_inf', 'x_forma54_inf',
+            'x_forma56_inf', 'n_los_empl'
+        ]
+
+    def fields_module3_organization(self):
+        return [
+            'x_dcont6', 'x_org61', 'x_org62', 'x_org63', 'x_org64', 'x_org65', 'x_org66',
+            'x_org67', 'x_org68'
+        ]
+
+    def fields_module3_marketing(self):
+        return [
+            'x_dcont7', 'x_mer69', 'x_mer70', 'x_mer71', 'x_mer72', 'x_mer73', 'x_mer74',
+            'x_mer75', 'prom77', 'prom78', 'x_merc86_form', 'prom79', 'prom80', 'prom81',
+            'prom82'
+        ]
+
+    def fields_module3_financial(self):
+        return [
+            'x_dcont8', 'x_finan92_form', 'x_finan93_form', 'x_fin85', 'x_finan98_form',
+            'x_finan99_form', 'x_fin88', 'x_fin89', 'x_fin90', 'x_finan104_form'
+        ]
+
+    def full_list_field(self):
+        full_fields = []
+        full_fields.extend(self.fields_module3_generalities())
+        full_fields.extend(self.fields_module3_biosecurity())
+        full_fields.extend(self.fields_module3_business_model())
+        full_fields.extend(self.fields_module3_production())
+        full_fields.extend(self.fields_module3_innovation())
+        full_fields.extend(self.fields_module3_formalization())
+        full_fields.extend(self.fields_module3_organization())
+        full_fields.extend(self.fields_module3_marketing())
+        full_fields.extend(self.fields_module3_financial())
+        full_fields.extend(['second_module_read'])
+        return full_fields
+    # ended section
+
+    # validating if the current user has the facilitador profile
+    def is_facilitator(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'facilitador')], limit=1)
+        if role_id:
+            if any(user.id == self.env.user.id for user in role_id.line_ids.mapped('user_id')):
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    # validating if the current user has the cordinator profile
+    def is_cordinator(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'coordinador')], limit=1)
+        if role_id:
+            if any(user.id == self.env.user.id for user in role_id.line_ids.mapped('user_id')):
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    # computed if the module1 is ok
+    @api.depends(fields_module1)
+    def compute_first_module(self):
+        for lead in self:
+            if lead.is_facilitator():
+                if lead.all_fields_module1_are_ok():
+                    lead.first_module_ready = True
+                else:
+                    lead.first_module_ready = False
+            else:
+                lead.first_module_ready = False
+
+    # computed if the module2 is ok
+    @api.depends(fields_module2)
+    def compute_second_module(self):
+        for lead in self:
+            if lead.is_facilitator() and lead.first_module_ready:
+                if lead.all_fields_module2_are_ok():
+                    lead.second_module_read = True
+                else:
+                    lead.second_module_read = False
+            else:
+                lead.second_module_read = False
+
+    # computed if the module3 is ok
+    @api.depends(full_list_field)
+    def compute_third_module(self):
+        for lead in self:
+            if lead.is_facilitator() and lead.second_module_read:
+                if lead.all_fields_module3_are_ok():
+                    lead.third_module_ready = True
+                else:
+                    lead.third_module_ready = False
+            else:
+                lead.third_module_ready = False
+
+    # validating it all fields of module3 were filled
+    def all_fields_module3_are_ok(self):
+        result = []
+        # fields = self.fields_module3()
+        if getattr(self, 'x_datos3') and getattr(self, 'x_datos3') == 'no':
+            return True
+        result.append(self.check_generalities_fields(self.fields_module3_generalities()))
+        result.append(self.check_biosecurity_fields(self.fields_module3_biosecurity()))
+        result.append(self.check_business_model_fields(self.fields_module3_business_model()))
+        result.append(self.check_production_fields(self.fields_module3_production()))
+        result.append(self.check_innovation_fields(self.fields_module3_innovation()))
+        result.append(self.check_formalization_fields(self.fields_module3_formalization()))
+        result.append(self.check_organization_fields(self.fields_module3_organization()))
+        result.append(self.check_marketing_fields(self.fields_module3_marketing()))
+        result.append(self.check_financial_fields(self.fields_module3_financial()))
+        if any(r == False for r in result):
+            return False
+        else:
+            return True
+
+    # checking if all generalities field section are ok
+    def check_generalities_fields(self, fields):
+        if any(not getattr(self, field) for field in fields):
+            return False
+        else:
+            return True
+
+    # checking if all biosecurity field section are ok
+    def check_biosecurity_fields(self, fields):
+        if not getattr(self, 'x_dcont1'):
+            return True
+        elif any(not getattr(self, field) for field in fields):
+            return False
+        else:
+            return True
+
+    # checking if all business model field section are ok
+    def check_business_model_fields(self, fields):
+        if not getattr(self, 'x_dcont2'):
+            return True
+        elif any(not getattr(self, field) for field in fields):
+            return False
+        else:
+            return True
+
+    # checking if all production field section are ok
+    def check_production_fields(self, fields):
+        if not getattr(self, 'x_dcont3'):
+            return True
+        elif any(not getattr(self, field) for field in fields):
+            return False
+        else:
+            return True
+
+    # checking if all innovation field section are ok
+    def check_innovation_fields(self, fields):
+        if not getattr(self, 'x_dcont4'):
+            return True
+        else:
+            fields = self.excluding_fields_from_list_innovation(fields, ['x_ninova53'])
+            if any(not getattr(self, field) for field in fields):
+                return False
+            else:
+                return True
+
+    # checking if all formalization field section are ok
+    def check_formalization_fields(self, fields):
+        if not getattr(self, 'x_dcont5'):
+            return True
+        elif any(not getattr(self, field) for field in fields):
+            return False
+        else:
+            return True
+
+    # checking if all organization field section are ok
+    def check_organization_fields(self, fields):
+        if not getattr(self, 'x_dcont6'):
+            return True
+        elif any(not getattr(self, field) for field in fields):
+            return False
+        else:
+            return True
+
+    # checking if all marketing field section are ok
+    def check_marketing_fields(self, fields):
+        if not getattr(self, 'x_dcont7'):
+            return True
+        elif any(not getattr(self, field) for field in fields):
+            return False
+        else:
+            return True
+
+    # checking if all financial field section are ok
+    def check_financial_fields(self, fields):
+        if not getattr(self, 'x_dcont8'):
+            return True
+        elif any(not getattr(self, field) for field in fields):
+            return False
+        else:
+            return True
+
+    # excluding fields from list innovation
+    def excluding_fields_from_list_innovation(self, fields, exclude_fields):
+        if getattr(self, 'x_innova40') and getattr(self, 'x_innova40') == 'no':
+            for field in exclude_fields:
+                fields.remove(field)
+            return fields
+        elif getattr(self, 'x_innova40') and getattr(self, 'x_innova40') == 'si':
+            return fields
+        else:
+            return fields
+
+    # validating it all fields of module1 were filled
+    def all_fields_module1_are_ok(self):
+        fields = self.fields_module1()
+        if getattr(self, 'x_datos1') and getattr(self, 'x_datos1') == 'no':
+            return True
+        fields = self.excluding_fields_from_list_tie_ca_ide(fields, ['x_cual_34', 'x_por_34'])
+        fields = self.excluding_fields_from_list_x_grupos(fields, ['x_grupos_cual'])
+        if any(not getattr(self, field) for field in fields):
+            return False
+        else:
+            return True
+
+    # excluding fields from list
+    def excluding_fields_from_list_tie_ca_ide(self, fields, exclude_fields):
+        if getattr(self, 'tie_ca_ide') and getattr(self, 'tie_ca_ide') == 'no':
+            for field in exclude_fields:
+                fields.remove(field)
+            return fields
+        elif getattr(self, 'tie_ca_ide') and getattr(self, 'tie_ca_ide') == 'si':
+            return fields
+        else:
+            return fields
+
+    # excluding fields from list
+    def excluding_fields_from_list_x_grupos(self, fields, exclude_fields):
+        if getattr(self, 'x_grupos') and getattr(self, 'x_grupos') == 'no':
+            for field in exclude_fields:
+                fields.remove(field)
+            return fields
+        elif getattr(self, 'x_grupos') and getattr(self, 'x_grupos') == 'si':
+            return fields
+        else:
+            return fields
+
+    # validating it all fields of module2 were filled
+    def all_fields_module2_are_ok(self):
+        if getattr(self, 'x_cont1') and getattr(self, 'x_cont1') == 'si':
+            return True
+        elif (getattr(self, 'x_cont1') and getattr(self, 'x_cont1') == 'no') and getattr(self, 'x_cont1_por'):
+            return True
+        else:
+            return False
+
+    # getting the stage by stage state
+    @api.model
+    def get_stage(self, stage_state):
+        stage_id = self.env['crm.stage'].sudo().search([('stage_state', '=', stage_state)], limit=1)
+        return stage_id
+
+    # change the stage on lead according if the question modules
+    @api.onchange('first_module_ready', 'second_module_read', 'third_module_ready')
+    def update_stage(self):
+        if self.is_facilitator():
+            if self.first_module_ready:
+                second_stage =  self.get_stage('segundo_encuentro')
+                self.stage_id = second_stage if second_stage else self.stage_id
+            if self.first_module_ready and self.second_module_read:
+                third_stage =  self.get_stage('tercer_encuentro')
+                self.stage_id = third_stage if third_stage else self.stage_id
+            if self.first_module_ready and self.second_module_read and self.third_module_ready:
+                fourth_stage =  self.get_stage('espera_de_plan')
+                self.stage_id = fourth_stage if fourth_stage else self.stage_id
+
+    # inherit method to validate if the current user has the cordinator profile
+    # if so then we set readonly=False on mentors field
+    @api.model
+    def fields_view_get(
+            self, view_id=None, view_type='form', toolbar=False,
+            submenu=False):
+        res = super(CrmLead, self).fields_view_get(
+            view_id=view_id, view_type=view_type, toolbar=toolbar,
+            submenu=submenu)
+        if view_type == 'form' and self.is_cordinator():
+            doc = etree.XML(res['arch'])
+            for node in doc.xpath("//field[@name='mentors']"):
+                if 'modifiers' in node.attrib:
+                    modifiers = json.loads(node.attrib["modifiers"])
+                    modifiers['readonly'] = False
+                    node.attrib['modifiers'] = json.dumps(modifiers)
+            res['arch'] = etree.tostring(doc)
+        return res

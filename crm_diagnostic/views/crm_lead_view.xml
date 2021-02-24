@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- inherit crm.lead from crm -->
     <record id="iuv_crm_diagnostic_lead_form_view" model="ir.ui.view">
         <field name="name">iuv_crm_diagnostic_lead_form_view</field>
         <field name="model">crm.lead</field>
@@ -10,6 +11,42 @@
                     <span class="o_stat_text"> Realizar Diagnostico </span>
                 </button>
             </xpath>
+            <xpath expr="//field[@name='team_id']" position="after">
+                <field name="first_module_ready" invisible="1"/>
+                <field name="second_module_read" invisible="1"/>
+                <field name="third_module_ready" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="mentors" widget="many2many_tags"/>
+            </xpath>
         </field>
     </record>
+
+    <!-- inherit crm.stage from crm-->
+    <record id="q_inherit_crm_stage_form_view" model="ir.ui.view">
+        <field name="name">q.inherit.crm.stage.form.view</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_won']" position="before">
+                <field name="stage_state"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- inherit crm.lead from crm_uni_forms-->
+    <record id="q_inherit_crm_case_form_view_oppor_inherit_product" model="ir.ui.view">
+        <field name="name">q.inherit.crm.case.form.view.oppor.inherit.product</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_uni_forms.crm_case_form_view_oppor_inherit_product"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='modulo2']" position="attributes">
+                <attribute name="attrs">{'invisible': [('first_module_ready', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//page[@name='modulo3']" position="attributes">
+                <attribute name="attrs">{'invisible': [('second_module_read', '=', False)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>

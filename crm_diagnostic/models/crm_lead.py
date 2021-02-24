@@ -819,6 +819,10 @@ class CrmLead(models.Model):
             'flags': {'mode': 'readonly', 'action_buttons': True},
         }
 
+##########################################################################
+#                            ROLE METHODS
+##########################################################################
+
     # return the field list to validate the module1
     def fields_module1(self):
         return [
@@ -1158,3 +1162,58 @@ class CrmLead(models.Model):
                     node.attrib['modifiers'] = json.dumps(modifiers)
             res['arch'] = etree.tostring(doc)
         return res
+
+##########################################################################
+#                           ATTENTION PLAN METHODS
+##########################################################################
+    crm_attenation_plan_ids = fields.One2many(
+        'crm.attention.plan',
+        'lead_id',
+        copy=False)
+
+    # returning an action to go to crm.attention.plan form view related to lead
+    def call_action_crm_attention_plan(self):
+        for record in self:
+            # validating if it is necessary to create a new attention plan record or return the first on the list
+            if len(record.crm_attenation_plan_ids) > 0:
+               return record.action_to_return_to_crm_attention_plan(record.crm_attenation_plan_ids[0])
+            else:
+                attention_plan_vals = record.getting_values_to_crm_attention_plan()
+                crm_attention_id = self.env['crm.attention.plan'].create(attention_plan_vals)
+            return record.action_to_return_to_crm_attention_plan(crm_attention_id)
+
+    # return a dic values for crm.diagnostic
+    def getting_values_to_crm_attention_plan(self):
+        for lead in self:
+            dic_vals = {
+                'lead_id': lead.id,
+                'fecha': fields.Date.today(),
+                'plan_line_ids': lead.get_attention_plan_lines()
+            }
+            return dic_vals
+
+    def get_attention_plan_lines(self):
+        lines = []
+        items = ['48 H', '1 Semana', '2 Semanas', '1 Mes']
+        for item in items:
+            lines.append(
+                (0, 0, {
+                    'prioridad': item,
+                    'actividades': False,
+                    'soluciones': False,
+                    'reponsable': False,
+                }))
+        return lines
+
+    @api.model
+    def action_to_return_to_crm_attention_plan(self, crm_attention_id):
+        form_view = self.env.ref('crm_diagnostic.q_crm_attention_plan_form_view')
+        return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'crm.attention.plan',
+            'res_id': crm_attention_id.id,
+            'views': [(form_view.id, 'form')],
+            'view_id': form_view.id,
+            'target': 'current',
+        }

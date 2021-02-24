@@ -135,7 +135,7 @@ class CrmDiagnostic(models.Model):
         if wo_suggestion_lines:
             return wo_suggestion_lines
         else:
-            return []
+            return self.env['crm.diagnostic.line']
 
     def make_chart_barh(self, data):
         buf = io.BytesIO()

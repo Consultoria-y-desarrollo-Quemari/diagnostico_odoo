@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_crm_attention_plan_assets_common" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+            <link href="/crm_diagnostic/static/src/css/crm_attention_plan_report.css" rel="stylesheet" type="text/css"/>
+        </xpath>
+    </template>
+</odoo>

@@ -71,7 +71,7 @@
                             </tree>
                         </field>
                         <div class="alert alert-success text-center" role="alert">
-                            <h3>Innvación</h3>
+                            <h3>Innovación</h3>
                         </div>
                         <field name="crm_diagnostic_line_innovation_ids" mode="tree">
                             <tree>

@@ -119,7 +119,7 @@ class CrmAttentionPlanLines(models.Model):
     prioridad = fields.Char(
         string='Prioridad'
     )
-    actividades =  fields.Char(
+    actividades = fields.Char(
         string='Actividades'
     )
     soluciones = fields.Char(

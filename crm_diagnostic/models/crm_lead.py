@@ -1187,6 +1187,8 @@ class CrmLead(models.Model):
         for lead in self:
             dic_vals = {
                 'lead_id': lead.id,
+                'nombre_negocio': lead.x_nombre_negocio,
+                'ubicacion': lead.x_dir_neg,
                 'fecha': fields.Date.today(),
                 'plan_line_ids': lead.get_attention_plan_lines()
             }

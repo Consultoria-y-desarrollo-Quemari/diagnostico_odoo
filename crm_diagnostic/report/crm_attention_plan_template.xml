@@ -57,8 +57,8 @@
                         </div>
                         <div class="col-2">
                         </div>
-                        <div class="col-3" style="padding: 50px; text-align: center; border: 2px solid white;border-radius: 25px; background: white">
-                            <img src="crm_diagnostic/static/src/img/firma.png" style="max-height: 45px;"/>
+                        <div class="col-3" style="padding: 30px; text-align: center; border: 2px solid white;border-radius: 25px; background: white">
+                            <img src="crm_diagnostic/static/src/img/icon_right.jpg" style="max-height: 90px;"/>
                         </div>
                         <div class="col-2">
                         </div>
@@ -67,17 +67,17 @@
                     </div>
                     <div style="page-break-after: always;"/>
                     <div class="row">
-                        <div class="col-2">
-                            <img src="crm_diagnostic/static/src/img/firma.png" style="max-height: 45px;"/>
+                        <div class="col-1">
+                            <img src="crm_diagnostic/static/src/img/icon_left.jpg" style="max-height: 70px;"/>
                         </div>
-                        <div class="col-2">
-                            <strong><span t-esc="'PLAN DE ATENCIÓN'" style="color: #21618C;"/></strong>
+                        <div class="col-3" style="margin-top: 20px; text-align: center;">
+                            <strong><span t-esc="'PLAN DE ATENCIÓN'" style="color: #21618C; font-size: 23px;"/></strong>
                         </div>
-                        <div class="col-5" style="margin-top: 10px; text-align: center;">
+                        <div class="col-5" style="margin-top: 30px; text-align: left;">
                             <hr style="width:600px; height:5px; border-width: 0; color:#f6a224; background-color: #f6a224"/>
                         </div>
                         <div class="col-3" style="text-align: right;">
-                            <img src="crm_diagnostic/static/src/img/firma.png" style="max-height: 45px;"/>
+                            <img src="crm_diagnostic/static/src/img/icon_right.jpg" style="max-height: 70px;"/>
                         </div>
                     </div>
                     <br/>
@@ -120,17 +120,17 @@
                     </table>
                     <div style="page-break-after: always;"/>
                     <div class="row">
-                        <div class="col-2">
-                            <img src="crm_diagnostic/static/src/img/firma.png" style="max-height: 45px;"/>
+                        <div class="col-1">
+                            <img src="crm_diagnostic/static/src/img/icon_left.jpg" style="max-height: 70px;"/>
                         </div>
-                        <div class="col-2">
-                            <strong><span t-esc="'PLAN DE ATENCIÓN'" style="color: #21618C;"/></strong>
+                        <div class="col-3" style="margin-top: 20px; text-align: center;">
+                            <strong><span t-esc="'PLAN DE ATENCIÓN'" style="color: #21618C; font-size: 23px;"/></strong>
                         </div>
-                        <div class="col-5" style="margin-top: 10px; text-align: center;">
+                        <div class="col-5" style="margin-top: 30px; text-align: left;">
                             <hr style="width:600px; height:5px; border-width: 0; color:#f6a224; background-color: #f6a224"/>
                         </div>
                         <div class="col-3" style="text-align: right;">
-                            <img src="crm_diagnostic/static/src/img/firma.png" style="max-height: 45px;"/>
+                            <img src="crm_diagnostic/static/src/img/icon_right.jpg" style="max-height: 70px;"/>
                         </div>
                     </div>
                     <br/>

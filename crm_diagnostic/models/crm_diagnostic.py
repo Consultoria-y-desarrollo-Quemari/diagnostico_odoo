@@ -135,7 +135,7 @@ class CrmDiagnostic(models.Model):
         if wo_suggestion_lines:
             return wo_suggestion_lines
         else:
-            return []
+            return self.env['crm.diagnostic.line']
 
     def make_chart_barh(self, data):
         buf = io.BytesIO()
@@ -144,6 +144,7 @@ class CrmDiagnostic(models.Model):
         y_pos = np.arange(len(objects))
         performance = data
         plt.figure(figsize =(10, 6))
+        plt.xlim(0, 100)
         plt.barh(y_pos, performance, align='center', alpha=0.5)
         plt.yticks(y_pos, objects)
         plt.xlabel('Porcentaje')

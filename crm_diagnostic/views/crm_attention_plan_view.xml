@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="q_crm_attention_plan_form_view" model="ir.ui.view">
+            <field name="name">q.crm.attention.plan.form.view</field>
+            <field name="model">crm.attention.plan</field>
+            <field name="arch" type="xml">
+                <form string="Plan de atención" delete="0">
+                    <sheet>
+                        <div class="oe_title text-center">
+                            <h2>
+                                <span>Plan de atención</span>
+                            </h2>
+                        </div>
+                        <group col="4">
+                            <group name="left_group">
+                                <field name="lead_id" invisible="1"/>
+                                <field name="nombre_negocio"/>
+                                <field name="diagnostico"/>
+                            </group>
+                            <group name="center_group">
+                                <field name="ubicacion"/>
+                                <field name="responsable"/>
+                            </group>
+
+                            <group name="right_group">
+                                <field name="fecha"/>
+                            </group>
+                        </group>
+                        <div class="oe_title text-center">
+                            <h3>
+                                <span>Atención Especial</span>
+                            </h3>
+                        </div>
+                        <field name="plan_line_ids" mode="tree">
+                            <tree editable="bottom" create="0" delete="0">
+                                <field name="prioridad"/>
+                                <field name="actividades"/>
+                                <field name="soluciones"/>
+                                <field name="reponsable"/>
+                            </tree>
+                        </field>
+                        <div class="oe_title text-center">
+                            <h3>
+                                <span>Acciones de Mejora</span>
+                            </h3>
+                        </div>
+                        <div class="oe_title text-left">
+                            <h5>
+                                <span>Programa de entrenamiento para el fortalecimiento de distintas áreas del micronegocio.</span>
+                            </h5>
+                        </div>
+                        <group name="pro_left_group">
+                            <field name="programa"/>
+                        </group>
+                        <group col="4">
+                            <group name="pro_center_group">
+                                <field name="duración"/>
+                                <field name="plataforma"/>
+                            </group>
+                            <group name="pro_right_group">
+                                <field name="inicia"/>
+                                <field name="enlace"/>
+                            </group>
+                            <group name="pro_right_group">
+                                <field name="finaliza"/>
+                            </group>
+                        </group>
+                        <group name="sol_pro_group">
+                            <field name="soluciones"/>
+                        </group>
+                        <div col="4" class="oe_title text-left">
+                            <h5>
+                                <span>Cursos virtuales cortos que funcionan bajo la modalidad de aprendizaje flexible gracias a su metodología 100% Online.</span>
+                            </h5>
+                        </div>
+                        <group name="pro_cvc_left_group">
+                            <field name="cvc_programa"/>
+                        </group>
+                        <group col="4">
+                            <group name="pro_cvc_center_group">
+                                <field name="cvc_duración"/>
+                                <field name="cvc_plataforma"/>
+                            </group>
+                            <group name="pro_cvc_right_group">
+                                <field name="cvc_inicia"/>
+                                <field name="cvc_enlace"/>
+                            </group>
+                            <group name="pro_cvc_right_group">
+                                <field name="cvc_finaliza"/>
+                            </group>
+                        </group>
+                        <group name="sol_cvc_group">
+                            <field name="cvc_soluciones"/>
+                        </group>
+                        <div col="4" class="oe_title text-left">
+                            <h5>
+                                <span>Horas de mentoría personalizada en el área de:</span>
+                            </h5>
+                        </div>
+                        <group name="pro_men_principal_group">
+                            <field name="tema"/>
+                            <field name="mentor"/>
+                            <field name="horario"/>
+                            <field name="m_soluciones"/>
+                        </group>
+                        <div col="4" class="oe_title text-left">
+                            <group name="indicators_principal_group">
+                                <group name="indicators_left_group">
+                                    <field name="indicador1"/>
+                                </group>
+                                <group name="indicators_right_group">
+                                    <field name="indicador2"/>
+                                </group>
+                            </group>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

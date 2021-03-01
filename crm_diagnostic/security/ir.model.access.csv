@@ -1,5 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_crm_diagnostic,access_crm_diagnostic,model_crm_diagnostic,,1,1,1,1
 access_crm_diagnostic_line,access_crm_diagnostic_line,model_crm_diagnostic_line,,1,1,1,1
-
+access_crm_attention_plan,access_crm_attention_plan,model_crm_attention_plan,,1,1,1,1
+access_crm_attention_plan_line,access_crm_attention_plan_line,model_crm_attention_plan_line,,1,1,1,1
 

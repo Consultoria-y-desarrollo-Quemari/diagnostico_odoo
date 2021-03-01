@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="paperformat_crm_diagnostic_plan" model="report.paperformat">
+            <field name="name">CRM diagnostico plan</field>
+            <field name="default" eval="True" />
+            <field name="format">Letter</field>
+            <field name="orientation">Landscape</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+            id="action_report_crm_attention_plan"
+            string="Plan de atención"
+            model="crm.attention.plan"
+            report_type="qweb-pdf"
+            file="crm_diagnostic.report_crm_attention_plan_template"
+            name="crm_diagnostic.report_crm_attention_plan_template"
+            print_report_name="'PLAN DE ATENCIÓN'"
+            paperformat="paperformat_crm_diagnostic_plan"/>
+        />
+    </data>
+</odoo>

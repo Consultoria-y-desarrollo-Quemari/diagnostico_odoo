@@ -10,6 +10,9 @@
                 <button name="action_crm_diagnostic_view" type="object" icon="fa-file-text-o" class="oe_stat_button">
                     <span class="o_stat_text"> Realizar Diagnostico </span>
                 </button>
+                <button name="call_action_crm_attention_plan" type="object" icon="fa-check-square-o" class="oe_stat_button">
+                    <span class="o_stat_text">Plan de atención</span>
+                </button>
             </xpath>
             <xpath expr="//field[@name='team_id']" position="after">
                 <field name="first_module_ready" invisible="1"/>

@@ -1196,7 +1196,7 @@ class CrmLead(models.Model):
 
     def get_attention_plan_lines(self):
         lines = []
-        items = ['48 H', '1 Semana', '2 Semanas', '1 Mes']
+        items = ['48 H', '1 Semana', '2 Semanas', '1 Mes', 'A futuro', 'Hábitos a desarrollar']
         for item in items:
             lines.append(
                 (0, 0, {

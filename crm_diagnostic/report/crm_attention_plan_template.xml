@@ -2,343 +2,403 @@
 <odoo>
     <data>
         <!-- main template -->
-        <template id="crm_plan_attention_main_template">
+        <template id="crm_plan_attention_main_template_first_page">
             <t t-call="web.basic_layout">
-                <div class="page" t-attf-style="background-image:url('crm_diagnostic/static/src/img/background.png');background-size:1200px 900px; width:1200px; height:900px;">
-                    <br/><br/><br/>
-                    <div class="row">
-                        <div class="col-4">
+                <!-- <div class="page" t-attf-style="background-image:url('crm_diagnostic/static/src/img/background.png');background-size:1400px 1050px; width:1400px; height:1050px;margin:0px !important"> -->
+                <div class="page">
+                            <div style="position:absolute;top:0px;left:0px;opacity:0.95;width:100%;height:100%;z-index:-100;margin:0px;padding:0px">
+                                    <img src="crm_diagnostic/static/src/img/background.png" style="-webkit-filter: blur(20px); /* Chrome, Safari, Opera */filter: blur(20px);"/>
+                            </div>
+                            <div class="container">
+                                <div class="row pt-5 mt-5">
+                                    <div class="col-4">
+                                    </div>
+                                    <div class="col-4 m-3" style="align: center; border: 2px solid white;border-radius: 15px;">
+                                        <p class="text-center" style="font-size: 60px; color: white;"><strong>PLAN DE </strong></p>
+                                        <p class="text-center p-0" style="font-size: 90px; color: white;"><strong>ATENCIÓN</strong></p>
+                                    </div>
+                                    <div class="col-4">
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div class="row" style="padding-top:500px">
+                                        <div class="col-8 text-center text-uppercase ">
+                                            <div class="card-body border border-warning bg-white" style="border-radius: 15px !important;color: #21618C !important;">
+                                                <span style="font-size: 30px;" t-field="o.nombre_negocio"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-center text-uppercase">
+                                            <div class="card-body border border-warning" style="border-radius: 15px !important;color: #21618C !important;">
+                                                <span style="font-size: 30px;" t-field="o.diagnostico"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-3" >
+                                        <div class="col-4 text-center text-uppercase">
+                                            <div class="card-body border border-warning" style="border-radius: 15px !important;color: #21618C !important;">
+                                                <span style="font-size: 30px;" t-field="o.ubicacion"/>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="col-4 text-center text-uppercase">
+                                            <div class="card-body border border-warning" style="border-radius: 15px !important;color: #21618C !important;">
+                                                <span style="font-size: 30px;" t-field="o.responsable"/>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="col-4 text-center text-uppercase">
+                                            <div class="card-body border border-warning" style="border-radius: 15px !important;color: #21618C !important;">
+                                                <span style="font-size: 30px;" t-field="o.fecha"/>
+                                            </div>
+                                        </div>
+                        
+                                    </div>
+                                    <div class="row pt-5">
+                                        <div class="col-3">
+                                        </div>
+                                        <div class="col-2">
+                                        </div>
+                                        <div class="col-3" style="padding: 30px; text-align: center; border: 2px solid white;border-radius: 25px; background: white">
+                                            <img src="crm_diagnostic/static/src/img/icon_right.jpg" style="max-height: 90px;"/>
+                                        </div>
+                                        <div class="col-2">
+                                        </div>
+                                        <div class="col-2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                </div>
+            </t>
+        </template>
+        <template id="crm_plan_attention_main_template">
+            <t t-call="web.basic_layout">            
+                <div class="page" style="background-image:url('crm_diagnostic/static/src/img/bg2.png');background-repeat: repeat;min-height:400px">
+                    <div class="row shadow bg-white" style="min-height: 130px">
+                        <div class="col-1 text-center">
+                            <img src="crm_diagnostic/static/src/img/icon_left.jpg" style="max-height: 125px;"/>
                         </div>
-                        <div class="col-4" style="align: center; border: 5px solid white;border-radius: 25px;">
-                            <p class="text-center" style="font-size: 40px; color: white;"><strong>PLAN</strong></p>
-                            <p class="text-center" style="font-size: 50px; color: white;"><strong>DE ATENCIÓN</strong></p>
+                        <div class="col-3 pt-3" style="text-align: center;color: #21618C; font-size: 40px;">
+                            <strong>PLAN DE ATENCIÓN</strong>
                         </div>
-                        <div class="col-4">
+                        <div class="col-6 pt-4" style="text-align: left;">
+                            <hr style="width:auto; height:7px; border-width: 0; color:#f4cc4a; background-color: #f4cc4a"/>
+                        </div>
+                        <div class="col-1 text-center mr-auto">
+                            <img src="crm_diagnostic/static/src/img/icon_right.jpg" style="max-height: 125px;"/>
+                        </div>
+                        <div class="col-1"/>
+                    </div>
+                    <div class="container p-5">
+                        <div class="row container">
+                            <div class="col-4">
+                            </div>
+                            <div class="col-4">
+                                <h1 class="text-center" style="color: #21618C;"><strong>- Atención Especial –</strong></h1>
+                                <p class="text-center"><strong>Recomendaciones Generales</strong></p>
+                            </div>
+                            <div class="col-4">
+                            </div>
+                        </div>
+                        <div class="container" style="font-size:27px">
+                            <p>A partir del resultado de la valoración inicial, el Minuto de Dios le sugiere avanzar en las siguientes recomentaciones específicas.</p>
+                        </div>
+                        <div class="container" style="padding: 10px; border-radius: 25px; background: #F4F6F6; font-size:29px">
+                            <p>Apreciado Empresario a continuación se lista el Plan de Atención para el fortalecimiento a través de programas públicos y preivados</p><p> de ecosistema de micronegocios.</p>
                         </div>
                     </div>
-                    <br/><br/><br/><br/><br/><br/><br/><br/>
-                    <div class="row">
-                        <div class="col-1">
-                        </div>
-                        <div class="col-5" style="padding: 10px; text-align: center; height: 50px; align:left; border: 2px solid #f6a224; border-radius: 5px; background: white;">
-                            <span style="font-size: 20px;" t-field="o.nombre_negocio"/>
-                        </div>
-                        <div class="col-1">
-                        </div>
-                        <div class="col-4" style="padding: 10px; text-align: left; height: 50px; border: 2px solid #f6a224; border-radius: 5px; background: white">
-                            <span style="font-size: 20px;" t-field="o.diagnostico"/>
-                        </div>
-                        <div class="col-1">
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="row">
-                        <div class="col-1">
-                        </div>
-                        <div class="col-3" style="padding: 10px; text-align: center; height: 50px; border: 2px solid #f6a224; border-radius: 5px; background: white">
-                             <span style="font-size: 20px;" t-field="o.ubicacion"/>
-                        </div>
-                        <div class="col-1">
-                        </div>
-                        <div class="col-3" style="padding: 10px; text-align: center; height: 50px; border: 2px solid #f6a224; border-radius: 5px; background: white">
-                             <span style="font-size: 20px;" t-field="o.responsable"/>
-                        </div>
-                        <div class="col-1">
-                        </div>
-                        <div class="col-2" style="padding: 10px; text-align: center; height: 50px; border: 2px solid #f6a224; border-radius: 5px; background: white">
-                             <span style="font-size: 20px;" t-field="o.fecha"/>
-                        </div>
-                        <div class="col-1">
-                        </div>
-                    </div>
-                    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-                    <div class="row">
-                        <div class="col-3">
-                        </div>
-                        <div class="col-2">
-                        </div>
-                        <div class="col-3" style="padding: 30px; text-align: center; border: 2px solid white;border-radius: 25px; background: white">
-                            <img src="crm_diagnostic/static/src/img/icon_right.jpg" style="max-height: 90px;"/>
-                        </div>
-                        <div class="col-2">
-                        </div>
-                        <div class="col-2">
+
+                    <style>
+                        table {
+                        border-collapse: collapse;
+                        }
+                        table td {
+                        border: 2px solid #f4cc4a; 
+                        }
+                        table tr:first-child td {
+                        border-top: 0 !important;
+                        }
+                        table tr td:first-child {
+                        border-left: 0 !important;
+                        }
+                        table tr:last-child td {
+                        border-bottom: 0 !important;
+                        }
+                        table tr td:last-child {
+                        border-right: 0 !important;
+                        }
+                    </style>
+                    <div class="card border border-warning" style="border-radius: 25px !important;">
+                        <div class="table-responsive">
+                            <table class="m-0" width="100%">
+                                <thead>
+                                    <tr class="table-active font-weight-bold" style="font-size:30px">
+                                        <th class="text-center p-2">Prioridad</th>
+                                        <th class="text-center p-2">Actividades</th>
+                                        <th class="text-center p-2">Soluciones</th>
+                                        <th class="text-center p-2">Responsable</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 28px">
+                                    <t t-foreach="o.plan_line_ids" t-as="line">
+                                        <tr>
+                                            <td height="150" class="font-weight-bold text-center" style="vertical-align:middle !important">
+                                                <p  t-field="line.prioridad"/>
+                                            </td>
+                                            <td class="p-3"><p t-field="line.actividades" t-style="color: #21618C;"/></td>
+                                            <td class="p-3"><p t-field="line.soluciones" t-style="color: #21618C;"/></td>
+                                            <td class="p-3"><p t-field="line.reponsable" t-style="color: #21618C;"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div style="page-break-after: always;"/>
-                    <div class="row">
-                        <div class="col-1">
-                            <img src="crm_diagnostic/static/src/img/icon_left.jpg" style="max-height: 70px;"/>
+                    
+                </div>
+                <footer style="background-image:url('crm_diagnostic/static/src/img/bg2.png');background-repeat: repeat;">
+                    <center>
+                        <h1><a href="www.mdc.org.co">www.mdc.org.co</a></h1>
+                    </center>
+                </footer>
+            </t>
+        </template>
+
+        <template id="crm_plan_attention_main_template_last_page">
+            <t t-call="web.basic_layout">
+                <div class="page" style="min-height:400px">
+                    <div class="row shadow bg-white" style="min-height: 130px">
+                        <div class="col-1 text-center">
+                            <img src="crm_diagnostic/static/src/img/icon_left.jpg" style="max-height: 125px;"/>
                         </div>
-                        <div class="col-3" style="margin-top: 20px; text-align: center;">
-                            <strong><span t-esc="'PLAN DE ATENCIÓN'" style="color: #21618C; font-size: 23px;"/></strong>
+                        <div class="col-3 pt-3" style="text-align: center;color: #21618C; font-size: 40px;">
+                            <strong>PLAN DE ATENCIÓN</strong>
                         </div>
-                        <div class="col-5" style="margin-top: 30px; text-align: left;">
-                            <hr style="width:600px; height:5px; border-width: 0; color:#f6a224; background-color: #f6a224"/>
+                        <div class="col-6 pt-4" style="text-align: left;">
+                            <hr style="width:auto; height:7px; border-width: 0; color:#f4cc4a; background-color: #f4cc4a"/>
                         </div>
-                        <div class="col-3" style="text-align: right;">
-                            <img src="crm_diagnostic/static/src/img/icon_right.jpg" style="max-height: 70px;"/>
+                        <div class="col-1 text-center mr-auto">
+                            <img src="crm_diagnostic/static/src/img/icon_right.jpg" style="max-height: 125px;"/>
                         </div>
+                        <div class="col-1"/>
                     </div>
-                    <br/>
-                    <div class="row">
-                        <div class="col-4">
-                        </div>
-                        <div class="col-4">
-                            <p class="text-center" style="font-size: 20px; color: #21618C;"><strong>Atención Especial</strong></p>
-                            <p class="text-center" style="font-size: 20px;"><strong>Recomendaciones Generales</strong></p>
-                        </div>
-                        <div class="col-4">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <span style="font-size: 20px;">A partir del resultado de la valoración inicial, el Minuto de Dios le sugiere avanzar en las siguientes recomentaciones específicas.</span>
-                    </div>
-                    <div class="row" style="padding: 10px; border-radius: 25px; background: #F4F6F6">
-                        <span style="font-size: 20px;">Apreciado Empresario a continuación se lista el Plan de Atención para el fortalecimiento a través de programas públicos y preivados de ecosistema de micronegocios.</span>
-                    </div>
-                    <br/>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="text-center">Prioridad</th>
-                                <th class="text-center">Actividades</th>
-                                <th class="text-center">Soluciones</th>
-                                <th class="text-center">Responsable</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <t t-foreach="o.plan_line_ids" t-as="line">
-                                <tr>
-                                    <td><span t-field="line.prioridad"/></td>
-                                    <td><span t-field="line.actividades"/></td>
-                                    <td><span t-field="line.soluciones"/></td>
-                                    <td><span t-field="line.reponsable"/></td>
-                                </tr>
-                            </t>
-                        </tbody>
-                    </table>
-                    <div style="page-break-after: always;"/>
-                    <div class="row">
-                        <div class="col-1">
-                            <img src="crm_diagnostic/static/src/img/icon_left.jpg" style="max-height: 70px;"/>
-                        </div>
-                        <div class="col-3" style="margin-top: 20px; text-align: center;">
-                            <strong><span t-esc="'PLAN DE ATENCIÓN'" style="color: #21618C; font-size: 23px;"/></strong>
-                        </div>
-                        <div class="col-5" style="margin-top: 30px; text-align: left;">
-                            <hr style="width:600px; height:5px; border-width: 0; color:#f6a224; background-color: #f6a224"/>
-                        </div>
-                        <div class="col-3" style="text-align: right;">
-                            <img src="crm_diagnostic/static/src/img/icon_right.jpg" style="max-height: 70px;"/>
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="row">
-                        <div class="col-4">
-                        </div>
-                        <div class="col-4">
-                            <p class="text-center" style="font-size: 20px; color: #21618C;"><strong>Acciones de Mejora</strong></p>
-                        </div>
-                        <div class="col-4">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <span style="font-size: 20px;"><strong>A partir del resultado de la valoración inicial, el Minuto de Dios le recomienda avanzar en el siguiente plan de mejora:</strong></span>
-                    </div>
-                    <div class="row" style="padding: 30px; border-radius: 25px; background: #F4F6F6">
-                        <span style="font-size: 20px;">Apreciado Empresario identificamos que su negocio:</span>
-                    </div>
-                    <br/><br/>
-                    <div class="container-fluid" style="display: table; padding: 30px; border-radius: 25px; background: #F4F6F6; border: 2px solid #f6a224;">
+                    <div class="container">
                         <div class="row">
-                            <div class="row col-2">
+                            <div class="col-4">
                             </div>
-                            <div class="row col-10">
-                                <p>Programa de entrenamiento para el fortalecimiento de distintas áreas del micronegocio.</p>
+                            <div class="col-4">
+                                <p class="text-center" style="font-size: 20px; color: #21618C;"><strong>Acciones de Mejora</strong></p>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="row col-2">
-                                <p>Programa de Entrenamiento</p>
-                            </div>
-                            <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 5px;align: align: left; border: 1px solid; border-radius: 10px; background: #21618C;">
-                                <strong><span t-esc="'Programa: '" style="color: white;"/></strong>
-                                <span style="color: white;" t-field="o.programa"/>
+                            <div class="col-4">
                             </div>
                         </div>
                         <div class="row">
-                            <div class="row col-2">
+                            <span style="font-size: 20px;"><strong>A partir del resultado de la valoración inicial, el Minuto de Dios le recomienda avanzar en el siguiente plan de mejora:</strong></span>
+                        </div>
+                        <div class="row" style="padding: 30px; border-radius: 25px; background: #F4F6F6">
+                            <span style="font-size: 20px;">Apreciado Empresario identificamos que su negocio:</span>
+                        </div>
+
+
+                        <div class="container-fluid" style="display: table; padding: 30px; border-radius: 25px; background: #F4F6F6; border: 2px solid #f6a224;">
+                            <div class="row">
+                                <div class="row col-2">
+                                </div>
+                                <div class="row col-10">
+                                    <p>Programa de entrenamiento para el fortalecimiento de distintas áreas del micronegocio.</p>
+                                </div>
                             </div>
-                            <div class="col-3" style="display: table; width:20%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
-                                <strong t-esc="'Duración (horas): '" style="color: white;"></strong>
-                                <span style="color: white;" t-field="o.duración"/>
+                            <div class="row">
+                                <div class="row col-2">
+                                    <p>Programa de Entrenamiento</p>
+                                </div>
+                                <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 5px;align: align: left; border: 1px solid; border-radius: 10px; background: #21618C;">
+                                    <strong><span t-esc="'Programa: '" style="color: white;"/></strong>
+                                    <span style="color: white;" t-field="o.programa"/>
+                                </div>
                             </div>
-                            <div class="col-1">
+                            <div class="row">
+                                <div class="row col-2">
+                                </div>
+                                <div class="col-3" style="display: table; width:20%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
+                                    <strong t-esc="'Duración (horas): '" style="color: white;"></strong>
+                                    <span style="color: white;" t-field="o.duración"/>
+                                </div>
+                                <div class="col-1">
+                                </div>
+                                <div class="col-2" style="display: table; width:20%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
+                                    <strong><span t-esc="'Inicia: '" style="color: white;"/></strong>
+                                    <span style="color: white;" t-field="o.inicia"/>
+                                </div>
+                                <div class="col-1">
+                                </div>
+                                <div class="col-3" style="display: table; width:27%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
+                                    <strong><span t-esc="'Finaliza: '" style="color: white;"/></strong>
+                                    <span style="color: white;" t-field="o.finaliza"/>
+                                </div>
                             </div>
-                            <div class="col-2" style="display: table; width:20%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
-                                <strong><span t-esc="'Inicia: '" style="color: white;"/></strong>
-                                <span style="color: white;" t-field="o.inicia"/>
+                            <br/>
+                            <div class="row">
+                                <div class="row col-2">
+                                </div>
+                                <div class="col-3" style="display: table; width:30%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
+                                    <strong t-esc="'Plataforma: '" style="color: white;"></strong>
+                                    <span style="color: white;" t-field="o.plataforma"/>
+                                </div>
+                                <div class="col-1">
+                                </div>
+                                <div class="col-6" style="display: table; width:45%; vertical-align: middle; padding: 5px; height: 5px;align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
+                                    <strong><span t-esc="'Enlace para ingresar: '" style="color: white;"/></strong>
+                                    <span style="color: white;" t-field="o.enlace"/>
+                                </div>
                             </div>
-                            <div class="col-1">
-                            </div>
-                            <div class="col-3" style="display: table; width:27%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
-                                <strong><span t-esc="'Finaliza: '" style="color: white;"/></strong>
-                                <span style="color: white;" t-field="o.finaliza"/>
+                            <br/>
+                            <div class="row">
+                                <div class="row col-2">
+                                    <p>Soluciones</p>
+                                </div>
+                                <div class="col-10" style="display: table; width:83.5%; vertical-align:middle; padding: 25px; height: 20px; align: left; border: 1px solid; border-radius: 10px; background: #21618C;">
+                                    <span style="color: white;" t-field="o.soluciones"/>
+                                </div>
                             </div>
                         </div>
                         <br/>
-                        <div class="row">
-                            <div class="row col-2">
+                        <div class="container-fluid" style="display: table; padding: 30px; border-radius: 25px; background: #F4F6F6; border: 2px solid #f6a224;">
+                            <div class="row">
+                                <div class="row col-2">
+                                </div>
+                                <div class="row col-10">
+                                    <p>Cursos virtuales cortos que funcionan bajo la modalidad de aprendizaje flexible gracias a su metodología 100% Online.</p>
+                                </div>
                             </div>
-                            <div class="col-3" style="display: table; width:30%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
-                                <strong t-esc="'Plataforma: '" style="color: white;"></strong>
-                                <span style="color: white;" t-field="o.plataforma"/>
+                            <div class="row">
+                                <div class="row col-2">
+                                    <p>MOOCs Cursos Cortos</p>
+                                </div>
+                                <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 5px;align: left; border: 1px solid; border-radius: 10px; background: #21618C;">
+                                    <strong><span t-esc="'Programa: '" style="color: white;"/></strong>
+                                    <span style="color: white;" t-field="o.cvc_programa"/>
+                                </div>
                             </div>
-                            <div class="col-1">
+                            <br/>
+                            <div class="row">
+                                <div class="row col-2">
+                                </div>
+                                <div class="col-3" style="display: table; width:20%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
+                                    <strong t-esc="'Duración (horas): '" style="color: white;"></strong>
+                                    <span style="color: white;" t-field="o.cvc_duración"/>
+                                </div>
+                                <div class="col-1">
+                                </div>
+                                <div class="col-2" style="display: table; width:20%; vertical-align: middle; padding: 5px; height: 5px;align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
+                                    <strong><span t-esc="'Inicia: '" style="color: white;"/></strong>
+                                    <span style="color: white;" t-field="o.cvc_inicia"/>
+                                </div>
+                                <div class="col-1">
+                                </div>
+                                <div class="col-3" style="display: table; width:27%; vertical-align: middle; padding: 5px; height: 5px;align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
+                                    <strong><span t-esc="'Finaliza: '" style="color: white;"/></strong>
+                                    <span style="color: white;" t-field="o.cvc_finaliza"/>
+                                </div>
                             </div>
-                            <div class="col-6" style="display: table; width:45%; vertical-align: middle; padding: 5px; height: 5px;align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
-                                <strong><span t-esc="'Enlace para ingresar: '" style="color: white;"/></strong>
-                                <span style="color: white;" t-field="o.enlace"/>
+                            <br/>
+                            <div class="row">
+                                <div class="row col-2">
+                                </div>
+                                <div class="col-3" style="display: table; width:25%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
+                                    <strong t-esc="'Plataforma: '" style="color: white;"></strong>
+                                    <span style="color: white;" t-field="o.cvc_plataforma"/>
+                                </div>
+                                <div class="col-1">
+                                </div>
+                                <div class="col-6" style="display: table; width:50%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
+                                    <strong><span t-esc="'Enlace para ingresar: '" style="color: white;"/></strong>
+                                    <span style="color: white;" t-field="o.cvc_enlace"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="row col-2">
+                                    <p>Soluciones</p>
+                                </div>
+                                <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 25px; height: 20px; align: left; border: 1px solid; border-radius: 10px; background: #21618C;">
+                                    <span style="color: white;" t-field="o.cvc_soluciones"/>
+                                </div>
                             </div>
                         </div>
-                        <br/>
-                        <div class="row">
-                            <div class="row col-2">
-                                <p>Soluciones</p>
+
+                        <div class="container-fluid" style="display: table; padding: 30px; border-radius: 25px; background: #F4F6F6; border: 2px solid #f6a224;">
+                            <div class="row">
+                                <div class="row col-2">
+                                </div>
+                                <div class="row col-10">
+                                    <p><span style="border-bottom: 1px solid black; padding-left: 50px">&amp;nbsp;</span>horas de mentoría personalizada en el área de:</p>
+                                </div>
                             </div>
-                            <div class="col-10" style="display: table; width:83.5%; vertical-align:middle; padding: 25px; height: 20px; align: left; border: 1px solid; border-radius: 10px; background: #21618C;">
-                                <span style="color: white;" t-field="o.soluciones"/>
+                            <div class="row">
+                                <div class="row col-2">
+                                    <p>Mentorias</p>
+                                </div>
+                                <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 5px; height: 5px;align: left; border: 1px solid; border-radius: 10px; background: #21618C;">
+                                    <strong><span t-esc="'Tema: '" style="color: white;"/></strong>
+                                    <span style="color: white;" t-field="o.tema"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="row col-2">
+                                </div>
+                                <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
+                                    <strong t-esc="'Mentor: '" style="color: white;"></strong>
+                                    <span style="color: white;" t-field="o.mentor"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="row col-2">
+                                </div>
+                                <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C; border-radius: 10px; background: #21618C;">
+                                    <strong t-esc="'Horario: '" style="color: white;"></strong>
+                                    <span style="color: white;" t-field="o.horario"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="row col-2">
+                                    <p>Soluciones</p>
+                                </div>
+                                <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 25px; height: 20px; border: 1px solid; border-radius: 10px; background: #21618C;">
+                                    <span style="color: white;" t-field="o.m_soluciones"/>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="row" style="padding: 20px; border-radius: 25px; background: #F4F6F6">
+                            <div class="col-2" style="padding: 15px; height: 20px;">
+                                <strong><span>Indicador 1</span></strong>
+                            </div>
+                            <div class="row col-3" style="text-align: left; padding: 15px; height: 20px; border-bottom: 1px solid black;">
+                                <span t-field="o.indicador1"/>
+                            </div>
+                            <div class="col-2">
+                            </div>
+                            <div class="col-2" style="padding: 15px; height: 20px;">
+                                <strong><span>Indicador 2</span></strong>
+                            </div>
+                            <div class="row col-3" style="padding: 15px; height: 20px; border-bottom: 1px solid black;">
+                                <span t-field="o.indicador2"/>
+                            </div>
+                        </div>
+
                     </div>
-                    <br/>
-                    <div class="container-fluid" style="display: table; padding: 30px; border-radius: 25px; background: #F4F6F6; border: 2px solid #f6a224;">
-                        <div class="row">
-                            <div class="row col-2">
-                            </div>
-                            <div class="row col-10">
-                                <p>Cursos virtuales cortos que funcionan bajo la modalidad de aprendizaje flexible gracias a su metodología 100% Online.</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="row col-2">
-                                <p>MOOCs Cursos Cortos</p>
-                            </div>
-                            <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 5px;align: left; border: 1px solid; border-radius: 10px; background: #21618C;">
-                                <strong><span t-esc="'Programa: '" style="color: white;"/></strong>
-                                <span style="color: white;" t-field="o.cvc_programa"/>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="row col-2">
-                            </div>
-                            <div class="col-3" style="display: table; width:20%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
-                                <strong t-esc="'Duración (horas): '" style="color: white;"></strong>
-                                <span style="color: white;" t-field="o.cvc_duración"/>
-                            </div>
-                            <div class="col-1">
-                            </div>
-                            <div class="col-2" style="display: table; width:20%; vertical-align: middle; padding: 5px; height: 5px;align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
-                                <strong><span t-esc="'Inicia: '" style="color: white;"/></strong>
-                                <span style="color: white;" t-field="o.cvc_inicia"/>
-                            </div>
-                            <div class="col-1">
-                            </div>
-                            <div class="col-3" style="display: table; width:27%; vertical-align: middle; padding: 5px; height: 5px;align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
-                                <strong><span t-esc="'Finaliza: '" style="color: white;"/></strong>
-                                <span style="color: white;" t-field="o.cvc_finaliza"/>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="row col-2">
-                            </div>
-                            <div class="col-3" style="display: table; width:25%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
-                                <strong t-esc="'Plataforma: '" style="color: white;"></strong>
-                                <span style="color: white;" t-field="o.cvc_plataforma"/>
-                            </div>
-                            <div class="col-1">
-                            </div>
-                            <div class="col-6" style="display: table; width:50%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
-                                <strong><span t-esc="'Enlace para ingresar: '" style="color: white;"/></strong>
-                                <span style="color: white;" t-field="o.cvc_enlace"/>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="row col-2">
-                                <p>Soluciones</p>
-                            </div>
-                            <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 25px; height: 20px; align: left; border: 1px solid; border-radius: 10px; background: #21618C;">
-                                <span style="color: white;" t-field="o.cvc_soluciones"/>
-                            </div>
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="container-fluid" style="display: table; padding: 30px; border-radius: 25px; background: #F4F6F6; border: 2px solid #f6a224;">
-                        <div class="row">
-                            <div class="row col-2">
-                            </div>
-                            <div class="row col-10">
-                                <p><span style="border-bottom: 1px solid black; padding-left: 50px">&amp;nbsp;</span>horas de mentoría personalizada en el área de:</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="row col-2">
-                                <p>Mentorias</p>
-                            </div>
-                            <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 5px; height: 5px;align: left; border: 1px solid; border-radius: 10px; background: #21618C;">
-                                <strong><span t-esc="'Tema: '" style="color: white;"/></strong>
-                                <span style="color: white;" t-field="o.tema"/>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="row col-2">
-                            </div>
-                            <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C;border-radius: 10px; background: #21618C;">
-                                <strong t-esc="'Mentor: '" style="color: white;"></strong>
-                                <span style="color: white;" t-field="o.mentor"/>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="row col-2">
-                            </div>
-                            <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 5px; height: 5px; align: left; border: 1px solid #21618C; border-radius: 10px; background: #21618C;">
-                                <strong t-esc="'Horario: '" style="color: white;"></strong>
-                                <span style="color: white;" t-field="o.horario"/>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="row col-2">
-                                <p>Soluciones</p>
-                            </div>
-                            <div class="col-10" style="display: table; width:83.5%; vertical-align: middle; padding: 25px; height: 20px; border: 1px solid; border-radius: 10px; background: #21618C;">
-                                <span style="color: white;" t-field="o.m_soluciones"/>
-                            </div>
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="row" style="padding: 20px; border-radius: 25px; background: #F4F6F6">
-                        <div class="col-2" style="padding: 15px; height: 20px;">
-                            <strong><span>Indicador 1</span></strong>
-                        </div>
-                        <div class="row col-3" style="text-align: left; padding: 15px; height: 20px; border-bottom: 1px solid black;">
-                            <span t-field="o.indicador1"/>
-                        </div>
-                        <div class="col-2">
-                        </div>
-                        <div class="col-2" style="padding: 15px; height: 20px;">
-                            <strong><span>Indicador 2</span></strong>
-                        </div>
-                        <div class="row col-3" style="padding: 15px; height: 20px; border-bottom: 1px solid black;">
-                            <span t-field="o.indicador2"/>
-                        </div>
-                    </div>
+                    
+                
+                    <footer style="background-image:url('crm_diagnostic/static/src/img/bg2.png');background-repeat: repeat;">
+                        <center>
+                            <h1><a href="www.mdc.org.co">www.mdc.org.co</a></h1>
+                        </center>
+                    </footer>
                 </div>
             </t>
         </template>
@@ -347,7 +407,9 @@
         <template id="report_crm_attention_plan_template">
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
+                    <t t-call="crm_diagnostic.crm_plan_attention_main_template_first_page"/>
                     <t t-call="crm_diagnostic.crm_plan_attention_main_template"/>
+                    <t t-call="crm_diagnostic.crm_plan_attention_main_template_last_page"/>
                 </t>
             </t>
         </template>

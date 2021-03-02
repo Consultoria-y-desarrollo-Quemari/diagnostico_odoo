@@ -758,9 +758,6 @@ class CrmLead(models.Model):
             # TODO
             # validating if the field value is in ANSWER_VALUES
             # we obtain certain values from lead on its field what is iterating
-            _logger.info("-"*100)
-            _logger.info(field_value)
-            _logger.info(ANSWER_VALUES)
             if field_value in ANSWER_VALUES:
                 answer = dict(lead._fields[field.name].selection).get(getattr(lead, field.name))
                 score = ANSWER_VALUES.get(field_value)
@@ -778,7 +775,6 @@ class CrmLead(models.Model):
             else:
                 answer = dict(lead._fields[field.name].selection).get(getattr(lead, field.name))
                 score = ANSWER_VALUES.get(field_value)
-                print(field_value)
                 valuation = TEXT_VALUATION.get(score)
                 suggestion, area = self.get_sugestion(field.name, score)
                 lines.append(
@@ -828,11 +824,11 @@ class CrmLead(models.Model):
         return [
             'x_nombre_negocio', 'x_nombre', 'doctype', 'x_identification', 'x_sexo',
             'x_etnia', 'x_edad', 'country_id', 'state_id', 'xcity', 'x_vereda', 'mobile',
-            'email_from', 'x_limitacion', 'x_escolaridad', 'x_grupos', 'x_grupos_cual',
+            'x_limitacion', 'x_escolaridad', 'x_grupos',
             'x_estrato', 'x_situacion', 'x_sector', 'x_actcomer', 'x_state_id', 'x_city_id',
             'x_ubic', 'x_dir_neg', 'x_com_cuenta', 'x_merc78_form', 'x_merc80_form',
             'x_merc79_form', 'x_merc81_form', 'x_que_por_ren', 'x_que_por_ren_ant',
-            'x_tien_dur', 'tie_us_cre', 'tie_ca_ide', 'x_cual_34', 'x_por_34', 'x_datos1']
+            'x_tien_dur', 'tie_us_cre', 'tie_ca_ide', 'x_datos1']
 
     # return the field list to validate the module2
     def fields_module2(self):
@@ -846,7 +842,7 @@ class CrmLead(models.Model):
 
     def fields_module3_biosecurity(self):
         return [
-            'x_dcont1', 'x_proto1', 'x_proto2', 'x_proto3', 'x_proto4', 'x_proto6',
+            'x_proto1', 'x_proto2', 'x_proto3', 'x_proto4', 'x_proto6',
             'x_proto7', 'x_proto8', 'x_proto9', 'x_proto10', 'x_proto11', 'x_proto12',
             'x_proto13', 'x_proto14', 'x_proto15', 'x_proto16'
         ]
@@ -856,44 +852,45 @@ class CrmLead(models.Model):
             'x_model21', 'x_model22', 'x_model23', 'x_model24', 'x_model25',
             'x_model26', 'x_model27', 'x_model28', 'x_model29', 'x_model30', 'x_model31',
             'x_model32', 'x_model33', 'x_model34', 'x_model35', 'x_model36', 'x_model37',
-            'x_dcont2'
+            
         ]
 
     def fields_module3_production(self):
         return [
-            'x_dcont3', 'x_innova24', 'x_innova25', 'x_innova26', 'x_innova27', 'x_prodl42',
+            'x_innova24', 'x_innova25', 'x_innova26', 'x_innova27', 'x_prodl42',
             'x_prodl43', 'x_innova29', 'x_innova33', 'x_innova36', 'x_prodl47', 'x_innova39'
         ]
 
     def fields_module3_innovation(self):
         return [
-            'x_dcont4', 'x_innova40', 'x_ninova50', 'x_innova43_inf', 'x_ninova52',
-            'x_ninova53', 'x_ninova54'
+            'x_innova40', 'x_ninova50', 'x_innova43_inf', 'x_ninova52',
+            'x_ninova54'
         ]
 
     def fields_module3_formalization(self):
         return [
-            'x_dcont5', 'x_for55', 'x_forma50_inf', 'x_forma52_inf', 'x_forma54_inf',
+            'x_for55', 'x_forma50_inf', 'x_forma52_inf', 'x_forma54_inf',
             'x_forma56_inf', 'n_los_empl'
         ]
 
     def fields_module3_organization(self):
         return [
-            'x_dcont6', 'x_org61', 'x_org62', 'x_org63', 'x_org64', 'x_org65', 'x_org66',
+            'x_org61', 'x_org62', 'x_org63', 'x_org64', 'x_org65', 'x_org66',
             'x_org67', 'x_org68'
         ]
 
     def fields_module3_marketing(self):
         return [
-            'x_dcont7', 'x_mer69', 'x_mer70', 'x_mer71', 'x_mer72', 'x_mer73', 'x_mer74',
+            'x_mer69', 'x_mer70', 'x_mer71', 'x_mer72', 'x_mer73', 'x_mer74',
             'x_mer75', 'prom77', 'prom78', 'x_merc86_form', 'prom79', 'prom80', 'prom81',
             'prom82'
         ]
 
     def fields_module3_financial(self):
         return [
-            'x_dcont8', 'x_finan92_form', 'x_finan93_form', 'x_fin85', 'x_finan98_form',
-            'x_finan99_form', 'x_fin88', 'x_fin89', 'x_fin90', 'x_finan104_form'
+            'x_finan92_form', 'x_finan93_form', 'x_fin85', 'x_finan98_form',
+            'x_fin87n','x_fin88n','x_fin89n','x_fin90n','x_fin91n','x_fin92n','x_fin93n',
+            'x_fin94n','x_fin95n','x_fin96n', 'x_fin97n'
         ]
 
     def full_list_field(self):
@@ -962,7 +959,7 @@ class CrmLead(models.Model):
     def compute_third_module(self):
         for lead in self:
             if lead.is_facilitator() and lead.second_module_read:
-                if lead.all_fields_module3_are_ok():
+                if lead.all_fields_module3_are_ok():                    
                     lead.third_module_ready = True
                 else:
                     lead.third_module_ready = False
@@ -973,8 +970,6 @@ class CrmLead(models.Model):
     def all_fields_module3_are_ok(self):
         result = []
         # fields = self.fields_module3()
-        if getattr(self, 'x_datos3') and getattr(self, 'x_datos3') == 'no':
-            return True
         result.append(self.check_generalities_fields(self.fields_module3_generalities()))
         result.append(self.check_biosecurity_fields(self.fields_module3_biosecurity()))
         result.append(self.check_business_model_fields(self.fields_module3_business_model()))
@@ -998,129 +993,76 @@ class CrmLead(models.Model):
 
     # checking if all biosecurity field section are ok
     def check_biosecurity_fields(self, fields):
-        if not getattr(self, 'x_dcont1'):
-            return True
-        elif any(not getattr(self, field) for field in fields):
+        if any(not getattr(self, field) for field in fields):
             return False
         else:
             return True
 
     # checking if all business model field section are ok
     def check_business_model_fields(self, fields):
-        if not getattr(self, 'x_dcont2'):
-            return True
-        elif any(not getattr(self, field) for field in fields):
+        if any(not getattr(self, field) for field in fields):
             return False
         else:
             return True
 
     # checking if all production field section are ok
     def check_production_fields(self, fields):
-        if not getattr(self, 'x_dcont3'):
-            return True
-        elif any(not getattr(self, field) for field in fields):
+        
+        if any(not getattr(self, field) for field in fields):
             return False
         else:
             return True
 
     # checking if all innovation field section are ok
     def check_innovation_fields(self, fields):
-        if not getattr(self, 'x_dcont4'):
-            return True
+        if any(not getattr(self, field) for field in fields):
+            return False
         else:
-            fields = self.excluding_fields_from_list_innovation(fields, ['x_ninova53'])
-            if any(not getattr(self, field) for field in fields):
-                return False
-            else:
-                return True
+            return True
 
     # checking if all formalization field section are ok
     def check_formalization_fields(self, fields):
-        if not getattr(self, 'x_dcont5'):
-            return True
-        elif any(not getattr(self, field) for field in fields):
+        if any(not getattr(self, field) for field in fields):
             return False
         else:
             return True
 
     # checking if all organization field section are ok
     def check_organization_fields(self, fields):
-        if not getattr(self, 'x_dcont6'):
-            return True
-        elif any(not getattr(self, field) for field in fields):
+        if any(not getattr(self, field) for field in fields):
             return False
         else:
             return True
 
     # checking if all marketing field section are ok
     def check_marketing_fields(self, fields):
-        if not getattr(self, 'x_dcont7'):
-            return True
-        elif any(not getattr(self, field) for field in fields):
+        if any(not getattr(self, field) for field in fields):
             return False
         else:
             return True
 
     # checking if all financial field section are ok
     def check_financial_fields(self, fields):
-        if not getattr(self, 'x_dcont8'):
-            return True
-        elif any(not getattr(self, field) for field in fields):
-            return False
-        else:
-            return True
-
-    # excluding fields from list innovation
-    def excluding_fields_from_list_innovation(self, fields, exclude_fields):
-        if getattr(self, 'x_innova40') and getattr(self, 'x_innova40') == 'no':
-            for field in exclude_fields:
-                fields.remove(field)
-            return fields
-        elif getattr(self, 'x_innova40') and getattr(self, 'x_innova40') == 'si':
-            return fields
-        else:
-            return fields
-
-    # validating it all fields of module1 were filled
-    def all_fields_module1_are_ok(self):
-        fields = self.fields_module1()
-        if getattr(self, 'x_datos1') and getattr(self, 'x_datos1') == 'no':
-            return True
-        fields = self.excluding_fields_from_list_tie_ca_ide(fields, ['x_cual_34', 'x_por_34'])
-        fields = self.excluding_fields_from_list_x_grupos(fields, ['x_grupos_cual'])
         if any(not getattr(self, field) for field in fields):
             return False
         else:
             return True
 
-    # excluding fields from list
-    def excluding_fields_from_list_tie_ca_ide(self, fields, exclude_fields):
-        if getattr(self, 'tie_ca_ide') and getattr(self, 'tie_ca_ide') == 'no':
-            for field in exclude_fields:
-                fields.remove(field)
-            return fields
-        elif getattr(self, 'tie_ca_ide') and getattr(self, 'tie_ca_ide') == 'si':
-            return fields
-        else:
-            return fields
 
-    # excluding fields from list
-    def excluding_fields_from_list_x_grupos(self, fields, exclude_fields):
-        if getattr(self, 'x_grupos') and getattr(self, 'x_grupos') == 'no':
-            for field in exclude_fields:
-                fields.remove(field)
-            return fields
-        elif getattr(self, 'x_grupos') and getattr(self, 'x_grupos') == 'si':
-            return fields
+    # validating it all fields of module1 were filled
+    def all_fields_module1_are_ok(self):
+        fields = self.fields_module1()
+        if any(not getattr(self, field) for field in fields):
+            return False
         else:
-            return fields
+            return True
 
     # validating it all fields of module2 were filled
     def all_fields_module2_are_ok(self):
         if getattr(self, 'x_cont1') and getattr(self, 'x_cont1') == 'si':
             return True
         elif (getattr(self, 'x_cont1') and getattr(self, 'x_cont1') == 'no') and getattr(self, 'x_cont1_por'):
-            return True
+            return False
         else:
             return False
 

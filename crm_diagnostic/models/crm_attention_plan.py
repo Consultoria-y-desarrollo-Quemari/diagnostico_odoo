@@ -25,7 +25,8 @@ class CrmAttentionPlan(models.Model):
             ('incipiente', 'Incipiento'),
             ('aceptable', 'Aceptable'),
             ('confiable', 'Confiable'),
-            ('competente', 'Excelencia')],
+            ('competente', 'Competente'),
+            ('excelencia', 'Excelencia')],
         string='Diagnostico'
     )
     #programa de entrenamiento

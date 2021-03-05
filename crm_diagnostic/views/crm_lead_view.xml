@@ -22,6 +22,9 @@
             <xpath expr="//field[@name='company_id']" position="after">
                 <field name="mentors" widget="many2many_tags"/>
             </xpath>
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="coordinador"/>
+            </xpath>
         </field>
     </record>
 

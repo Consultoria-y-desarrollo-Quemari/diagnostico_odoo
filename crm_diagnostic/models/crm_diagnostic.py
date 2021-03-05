@@ -33,6 +33,16 @@ class CrmDiagnostic(models.Model):
     codigo_formulario = fields.Char(string="Codigo de formulario")
     valoracion_micronegocio = fields.Char(string="Valoracion del Micronegocio")
     diagnostico = fields.Text(string="Diagnostico")
+    valuacion_diagnostico = fields.Selection(
+        selection=[
+            ('competitividad', 'Nivel de competitividad'),
+            ('incipiente', 'Incipiento'),
+            ('aceptable', 'Aceptable'),
+            ('confiable', 'Confiable'),
+            ('competente', 'Competente'),
+            ('excelencia', 'Excelencia')],
+        string='Valuación de diagnostico'
+    )
     company_id = fields.Many2one(
         'res.company',
         default=lambda self : self.env.company)

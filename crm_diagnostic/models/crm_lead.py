@@ -700,7 +700,7 @@ class CrmLead(models.Model):
         string='CRM Diagnostic',
         copy=False)
     mentors = fields.Many2many(
-        'res.users',
+        'res.partner',
         string='Mentores',
         readonly=True
     )
@@ -838,12 +838,12 @@ class CrmLead(models.Model):
         if not lead_ids:
             return
         for lead in lead_ids:
-            for event in event_ids:
+            for event in event_ids.sorted(reverse=True):
                 # TODO
-                # we remove the current item of lead and event of their each object array
+                # we remove the current item of lead_ids and event_ids of their each object array
                 # because an opportunity has to be in an event
                 event.opportunity_id = lead.id
-                # lead.mentors += event
+                lead.mentors += event.partner_ids
                 self.send_mail_notification(lead)
                 event_ids -= event
                 lead_ids -= lead

@@ -736,7 +736,7 @@ class CrmLead(models.Model):
             if len(record.crm_lead_id) > 0:
                 return record.action_to_return_to_crm_diagnostic(record.crm_lead_id[0])
             else:
-                # we avoid to execute the diagnostic plan whether question modules haven't executed yet
+                # we avoid to execute the diagnostic whether question modules haven't executed yet
                 if not record.first_module_ready or not record.second_module_read or not record.third_module_ready:
                     raise ValidationError('Para realizar el diagnostico, debe responder las preguntas de los 3 modulos.')
                 crm_diagnostic_vals = record.getting_values_to_crm_diagnostic()

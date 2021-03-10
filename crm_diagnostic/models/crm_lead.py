@@ -1,12 +1,23 @@
 # -*- coding: utf-8 -*-
 from odoo import fields, models, api, SUPERUSER_ID, _
 from odoo.exceptions import ValidationError
-from datetime import datetime, date, time, timedelta
+from dateutil.relativedelta import relativedelta
+from datetime import datetime, timedelta
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from lxml import etree
 import json
 import logging
 
 _logger = logging.getLogger(__name__)
+
+
+RANGES = {
+        'incipiente': range(0, 76),
+        'aceptable': range(77, 152),
+        'confiable': range(153, 228),
+        'competente': range(229, 304),
+        'excelencia': range(305, 380)
+    }
 
 CRM_DIAGNOSTIC_SELECTION_FIELDS = {
     'doctype': 'tipo_documento',
@@ -689,9 +700,23 @@ class CrmLead(models.Model):
         string='CRM Diagnostic',
         copy=False)
     mentors = fields.Many2many(
-        'res.users',
+        'res.partner',
         string='Mentores',
         readonly=True
+    )
+    coordinador = fields.Many2one(
+        'res.users',
+        string='Coordinador'
+    )
+    diagnostico = fields.Selection(
+        selection=[
+            ('competitividad', 'Nivel de competitividad'),
+            ('incipiente', 'Incipiento'),
+            ('aceptable', 'Aceptable'),
+            ('confiable', 'Confiable'),
+            ('competente', 'Competente'),
+            ('excelencia', 'Excelencia')],
+        string='Diagnostico'
     )
     # computed fields
     first_module_ready = fields.Boolean(
@@ -753,6 +778,7 @@ class CrmLead(models.Model):
              ('selectable', '=', True),
              ('ttype', '=', 'selection')]).filtered(
                  lambda f : f.name.startswith('x_'))
+        puntaje = 0
         for field in _fields:
             field_value = dic_fields.get(field.name)
             # TODO
@@ -786,7 +812,69 @@ class CrmLead(models.Model):
                         'sugerencia': suggestion,
                         'valoracion': valuation,
                         }))
+            if score:
+                puntaje += score
+        self.set_diagnostico(puntaje, lead)
         return lines
+
+    # set diagnostico based on range
+    @api.model
+    def set_diagnostico(self, score, lead):
+        if score > 380:
+            lead.diagnostico = 'excelencia'
+            return
+        for k, v in RANGES.items():
+            if score in v:
+                lead.diagnostico = k
+
+    # this method is called from cron
+    def relate_events_to_leads(self):
+        event_ids = self.available_events()
+        if not event_ids:
+            return
+        lead_ids = self.search(
+            [('mentors', '=', False),
+             ('diagnostico', 'in', ('confiable', 'competente', 'excelencia'))])
+        if not lead_ids:
+            return
+        for lead in lead_ids:
+            for event in event_ids.sorted(reverse=True):
+                # TODO
+                # we remove the current item of lead_ids and event_ids of their each object array
+                # because an opportunity has to be in an event
+                event.opportunity_id = lead.id
+                lead.mentors += event.partner_ids
+                self.send_mail_notification(lead)
+                event_ids -= event
+                lead_ids -= lead
+                break
+
+    # send email notification to coordinador and facilitador
+    @api.model
+    def send_mail_notification(self, lead_id):
+        try:
+            template_id = self.env.ref('crm_diagnostic.q_mail_template_event_notification')
+            template_id.send_mail(lead_id.id, force_send=True)
+        except Exception as e:
+            print(e)
+
+    # return events availables
+    def available_events(self):
+        week_days = range(0, 5)
+        date_to_search = fields.Date.today() + timedelta(days=1)
+        events =  self.env['calendar.event'].search(
+            ['|', ('start_date', '>=', date_to_search),
+             ('start_datetime', '>=', date_to_search),
+             ('opportunity_id', '=', False)])
+        for event in events:
+            # validate if we have to use start date or start date time to check the day of the week
+            if event.start_date:
+                if event.start_date.weekday() not in week_days:
+                    events -= event
+            else:
+                if event.start_datetime.weekday() not in week_days:
+                    events -= event
+        return events
 
     # returning area and suggestion base on field_name and score
     @api.model
@@ -852,7 +940,6 @@ class CrmLead(models.Model):
             'x_model21', 'x_model22', 'x_model23', 'x_model24', 'x_model25',
             'x_model26', 'x_model27', 'x_model28', 'x_model29', 'x_model30', 'x_model31',
             'x_model32', 'x_model33', 'x_model34', 'x_model35', 'x_model36', 'x_model37',
-            
         ]
 
     def fields_module3_production(self):
@@ -959,7 +1046,7 @@ class CrmLead(models.Model):
     def compute_third_module(self):
         for lead in self:
             if lead.is_facilitator() and lead.second_module_read:
-                if lead.all_fields_module3_are_ok():                    
+                if lead.all_fields_module3_are_ok():
                     lead.third_module_ready = True
                 else:
                     lead.third_module_ready = False
@@ -1007,7 +1094,6 @@ class CrmLead(models.Model):
 
     # checking if all production field section are ok
     def check_production_fields(self, fields):
-        
         if any(not getattr(self, field) for field in fields):
             return False
         else:

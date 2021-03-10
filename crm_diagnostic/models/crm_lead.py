@@ -736,8 +736,12 @@ class CrmLead(models.Model):
             if len(record.crm_lead_id) > 0:
                 return record.action_to_return_to_crm_diagnostic(record.crm_lead_id[0])
             else:
+                # we avoid to execute the diagnostic plan whether question modules haven't executed yet
+                if not record.first_module_ready or not record.second_module_read or not record.third_module_ready:
+                    raise ValidationError('Para realizar el diagnostico, debe responder las preguntas de los 3 modulos.')
                 crm_diagnostic_vals = record.getting_values_to_crm_diagnostic()
                 crm_diagnostic_id = self.env['crm.diagnostic'].create(crm_diagnostic_vals)
+                crm_diagnostic_id.valuacion_diagnostico = record.diagnostico
             return record.action_to_return_to_crm_diagnostic(crm_diagnostic_id)
 
     # return a dic values for crm.diagnostic
@@ -1206,8 +1210,12 @@ class CrmLead(models.Model):
             if len(record.crm_attenation_plan_ids) > 0:
                return record.action_to_return_to_crm_attention_plan(record.crm_attenation_plan_ids[0])
             else:
+                if len(record.crm_lead_id) <= 0:
+                    # we avoid to execute the attention plan whether diagnostic haven't executed yet
+                    raise ValidationError('No puede realizar el plan de atención sin antes haber realizado el diagnostico.')
                 attention_plan_vals = record.getting_values_to_crm_attention_plan()
                 crm_attention_id = self.env['crm.attention.plan'].create(attention_plan_vals)
+                crm_attention_id.diagnostico = record.diagnostico
             return record.action_to_return_to_crm_attention_plan(crm_attention_id)
 
     # return a dic values for crm.diagnostic

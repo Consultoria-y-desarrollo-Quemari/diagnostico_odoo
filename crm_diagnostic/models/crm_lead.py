@@ -1226,6 +1226,7 @@ class CrmLead(models.Model):
                         modifiers = json.loads(node.attrib['modifiers'])
                         modifiers['readonly'] = False
                         node.attrib['modifiers'] = json.dumps(modifiers)
+                res['arch'] = etree.tostring(doc)
             if self.is_facilitator():
                 for node in doc.xpath("//header/field[@name='stage_id']"):
                     if 'options' in node.attrib:

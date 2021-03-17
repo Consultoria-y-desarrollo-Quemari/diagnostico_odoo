@@ -865,19 +865,13 @@ class CrmLead(models.Model):
     # return events availables
     def available_events(self):
         week_days = range(0, 5)
-        date_to_search = fields.Date.today() + timedelta(days=1)
-        events =  self.env['calendar.event'].search(
-            ['|', ('start_date', '>=', date_to_search),
-             ('start_datetime', '>=', date_to_search),
-             ('opportunity_id', '=', False)])
+        date_to_search = fields.Datetime.now() + timedelta(days=1)
+        events = self.env['calendar.event'].search(
+            [('start_datetime', '>', date_to_search),
+            ('opportunity_id', '=', False)])
         for event in events:
-            # validate if we have to use start date or start date time to check the day of the week
-            if event.start_date:
-                if event.start_date.weekday() not in week_days:
-                    events -= event
-            else:
-                if event.start_datetime.weekday() not in week_days:
-                    events -= event
+            if event.start_datetime.weekday() not in week_days:
+                events -= event
         return events
 
     # returning area and suggestion base on field_name and score

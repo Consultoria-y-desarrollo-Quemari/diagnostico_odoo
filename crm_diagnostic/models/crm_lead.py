@@ -728,6 +728,16 @@ class CrmLead(models.Model):
     third_module_ready = fields.Boolean(
         compute='compute_third_module'
     )
+    current_user = fields.Many2one(
+        'res.users',
+        compute='get_current_user'
+    )
+    root_current_user = fields.Boolean(
+        compute='current_user_is_root'
+    )
+    current_user_facilitator = fields.Boolean(
+        compute='current_user_is_facilitator'
+    )
 
     # returning an action to go to crm.diagnostic form view related to lead
     def action_crm_diagnostic_view(self):
@@ -905,11 +915,40 @@ class CrmLead(models.Model):
 #                            ROLE METHODS
 ##########################################################################
 
+    # set the current user
+    @api.depends('current_user')
+    def get_current_user(self):
+        for lead in self:
+            lead.current_user = self.env.user.id
+
+    # check if the current user is facilitator
+    @api.depends('current_user')
+    def current_user_is_facilitator(self):
+        for lead in self:
+            if lead.is_facilitator():
+                lead.current_user_facilitator = True
+            else:
+                lead.current_user_facilitator = False
+
+    # check if the current user is admin user
+    @api.depends('current_user')
+    def current_user_is_root(self):
+        for lead in self:
+            try:
+                root = self.env.ref('base.user_admin').id
+                if root == lead.current_user.id:
+                    lead.root_current_user = True
+                else:
+                    lead.root_current_user = False
+            except Exception as e:
+                lead.root_current_user = False
+                print(e)
+
     # return the field list to validate the module1
     def fields_module1(self):
         return [
             'x_nombre_negocio', 'x_nombre', 'doctype', 'x_identification', 'x_sexo',
-            'x_etnia', 'x_edad', 'country_id', 'state_id', 'xcity', 'x_vereda', 'mobile',
+            'x_etnia', 'country_id', 'state_id', 'xcity', 'x_vereda', 'mobile',
             'x_limitacion', 'x_escolaridad', 'x_grupos',
             'x_estrato', 'x_situacion', 'x_sector', 'x_actcomer', 'x_state_id', 'x_city_id',
             'x_ubic', 'x_dir_neg', 'x_com_cuenta', 'x_merc78_form', 'x_merc80_form',
@@ -1179,14 +1218,19 @@ class CrmLead(models.Model):
         res = super(CrmLead, self).fields_view_get(
             view_id=view_id, view_type=view_type, toolbar=toolbar,
             submenu=submenu)
-        if view_type == 'form' and self.is_cordinator():
+        if view_type == 'form':
             doc = etree.XML(res['arch'])
-            for node in doc.xpath("//field[@name='mentors']"):
-                if 'modifiers' in node.attrib:
-                    modifiers = json.loads(node.attrib["modifiers"])
-                    modifiers['readonly'] = False
-                    node.attrib['modifiers'] = json.dumps(modifiers)
-            res['arch'] = etree.tostring(doc)
+            if self.is_cordinator():
+                for node in doc.xpath("//field[@name='mentors']"):
+                    if 'modifiers' in node.attrib:
+                        modifiers = json.loads(node.attrib['modifiers'])
+                        modifiers['readonly'] = False
+                        node.attrib['modifiers'] = json.dumps(modifiers)
+            if self.is_facilitator():
+                for node in doc.xpath("//header/field[@name='stage_id']"):
+                    if 'options' in node.attrib:
+                        node.attrib.pop('options')
+                res['arch'] = etree.tostring(doc)
         return res
 
 ##########################################################################

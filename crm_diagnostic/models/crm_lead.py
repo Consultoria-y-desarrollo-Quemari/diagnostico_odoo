@@ -742,16 +742,12 @@ class CrmLead(models.Model):
     # returning an action to go to crm.diagnostic form view related to lead
     def action_crm_diagnostic_view(self):
         for record in self:
-            # validating if it is necessary to create a new diagnistic record or return the first on the list
-            if len(record.crm_lead_id) > 0:
-                return record.action_to_return_to_crm_diagnostic(record.crm_lead_id[0])
-            else:
-                # we avoid to execute the diagnostic whether question modules haven't executed yet
-                if not record.first_module_ready or not record.second_module_read or not record.third_module_ready:
-                    raise ValidationError('Para realizar el diagnostico, debe responder las preguntas de los 3 modulos.')
-                crm_diagnostic_vals = record.getting_values_to_crm_diagnostic()
-                crm_diagnostic_id = self.env['crm.diagnostic'].create(crm_diagnostic_vals)
-                crm_diagnostic_id.valuacion_diagnostico = record.diagnostico
+            # we avoid to execute the diagnostic whether question modules haven't executed yet
+            if not record.first_module_ready or not record.second_module_read or not record.third_module_ready:
+                raise ValidationError('Para realizar el diagnostico, debe responder las preguntas de los 3 modulos.')
+            crm_diagnostic_vals = record.getting_values_to_crm_diagnostic()
+            crm_diagnostic_id = self.env['crm.diagnostic'].create(crm_diagnostic_vals)
+            crm_diagnostic_id.valuacion_diagnostico = record.diagnostico
             return record.action_to_return_to_crm_diagnostic(crm_diagnostic_id)
 
     # return a dic values for crm.diagnostic

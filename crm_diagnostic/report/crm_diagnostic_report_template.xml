@@ -92,7 +92,7 @@
                         </table>
                         <div class="container-fluid" style="border-top: 1px solid; border-bottom: 1px solid; border-right: 1px solid; border-left: 1px solid">
                             <span>Diagnostico:</span>
-                            <p t-esc="o.diagnostico"/>
+                            <p t-esc="o.valuacion_diagnostico"/>
                         </div>
                         <div class="container-fluid">
                             <div class="row" style="border-top: 1px solid; border-bottom: 1px solid; border-right: 1px solid; border-left: 1px solid">

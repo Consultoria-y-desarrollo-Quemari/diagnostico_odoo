@@ -1196,7 +1196,7 @@ class CrmLead(models.Model):
     # change the stage on lead according if the question modules
     @api.onchange('first_module_ready', 'second_module_read', 'third_module_ready')
     def update_stage(self):
-        if self.is_facilitator():
+        if (self.is_facilitator()  or self.is_cordinator()):
             if self.first_module_ready:
                 second_stage =  self.get_stage('segundo_encuentro')
                 self.stage_id = second_stage if second_stage else self.stage_id

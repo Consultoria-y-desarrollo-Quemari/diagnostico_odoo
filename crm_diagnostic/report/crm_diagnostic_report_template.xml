@@ -42,7 +42,7 @@
                                         <span style="font-size: 14px;">Valoracion del micronegocio:</span>
                                     </td>
                                     <td style="width:10%; border-bottom: 1px solid; vertical-align:middle; border-right: 1px solid; horizontal-align:middle;" rowspan="4">
-                                        <span style="font-size: 14px;" t-esc="o.valoracion_micronegocio"/>
+                                        <span style="font-size: 14px;" t-field="o.valuacion_diagnostico"/>
                                     </td>
                                 </tr>
                                 <tr>

@@ -934,7 +934,7 @@ class CrmLead(models.Model):
         for lead in self:
             try:
                 root = self.env.ref('base.user_admin').id
-                if root == lead.current_user.id:
+                if root == lead.current_user.id or lead.is_cordinator() or lead.is_orientador():
                     lead.root_current_user = True
                 else:
                     lead.root_current_user = False
@@ -1044,6 +1044,16 @@ class CrmLead(models.Model):
     # validating if the current user has the cordinator profile
     def is_cordinator(self):
         role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'coordinador')], limit=1)
+        if role_id:
+            if any(user.id == self.env.user.id for user in role_id.line_ids.mapped('user_id')):
+                return True
+            else:
+                return False
+        else:
+            return False
+    
+    def is_orientador(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'orientador')], limit=1)
         if role_id:
             if any(user.id == self.env.user.id for user in role_id.line_ids.mapped('user_id')):
                 return True

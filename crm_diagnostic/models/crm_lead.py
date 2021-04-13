@@ -1066,11 +1066,13 @@ class CrmLead(models.Model):
     @api.depends(fields_module1)
     def compute_first_module(self):
         for lead in self:
-            if lead.is_facilitator() or lead.is_cordinator():
+            if lead.is_facilitator():
                 if lead.all_fields_module1_are_ok():
                     lead.first_module_ready = True
                 else:
                     lead.first_module_ready = False
+            elif lead.is_cordinator() or lead.is_orientador():
+                lead.first_module_ready = True
             else:
                 lead.first_module_ready = False
 
@@ -1078,11 +1080,13 @@ class CrmLead(models.Model):
     @api.depends(fields_module2)
     def compute_second_module(self):
         for lead in self:
-            if (lead.is_facilitator() or lead.is_cordinator()) and lead.first_module_ready:
+            if lead.is_facilitator() and lead.first_module_ready:
                 if lead.all_fields_module2_are_ok():
                     lead.second_module_read = True
                 else:
                     lead.second_module_read = False
+            elif lead.is_cordinator() or lead.is_orientador():
+                lead.second_module_read = True
             else:
                 lead.second_module_read = False
 
@@ -1090,11 +1094,13 @@ class CrmLead(models.Model):
     @api.depends(full_list_field)
     def compute_third_module(self):
         for lead in self:
-            if (lead.is_facilitator()  or lead.is_cordinator()) and lead.second_module_read:
+            if lead.is_facilitator() and lead.second_module_read:
                 if lead.all_fields_module3_are_ok():
                     lead.third_module_ready = True
                 else:
                     lead.third_module_ready = False
+            elif lead.is_cordinator() or lead.is_orientador():
+                lead.third_module_ready = True
             else:
                 lead.third_module_ready = False
 

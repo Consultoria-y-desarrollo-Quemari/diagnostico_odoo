@@ -47,6 +47,12 @@ TEXT_VALUATION = {
     }
 
 SUGGEST_VALUATION = {
+    'in_empleo': {
+        'si': 'Remitir al programa de Empleabilidad'
+    },
+    'xfin97n': {
+        'si': 'Remitir a la Cooperativa Minuto de Dios'
+    },
     'x_proto1': {
         1: 'Acompañamiento y asesoría en la implementación de los protocolos de bioseguridad según la actividad económica del micronegocio.',
         2: 'Acompañamiento y asesoría en la implementación de los protocolos de bioseguridad según la actividad económica del micronegocio.',

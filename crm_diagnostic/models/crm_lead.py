@@ -48,19 +48,19 @@ TEXT_VALUATION = {
 
 SUGGEST_VALUATION = {
     'x_in_empleo': {
-        1: 'Remitir al programa de Empleabilidad',
+        1: '',
         2: '',
         3: '',
         4: '',
-        5: '',
+        5: 'Remitir al programa de Empleabilidad',
         'area': 'PROTOCOLOS DE BIOSEGURIDAD'
         },
     'x_fin97n': {
-        1: 'Remitir a la Cooperativa Minuto de Dios',
+        1: '',
         2: '',
         3: '',
         4: '',
-        5: '',
+        5: 'Remitir a la Cooperativa Minuto de Dios',
         'area': 'FINANZAS'
         },
     'x_proto1': {

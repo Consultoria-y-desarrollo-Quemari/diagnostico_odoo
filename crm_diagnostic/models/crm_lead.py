@@ -48,13 +48,21 @@ TEXT_VALUATION = {
 
 SUGGEST_VALUATION = {
     'x_in_empleo': {
-        'si': 'Remitir al programa de Empleabilidad',
+        1: 'Remitir al programa de Empleabilidad',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
         'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-    },
+        },
     'x_fin97n': {
-        'si': 'Remitir a la Cooperativa Minuto de Dios',
+        1: 'Remitir a la Cooperativa Minuto de Dios',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
         'area': 'FINANZAS'
-    },
+        },
     'x_proto1': {
         1: 'Acompañamiento y asesoría en la implementación de los protocolos de bioseguridad según la actividad económica del micronegocio.',
         2: 'Acompañamiento y asesoría en la implementación de los protocolos de bioseguridad según la actividad económica del micronegocio.',

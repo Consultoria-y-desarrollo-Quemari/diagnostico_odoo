@@ -968,7 +968,7 @@ class CrmLead(models.Model):
     # methos that return list of fields by section
     def fields_module3_generalities(self):
         return [
-            'in_empleo', 'x_forma58_form', 'x_forma61_form', 'x_forma60_form',
+            'x_in_empleo', 'x_forma58_form', 'x_forma61_form', 'x_forma60_form',
             'x_forma65_inf', 'x_datos3']
 
     def fields_module3_biosecurity(self):

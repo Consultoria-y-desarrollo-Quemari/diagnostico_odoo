@@ -53,7 +53,7 @@ SUGGEST_VALUATION = {
         3: '',
         4: '',
         5: 'Remitir al programa de Empleabilidad',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
+        'area': 'FINANZAS'
         },
     'x_fin97n': {
         1: '',

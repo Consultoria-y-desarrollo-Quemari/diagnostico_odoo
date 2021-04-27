@@ -1048,35 +1048,26 @@ class CrmLead(models.Model):
 
     # validating if the current user has the facilitador profile
     def is_facilitator(self):
-        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'facilitador')], limit=1)
-        if role_id:
-            if any(user.id == self.env.user.id for user in role_id.line_ids.mapped('user_id')):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'facilitador')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
                 return True
-            else:
-                return False
-        else:
-            return False
+        return False
 
     # validating if the current user has the cordinator profile
     def is_cordinator(self):
-        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'coordinador')], limit=1)
-        if role_id:
-            if any(user.id == self.env.user.id for user in role_id.line_ids.mapped('user_id')):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'coordinador')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
                 return True
-            else:
-                return False
-        else:
-            return False
+        return False
     
     def is_orientador(self):
-        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'orientador')], limit=1)
-        if role_id:
-            if any(user.id == self.env.user.id for user in role_id.line_ids.mapped('user_id')):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'orientador')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
                 return True
-            else:
-                return False
-        else:
-            return False
+        return False
 
     # computed if the module1 is ok
     @api.depends(fields_module1)

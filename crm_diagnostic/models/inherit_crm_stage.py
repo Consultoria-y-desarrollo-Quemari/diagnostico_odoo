@@ -11,6 +11,5 @@ class CrmStage(models.Model):
                    ('segundo_encuentro', 'Segundo encuentro'),
                    ('tercer_encuentro', 'Tercer encuentro'),
                    ('espera_de_plan', 'En espera de plan de atención')],
-        required=True,
         help='Esta campo sirve para el estado al que pertence la etapa'
     )

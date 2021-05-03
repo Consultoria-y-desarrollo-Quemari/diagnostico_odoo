@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="calendar_event_form_view_inherit_lead" model="ir.ui.view">
+        <field name="name">calendar_event_form_view</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_title']" position="inside">
+                <label for="opportunity_id" string="Oportunidad" class="oe_edit_only"/>
+                <h2>
+                    <field name="opportunity_id" class="oe_inline"/>
+                </h2>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="calendar_event_calendar_view_inherit_lead" model="ir.ui.view">
+        <field name="name">calendar_event_calendar_view</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_calendar"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_ids']" position="after">
+                    <field name="opportunity_id" string="Oportunidad"/>
+            </xpath>
+            
+        </field>
+    </record>
+
+</odoo>

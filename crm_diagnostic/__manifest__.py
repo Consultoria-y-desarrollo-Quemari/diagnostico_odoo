@@ -13,10 +13,12 @@ CRM Diagnostic
         'web',
         'crm',
         'crm_uni_forms',
-        'base_user_role'
+        'base_user_role',
+        'calendar'
     ],
     'data': [
         'security/ir.model.access.csv',
+        'data/res_groups.xml',
         'views/web_assets.xml',
         'views/event_views.xml',
         'data/email_template.xml',

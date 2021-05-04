@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="q_show_events_normally" model="res.groups">
+            <field name="name">Mostrar eventos normalmente</field>
+        </record>
+    </data>
+</odoo>

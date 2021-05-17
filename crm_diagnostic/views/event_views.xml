@@ -12,7 +12,38 @@
                     <field name="opportunity_id" class="oe_inline"/>
                 </h2>
             </xpath>
-            
+            <xpath expr="//field[@name='partner_ids']" position="attributes">
+                <attribute name="groups">crm_diagnostic.q_show_events_normally</attribute>
+            </xpath>
+            <xpath expr="//page[@name='page_options']" position="attributes">
+                <attribute name="groups">crm_diagnostic.q_show_events_normally</attribute>
+            </xpath>
+            <xpath expr="//page[@name='page_invitations']" position="attributes">
+                <attribute name="groups">crm_diagnostic.q_show_events_normally</attribute>
+            </xpath>
+            <xpath expr="//page[@name='page_misc']" position="attributes">
+                <attribute name="groups">crm_diagnostic.q_show_events_normally</attribute>
+            </xpath>
+            <xpath expr="//field[@name='categ_ids']" position="attributes">
+                <attribute name="groups">crm_diagnostic.q_show_events_normally</attribute>
+            </xpath>
+            <xpath expr="//field[@name='alarm_ids']" position="attributes">
+                <attribute name="groups">crm_diagnostic.q_show_events_normally</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location']" position="attributes">
+                <attribute name="groups">crm_diagnostic.q_show_events_normally</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="calendar_event_calendar_view_inherit_lead" model="ir.ui.view">
+        <field name="name">calendar_event_calendar_view</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_calendar"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_ids']" position="after">
+                    <field name="opportunity_id" string="Oportunidad"/>
+            </xpath>            
         </field>
     </record>
 

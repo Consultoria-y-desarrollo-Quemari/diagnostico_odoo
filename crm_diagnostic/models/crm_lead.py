@@ -848,6 +848,7 @@ class CrmLead(models.Model):
     # this method is called from cron
     def relate_events_to_leads(self):
         event_ids = self.available_events()
+        
         if not event_ids:
             return
         lead_ids = self.search(
@@ -855,17 +856,22 @@ class CrmLead(models.Model):
              ('diagnostico', 'in', ('confiable', 'competente', 'excelencia'))])
         if not lead_ids:
             return
-        for lead in lead_ids:
-            for event in event_ids.sorted(reverse=True):
-                # TODO
-                # we remove the current item of lead_ids and event_ids of their each object array
-                # because an opportunity has to be in an event
-                event.opportunity_id = lead.id
-                lead.mentors += event.partner_ids
-                self.send_mail_notification(lead)
-                event_ids -= event
-                lead_ids -= lead
-                break
+        for event in event_ids.sorted(reverse=True):
+            _logger.info(event.opportunity_id)
+            _logger.info("$"*100)
+            if len(event.opportunity_id) == 0:
+                limit_date = event.start_datetime + timedelta(weeks=4)
+                diff = 6 - limit_date.weekday()
+                if diff > 0:
+                    limit_date = limit_date + timedelta(days=diff)
+                new_events = self.env['calendar.event'].search([('partner_ids', 'in', event.partner_ids.ids), ('start_datetime', '<=', limit_date), ('opportunity_id', '=', False)])
+                for lead in lead_ids.sorted(reverse = True):
+                    new_events.write({'opportunity_id': lead.id})
+                    lead.mentors += event.partner_ids
+                    # self.send_mail_notification(lead)
+                    event_ids -= new_events
+                    lead_ids -= lead
+                    break
 
     # send email notification to coordinador and facilitador
     @api.model
@@ -880,8 +886,7 @@ class CrmLead(models.Model):
     def available_events(self):
         week_days = range(0, 5)
         date_to_search = fields.Datetime.now().replace(hour=0, minute=0) + timedelta(days=1)
-        _logger.info(date_to_search)
-        _logger.info("$"*100)
+        
         events = self.env['calendar.event'].search(
             [('start_datetime', '>', date_to_search),
             ('opportunity_id', '=', False)])

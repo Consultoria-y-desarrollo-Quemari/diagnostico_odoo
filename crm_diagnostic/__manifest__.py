@@ -18,6 +18,7 @@ CRM Diagnostic
     'data': [
         'security/ir.model.access.csv',
         'views/web_assets.xml',
+        'views/event_views.xml',
         'data/email_template.xml',
         'data/ir_cron.xml',
         'views/crm_lead_view.xml',

@@ -856,6 +856,7 @@ class CrmLead(models.Model):
     # this method is called from cron
     def relate_events_to_leads(self):
         event_ids = self.available_events()
+        
         if not event_ids:
             return
         lead_ids = self.search(
@@ -905,8 +906,6 @@ class CrmLead(models.Model):
     def available_events(self):
         week_days = range(0, 5)
         date_to_search = fields.Datetime.now().replace(hour=0, minute=0) + timedelta(days=1)
-        
-        _logger.info("$"*100)
         events = self.env['calendar.event'].search(
             [('start_datetime', '>', date_to_search),
             ('opportunity_id', '=', False)])

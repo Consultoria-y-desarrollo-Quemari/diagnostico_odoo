@@ -864,21 +864,33 @@ class CrmLead(models.Model):
              ('diagnostico', 'in', ('confiable', 'competente', 'excelencia'))])
         if not lead_ids:
             return
-        for event in event_ids.sorted(reverse=True):
-            _logger.info(event.opportunity_id)
-            _logger.info("$"*100)
-            if len(event.opportunity_id) == 0:
-                limit_date = event.start_datetime + timedelta(weeks=4)
-                diff = 6 - limit_date.weekday()
-                if diff > 0:
-                    limit_date = limit_date + timedelta(days=diff)
-                new_events = self.env['calendar.event'].search([('partner_ids', 'in', event.partner_ids.ids), ('start_datetime', '<=', limit_date), ('opportunity_id', '=', False)])
-                for lead in lead_ids.sorted(reverse = True):
-                    new_events.write({'opportunity_id': lead.id})
-                    lead.mentors += event.partner_ids
-                    # self.send_mail_notification(lead)
-                    event_ids -= new_events
-                    lead_ids -= lead
+        count_max = 0
+        last_week = True
+        _logger.info("&"*100)
+        next_week = True
+        user_ids = True
+        for lead in lead_ids:
+            for event in event_ids.sorted(reverse=True):
+                if user_ids == True:
+                    user_ids = event.partner_ids
+                _logger.info(next_week)
+                if last_week and last_week != event.start_datetime.isocalendar()[1]:
+                    if next_week == True:
+                        next_week = event.start_datetime.isocalendar()[1]
+                    if next_week == event.start_datetime.isocalendar()[1] and user_ids == event.partner_ids:
+                        last_week = event.start_datetime.isocalendar()[1]
+                        event.opportunity_id = lead.id
+                        lead.mentors += event.partner_ids
+                        self.send_mail_notification(lead)
+                        event_ids -= event
+                        lead_ids -= lead
+                        count_max += 1
+                        next_week = (event.start_datetime  + timedelta(weeks=2)).isocalendar()[1]
+                if count_max == 3:
+                    count_max = 0
+                    next_week = False
+                    user_ids = True
+                    last_week = True
                     break
 
     # send email notification to coordinador and facilitador
@@ -894,13 +906,14 @@ class CrmLead(models.Model):
     def available_events(self):
         week_days = range(0, 5)
         date_to_search = fields.Datetime.now().replace(hour=0, minute=0) + timedelta(days=1)
-        
         events = self.env['calendar.event'].search(
             [('start_datetime', '>', date_to_search),
             ('opportunity_id', '=', False)])
+        _logger.info(events)
         for event in events:
             if event.start_datetime.weekday() not in week_days:
                 events -= event
+        _logger.info(events)
         return events
 
     # returning area and suggestion base on field_name and score

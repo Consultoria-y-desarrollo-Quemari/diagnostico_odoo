@@ -4,14 +4,12 @@
         <record id="q_mail_template_event_notification" model="mail.template">
             <field name="name">Mentores asignados</field>
             <field name="model_id" ref="crm.model_crm_lead"/>
-            <field name="subject">Se asignaron mentores a la oportunidad ${object.name}</field>
-            <field name="email_to">${object.user_id.partner_id.email}</field>
-            <field name="email_cc">${object.coordinador.partner_id.email}</field>
-            <field name="auto_delete" eval="True"/>
+            <field name="subject">Asignación de mentoria: ${object.name}</field>
+            <field name="email_to">${object.coordinador.partner_id.email}</field>
+            <field name="auto_delete" eval="False"/>
             <field name="body_html" type="html">
                 <p style="margin: 0px; padding: 0px; font-size: 13px;">
-                    Apreciables ${object.user_id.name or ''}, ${object.coordinador.name or ''} los mentores han sido
-                    asignados a la oportunidad.</p>
+                    Apreciable ${object.coordinador.name or ''} le ha sido asignado el negocio: ${object.partner_id.name or ''} para su mentoria.</p>
             </field>
             <field name="auto_delete" eval="True"/>
             <field name="user_signature" eval="False"/>

@@ -715,11 +715,13 @@ class CrmLead(models.Model):
         'lead_id',
         string='CRM Diagnostic',
         copy=False)
-    mentors = fields.Many2many(
+
+    mentors = fields.Many2one(
         'res.partner',
         string='Mentores',
         readonly=True
     )
+
     coordinador = fields.Many2one(
         'res.users',
         string='Coordinador'
@@ -856,7 +858,6 @@ class CrmLead(models.Model):
     # this method is called from cron
     def relate_events_to_leads(self):
         event_ids = self.available_events()
-        
         if not event_ids:
             return
         lead_ids = self.search(
@@ -869,8 +870,11 @@ class CrmLead(models.Model):
         _logger.info("&"*100)
         next_week = True
         user_ids = True
+
         for lead in lead_ids:
+
             for event in event_ids.sorted(reverse=True):
+
                 if user_ids == True:
                     user_ids = event.partner_ids
                 _logger.info(next_week)
@@ -880,7 +884,7 @@ class CrmLead(models.Model):
                     if next_week == event.start_datetime.isocalendar()[1] and user_ids == event.partner_ids:
                         last_week = event.start_datetime.isocalendar()[1]
                         event.opportunity_id = lead.id
-                        lead.mentors += event.partner_ids
+                        lead.mentors += event.partner_ids[0]
                         self.send_mail_notification(lead)
                         event_ids -= event
                         lead_ids -= lead
@@ -985,7 +989,7 @@ class CrmLead(models.Model):
             'x_estrato', 'x_situacion', 'x_sector', 'x_actcomer', 'x_state_id', 'x_city_id',
             'x_ubic', 'x_dir_neg', 'x_com_cuenta', 'x_merc78_form', 'x_merc80_form',
             'x_merc79_form', 'x_merc81_form', 'x_que_por_ren', 'x_que_por_ren_ant',
-            'x_tien_dur', 'tie_us_cre', 'tie_ca_ide', 'x_datos1']
+            'x_tien_dur', 'tie_us_cre', 'tie_ca_ide', 'x_datos1', 'attach_file']
 
     # return the field list to validate the module2
     def fields_module2(self):
@@ -1265,12 +1269,29 @@ class CrmLead(models.Model):
                         modifiers = json.loads(node.attrib['modifiers'])
                         modifiers['readonly'] = False
                         node.attrib['modifiers'] = json.dumps(modifiers)
+                    if 'options' in node.attrib:
+                        options = json.loads(node.attrib['options'])
+                        options['no_create'] = True
+                        options['no_open'] = True
+                        node.attrib['options'] = json.dumps(options)
+
                 res['arch'] = etree.tostring(doc)
             if self.is_facilitator():
                 for node in doc.xpath("//header/field[@name='stage_id']"):
                     if 'options' in node.attrib:
                         node.attrib.pop('options')
+
                 res['arch'] = etree.tostring(doc)
+
+                for node in doc.xpath("//field[@name='mentors']"):
+                    if not 'options' in node.attrib:
+                        options = json.loads(node.attrib['options'])
+                        options['no_create'] = False
+                        options['no_open'] = False
+                        node.attrib['options'] = json.dumps(options)
+
+                res['arch'] = etree.tostring(doc)
+
         return res
 
 ##########################################################################

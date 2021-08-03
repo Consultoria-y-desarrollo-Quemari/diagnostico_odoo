@@ -23,7 +23,7 @@
                 <field name="third_module_ready" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='company_id']" position="after">
-                <field name="mentors" widget="many2many_tags"/>
+                <field name="mentors" options="{}" />
             </xpath>
             <xpath expr="//field[@name='user_id']" position="after">
                 <field name="coordinador"/>

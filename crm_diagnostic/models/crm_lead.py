@@ -1269,6 +1269,11 @@ class CrmLead(models.Model):
                         modifiers = json.loads(node.attrib['modifiers'])
                         modifiers['readonly'] = False
                         node.attrib['modifiers'] = json.dumps(modifiers)
+                    if 'options' in node.attrib:
+                        options = json.loads(node.attrib['options'])
+                        options['no_create'] = True
+                        options['no_open'] = True
+                        node.attrib['options'] = json.dumps(options)
 
                 res['arch'] = etree.tostring(doc)
             if self.is_facilitator():
@@ -1281,6 +1286,7 @@ class CrmLead(models.Model):
                 for node in doc.xpath("//field[@name='mentors']"):
                     if not 'options' in node.attrib:
                         options = json.loads(node.attrib['options'])
+                        options['no_create'] = False
                         options['no_open'] = False
                         node.attrib['options'] = json.dumps(options)
 

@@ -1083,9 +1083,38 @@ class CrmLead(models.Model):
             if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
                 return True
         return False
+
+    # validating if the current user has the cordinator profile
+    def is_mentor(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'mentor')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
     
     def is_orientador(self):
         role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'orientador')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+
+    def is_admin(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'admin')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+
+    def is_administrativo(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'administrativo')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+
+    def is_estudiante(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'estudiante')])
         for role in role_id:
             if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
                 return True
@@ -1263,7 +1292,7 @@ class CrmLead(models.Model):
             submenu=submenu)
         if view_type == 'form':
             doc = etree.XML(res['arch'])
-            if self.is_cordinator():
+            if self.is_admin():
                 for node in doc.xpath("//field[@name='mentors']"):
                     if 'modifiers' in node.attrib:
                         modifiers = json.loads(node.attrib['modifiers'])

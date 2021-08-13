@@ -53,36 +53,37 @@ class CrmDiagnostic(models.Model):
     )
     # records for Orientaciones de bioseguridad
     crm_diagnostic_line_orientation_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line', 'diagnostic_id',
+        compute='_get_lines_for_areas', store=True)
+
     # records for Modelo de Negocio
     crm_diagnostic_line_business_model_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line', 'diagnostic_id',
+        compute='_get_lines_for_areas', store=True)
     # records for Producción
     crm_diagnostic_line_production_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line', 'diagnostic_id',
+        compute='_get_lines_for_areas', store=True)
     # records for Innovación
     crm_diagnostic_line_innovation_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line', 'diagnostic_id',
+        compute='_get_lines_for_areas', store=True)
     # records for Formalización
     crm_diagnostic_line_formalization_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line', 'diagnostic_id',
+        compute='_get_lines_for_areas', store=True)
     # records for Organización
     crm_diagnostic_line_organization_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line', 'diagnostic_id',
+        compute='_get_lines_for_areas', store=True)
     # records for Mercadeo y Comercialización
     crm_diagnostic_line_marketing_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line', 'diagnostic_id',
+        compute='_get_lines_for_areas', store=True)
     # records for Finanzas
     crm_diagnostic_line_finance_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line', 'diagnostic_id',
+        compute='_get_lines_for_areas', store=True)
 
     #diagnostic_chart = fields.Char(
     #    compute='_get_chart', store=False)

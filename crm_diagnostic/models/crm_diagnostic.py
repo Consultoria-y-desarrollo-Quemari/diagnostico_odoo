@@ -49,40 +49,41 @@ class CrmDiagnostic(models.Model):
     # principal records
     crm_diagnostic_line_ids = fields.One2many(
         'crm.diagnostic.line',
-        'diagnostic_id',
+        'diagnostic_id', store=True
     )
     # records for Orientaciones de bioseguridad
     crm_diagnostic_line_orientation_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line.orientation', 'diagnostic_id')
+
     # records for Modelo de Negocio
     crm_diagnostic_line_business_model_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
-    # records for Producción
-    crm_diagnostic_line_production_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
-    # records for Innovación
-    crm_diagnostic_line_innovation_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line.business', 'diagnostic_id',
+        )
     # records for Formalización
     crm_diagnostic_line_formalization_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
-    # records for Organización
-    crm_diagnostic_line_organization_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line.formalization', 'diagnostic_id',
+        )
     # records for Mercadeo y Comercialización
     crm_diagnostic_line_marketing_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line.marketing', 'diagnostic_id',
+        )
     # records for Finanzas
     crm_diagnostic_line_finance_ids = fields.One2many(
-        'crm.diagnostic.line',
-        compute='_get_lines_for_areas')
+        'crm.diagnostic.line.finance', 'diagnostic_id',
+        )
+
+    # records for Producción
+    crm_diagnostic_line_production_ids = fields.One2many(
+        'crm.diagnostic.line', 'diagnostic_id',
+        )
+    # records for Innovación
+    crm_diagnostic_line_innovation_ids = fields.One2many(
+        'crm.diagnostic.line', 'diagnostic_id',
+        )
+    # records for Organización
+    crm_diagnostic_line_organization_ids = fields.One2many(
+        'crm.diagnostic.line', 'diagnostic_id',
+        )
 
     #diagnostic_chart = fields.Char(
     #    compute='_get_chart', store=False)

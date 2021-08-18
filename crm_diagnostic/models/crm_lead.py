@@ -781,7 +781,25 @@ class CrmLead(models.Model):
             }
             dic_sel_fields = lead.getting_selection_fields_to_dignostic_form(lead)
             dic_vals.update(dic_sel_fields)
-            dic_vals['crm_diagnostic_line_ids'] = lead.prepare_diagnostic_lines(lead)
+            results = lead.prepare_diagnostic_lines(lead)
+            if 'PROTOCOLOS DE BIOSEGURIDAD' in results:
+                dic_vals['crm_diagnostic_line_orientation_ids'] = [results.get('PROTOCOLOS DE BIOSEGURIDAD')]
+            elif 'MODELO DE NEGOCIO' in results:
+                dic_vals['crm_diagnostic_line_business_model_ids'] = [results.get('MODELO DE NEGOCIO')]
+            # elif 'PRODUCCIÓN' in results:
+            #     dic_vals['crm_diagnostic_line_production_ids'] = [results.get('PRODUCCIÓN')]
+            # elif 'INNOVACIÓN' in results:
+            #     dic_vals['crm_diagnostic_line_innovation_ids'] = [results.get('INNOVACIÓN')]
+            elif 'FORMALIZACION' in results:
+                dic_vals['crm_diagnostic_line_formalization_ids'] = [results.get('FORMALIZACION')]
+            # elif 'ORGANIZACIÓN' in results:
+            #     dic_vals['crm_diagnostic_line_organization_ids'] = [results.get('ORGANIZACIÓN')]
+            elif 'MERCADEO Y COMERCIALIZACION' in results:
+                dic_vals['crm_diagnostic_line_marketing_ids'] = [results.get('MERCADEO Y COMERCIALIZACION')]
+            elif 'FINANZAS' in results:
+                dic_vals['crm_diagnostic_line_finance_ids'] = [results.get('FINANZAS')]
+
+            
             return dic_vals
 
     # getting str values from selection fields
@@ -799,6 +817,7 @@ class CrmLead(models.Model):
     @api.model
     def prepare_diagnostic_lines(self, lead):
         lines = []
+        lines_dict = {}
         dic_fields = lead.read()[0]
         _fields = self.env['ir.model.fields'].search(
             [('name', 'ilike', 'x_'),
@@ -808,6 +827,7 @@ class CrmLead(models.Model):
                  lambda f : f.name.startswith('x_'))
         puntaje = 0
         for field in _fields:
+            tmp_list = []
             field_value = dic_fields.get(field.name)
             # TODO
             # validating if the field value is in ANSWER_VALUES
@@ -817,33 +837,62 @@ class CrmLead(models.Model):
                 score = ANSWER_VALUES.get(field_value)
                 valuation = TEXT_VALUATION.get(score)
                 suggestion, area = self.get_sugestion(field.name, score)
-                lines.append(
-                    (0, 0, {
-                        'name': field.field_description,
-                        'respuesta': answer,
-                        'puntaje': score,
-                        'area': area,
-                        'sugerencia': suggestion,
-                        'valoracion': valuation,
-                        }))
+                if area in lines_dict:
+                    tmp_list = list(lines_dict.get(area))
+                    values = {
+                            'name': field.field_description,
+                            'respuesta': answer,
+                            'puntaje': score,
+                            'area': area,
+                            'sugerencia': suggestion,
+                            'valoracion': valuation,
+                            }
+                    tmp_list.append((0, 0, values))
+                    lines_dict.update({area:tmp_list})
+
+                else:
+                    vals = {
+                            'name': field.field_description,
+                            'respuesta': answer,
+                            'puntaje': score,
+                            'area': area,
+                            'sugerencia': suggestion,
+                            'valoracion': valuation,
+                            }
+
+                    lines_dict.update({area:(0,0,vals)})
             else:
                 answer = dict(lead._fields[field.name].selection).get(getattr(lead, field.name))
                 score = ANSWER_VALUES.get(field_value)
                 valuation = TEXT_VALUATION.get(score)
                 suggestion, area = self.get_sugestion(field.name, score)
-                lines.append(
-                    (0, 0, {
-                        'name': field.field_description,
-                        'respuesta': answer,
-                        'puntaje': score,
-                        'area': area,
-                        'sugerencia': suggestion,
-                        'valoracion': valuation,
-                        }))
+                if area in lines_dict:
+                    tmp_list = list(lines_dict.get(area))
+                    values = {
+                            'name': field.field_description,
+                            'respuesta': answer,
+                            'puntaje': score,
+                            'area': area,
+                            'sugerencia': suggestion,
+                            'valoracion': valuation,
+                            }
+                    tmp_list.append((0, 0, values))
+                    lines_dict.update({area:tmp_list})
+                else:
+                    vals = {
+                            'name': field.field_description,
+                            'respuesta': answer,
+                            'puntaje': score,
+                            'area': area,
+                            'sugerencia': suggestion,
+                            'valoracion': valuation,
+                            }
+
+                    lines_dict.update({area:(0, 0, vals)})
             if score:
                 puntaje += score
         self.set_diagnostico(puntaje, lead)
-        return lines
+        return lines_dict
 
     # set diagnostico based on range
     @api.model
@@ -989,7 +1038,7 @@ class CrmLead(models.Model):
             'x_estrato', 'x_situacion', 'x_sector', 'x_actcomer', 'x_state_id', 'x_city_id',
             'x_ubic', 'x_dir_neg', 'x_com_cuenta', 'x_merc78_form', 'x_merc80_form',
             'x_merc79_form', 'x_merc81_form', 'x_que_por_ren', 'x_que_por_ren_ant',
-            'x_tien_dur', 'tie_us_cre', 'tie_ca_ide', 'x_datos1', 'attach_file']
+            'x_tien_dur', 'tie_us_cre', 'tie_ca_ide', 'x_datos1', 'attach_file', 'x_ubicacion_negocio',]
 
     # return the field list to validate the module2
     def fields_module2(self):

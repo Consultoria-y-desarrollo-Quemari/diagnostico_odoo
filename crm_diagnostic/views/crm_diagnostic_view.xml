@@ -63,22 +63,22 @@
                                 <field name="sugerencia"/>
                             </tree>
                         </field>
-                        <div class="alert alert-success text-center" role="alert">
+                        <!-- <div class="alert alert-success text-center" role="alert">
                             <h3>Producción</h3>
                         </div>
                         <field name="crm_diagnostic_line_production_ids" mode="tree">
                             <tree>
                                 <field name="sugerencia"/>
                             </tree>
-                        </field>
-                        <div class="alert alert-success text-center" role="alert">
+                        </field> -->
+                        <!-- <div class="alert alert-success text-center" role="alert">
                             <h3>Innovación</h3>
                         </div>
                         <field name="crm_diagnostic_line_innovation_ids" mode="tree">
                             <tree>
                                 <field name="sugerencia"/>
                             </tree>
-                        </field>
+                        </field> -->
                         <div class="alert alert-success text-center" role="alert">
                             <h3>Formalización</h3>
                         </div>
@@ -87,14 +87,14 @@
                                 <field name="sugerencia"/>
                             </tree>
                         </field>
-                        <div class="alert alert-primary text-center" role="alert">
+                        <!-- <div class="alert alert-primary text-center" role="alert">
                             <h3>Organización</h3>
                         </div>
                         <field name="crm_diagnostic_line_organization_ids" mode="tree">
                             <tree>
                                 <field name="sugerencia"/>
                             </tree>
-                        </field>
+                        </field> -->
                         <div class="alert alert-primary text-center" role="alert">
                             <h3>Mercadeo y Comercialización</h3>
                         </div>
@@ -115,5 +115,80 @@
                 </form>
             </field>
         </record>
+
+        <record id="crm_diagnostic_view_tree" model="ir.ui.view">
+            <field name="name">crm_diagnostic_view_tree</field>
+            <field name="model">crm.diagnostic</field>
+            <field name="arch" type="xml">
+                <tree string="CRM Diagnostic" >
+                    <field name="nombre_propietario"/>
+                    <field name="nombre_negocio"/>
+                    <field name="tipo_documento"/>
+                    <field name="diagnostico"/>
+                    <field name="valuacion_diagnostico"/>
+                    <field name="actividad_micronegocio" readonly="1"/>
+                    <field name="tipo_micronegocio" optional="show"/>
+                    <field name="numero_identificacion" optional="hide"/>
+                    <field name="codigo_formulario" optional="show" readonly="1"/>
+                    <field name="valoracion_micronegocio" optional="hide"/>
+                    <field name="fecha" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="crm_diagnostic_view_search" model="ir.ui.view">
+            <field name="name">crm_diagnostic_view_search</field>
+            <field name="model">crm.diagnostic</field>
+            <field name="priority">15</field>
+            <!-- <field name="mode">primary</field> -->
+            <field name="arch" type="xml">
+                <search string="Search Sales Order">
+                    <field name="diagnostico" string="Sugerencia" filter_domain="[('crm_diagnostic_line_orientation_ids.sugerencia', 'ilike', self)]"/>
+                    <!-- <field name="crm_diagnostic_line_finance_ids" string="SECCION" filter_domain="[('crm_diagnostic_line_finance_ids.area', 'ilike', self)]"/> -->
+                    <!-- <field name="partner_id" operator="child_of"/>
+                    <field name="user_id"/>
+                    <field name="team_id" string="Sales Team"/>
+                    <field name="order_line" string="Product" filter_domain="[('order_line.product_id', 'ilike', self)]"/>
+                    <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/> -->
+                    <!-- <filter string="Bioseguridad" domain="[('crm_diagnostic_line_finance_ids.area', '=', 'PROTOCOLOS DE BIOSEGURIDAD')]" name="bioseguridad_filter"/>
+                    <filter string="Modelo de Seguridad" domain="[('crm_diagnostic_line_finance_ids.area', '=', 'ORGANIZACIÓN')]" name="seguridad_filter"/>
+                    <filter string="Financiaero y Contable" domain="[('crm_diagnostic_line_finance_ids.area', '=', 'FINANZAS')]" name="finanzas_filter"/>
+                    <filter string="Mercadeo y Comercializacion" domain="[('crm_diagnostic_line_finance_ids.area', '=', 'MERCADEO Y COMERCIALIZACION')]" name="mercadeo_comercializacion_filter"/>
+                    <filter string="Formalizacion" domain="[('crm_diagnostic_line_finance_ids.area', '=', 'FORMALIZACION')]" name="formalizacion_filter"/> -->
+               </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="crm_diagnostic_action_tree">
+            <field name="name">Crm Diagnostic</field>
+            <field name="res_model">crm.diagnostic</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="search_view_id" ref="crm_diagnostic_view_search"/>
+            <!-- <field name="context">{
+                }
+            </field> -->
+        </record>
+
+        <record id="crm_lead_all_leads_view_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="crm_diagnostic_view_tree"/>
+            <field name="act_window_id" ref="crm_diagnostic_action_tree"/>
+        </record>
+
+        <menuitem id="crm_diagnostic_root_menu"
+            name="Crm Diagnostic"
+            parent="crm.crm_menu_root"
+            sequence="20"
+        />
+
+        <menuitem id="crm_diagnostic_menu_child"
+            name="Crm Diagnostics"
+            parent="crm_diagnostic.crm_diagnostic_root_menu"
+            action="crm_diagnostic.crm_diagnostic_action_tree"
+            sequence="10"/>
+
+
     </data>
 </odoo>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<record id="view_hr_timesheet_line_form_inherit_crm_diagnostic" model="ir.ui.view">
+            <field name="name">view_hr_timesheet_line_form_inherit_crm_diagnostic</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="timesheet_grid.timesheet_view_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//div[@class='o_row']" position="after">
+                        <!-- <group> -->
+                        	<field name="stage_state"/>
+                        <!-- </group> -->
+                    </xpath>
+                </data>
+            </field>
+        </record>
+        <record id="view_hr_timesheet_line_tree_inherit_crm_diagnostic" model="ir.ui.view">
+            <field name="name">view_hr_timesheet_line_tree_inherit_crm_diagnostic</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='name']" position="after">
+                        <field name="stage_state"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_view_kanban_account_analytic_line_inherit_crm_diagnostic" model="ir.ui.view">
+            <field name="name">view_view_kanban_account_analytic_line_inherit_crm_diagnostic</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="hr_timesheet.view_kanban_account_analytic_line"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//kanban[@class='o_kanban_mobile']" position="replace">
+                    	<kanban class="o_kanban_mobile">
+		                    <field name="date"/>
+		                    <field name="user_id"/>
+		                    <field name="name"/>
+		                    <field name="project_id"/>
+		                    <field name="task_id" context="{'default_project_id': project_id}" domain="[('project_id', '=', project_id)]"/>
+		                    <field name="unit_amount"/>
+		                    <field name="stage_state"/>
+		                    <templates>
+		                        <t t-name="kanban-box">
+		                            <div t-attf-class="oe_kanban_global_click">
+		                                <div class="row">
+		                                    <div class="col-2">
+		                                        <img t-att-src="kanban_image('res.users', 'image_128', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" class="oe_kanban_avatar o_image_40_cover float-left"/>
+		                                    </div>
+		                                    <div class="col-10">
+		                                        <div>
+		                                            <strong><t t-esc="record.project_id.value"/></strong>
+		                                        </div>
+		                                        <div class="text-muted">
+		                                            <span>
+		                                                <t t-esc="record.name.value"/>
+		                                            </span>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                                <div class="row">
+		                                    <div class="col-2" >
+
+		                                    </div>
+		                                    <div>
+		                                    	<div class="col-10">
+		                                      		<strong><t t-esc="record.stage_state.value"/></strong>
+		                                      	</div>
+		                                    </div>
+		                                </div>
+		                                <hr class="mt4 mb4"/>
+		                                <span>
+		                                    <i class="fa fa-calendar" role="img" aria-label="Date" title="Date"></i>
+		                                    <t t-esc="record.date.value"/>
+		                                </span>
+		                                <span class="float-right">
+		                                    <strong>Duration: </strong><field name="unit_amount" widget="timesheet_uom"/>
+		                                </span>
+		                            </div>
+		                        </t>
+		                    </templates>
+		                </kanban>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

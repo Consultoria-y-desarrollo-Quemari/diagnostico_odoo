@@ -63,22 +63,22 @@
                                 <field name="sugerencia"/>
                             </tree>
                         </field>
-                        <div class="alert alert-success text-center" role="alert">
+                        <!-- <div class="alert alert-success text-center" role="alert">
                             <h3>Producción</h3>
                         </div>
                         <field name="crm_diagnostic_line_production_ids" mode="tree">
                             <tree>
                                 <field name="sugerencia"/>
                             </tree>
-                        </field>
-                        <div class="alert alert-success text-center" role="alert">
+                        </field> -->
+                        <!-- <div class="alert alert-success text-center" role="alert">
                             <h3>Innovación</h3>
                         </div>
                         <field name="crm_diagnostic_line_innovation_ids" mode="tree">
                             <tree>
                                 <field name="sugerencia"/>
                             </tree>
-                        </field>
+                        </field> -->
                         <div class="alert alert-success text-center" role="alert">
                             <h3>Formalización</h3>
                         </div>
@@ -87,14 +87,14 @@
                                 <field name="sugerencia"/>
                             </tree>
                         </field>
-                        <div class="alert alert-primary text-center" role="alert">
+                        <!-- <div class="alert alert-primary text-center" role="alert">
                             <h3>Organización</h3>
                         </div>
                         <field name="crm_diagnostic_line_organization_ids" mode="tree">
                             <tree>
                                 <field name="sugerencia"/>
                             </tree>
-                        </field>
+                        </field> -->
                         <div class="alert alert-primary text-center" role="alert">
                             <h3>Mercadeo y Comercialización</h3>
                         </div>

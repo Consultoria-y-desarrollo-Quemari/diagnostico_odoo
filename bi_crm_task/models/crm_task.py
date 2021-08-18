@@ -68,9 +68,9 @@ class crm_task_wizard(models.TransientModel):
                 'name': 'Primer Mentoria',
                 'project_id': task.project_id.id or False,
                 'task_id': task.id or False,
-                # 'user_id': task.user_id.id or False,
+                'user_id': task.user_id.id or False,
                 'date': date.today(),
-                # 'employee_id': self.env.user.partner_id.id,
+                'employee_id': self.env.user.partner_id.id,
                 }
         self.env['account.analytic.line'].create(vals)
         

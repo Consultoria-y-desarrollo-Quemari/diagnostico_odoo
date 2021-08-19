@@ -783,24 +783,158 @@ class CrmLead(models.Model):
             dic_vals.update(dic_sel_fields)
             results = lead.prepare_diagnostic_lines(lead)
             if 'PROTOCOLOS DE BIOSEGURIDAD' in results:
+                area_val = 'bioseguridad'
                 dic_vals['crm_diagnostic_line_orientation_ids'] = [results.get('PROTOCOLOS DE BIOSEGURIDAD')]
-            elif 'MODELO DE NEGOCIO' in results:
+                puntaje1 = 0
+                count1 = 0
+                for record in dic_vals['crm_diagnostic_line_orientation_ids']:
+                    for dic in record:
+                        if type(dic).__name__ == 'dict':
+                            if 'puntaje' in dic.keys():
+                                print(dic.get('puntaje'))
+                                puntaje1 += int(dic.get('puntaje'))
+                                count1 += 1
+                                # dic.get('puntaje')
+                        elif type(dic).__name__ == 'tuple':
+                            if 'puntaje' in dic[2].keys():
+                                puntaje1 += int(dic[2].get('puntaje'))
+                                count1 += 1
+                dic_vals['calificacion'] = puntaje1
+                dic_vals['valoracion_bio'] = self._get_valoracion_bio(puntaje1)
+
+            if 'MODELO DE NEGOCIO' in results:
                 dic_vals['crm_diagnostic_line_business_model_ids'] = [results.get('MODELO DE NEGOCIO')]
+                puntaje2 = 0
+                count2 = 0
+                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
+                    for dic in record:
+                        if type(dic).__name__ == 'dict':
+                            if 'puntaje' in dic.keys():
+                                print(dic.get('puntaje'))
+                                puntaje2 += int(dic.get('puntaje'))
+                                count2 += 1
+                        elif type(dic).__name__ == 'tuple':
+                            if 'puntaje' in dic[2].keys():
+                                puntaje2 += int(dic[2].get('puntaje'))
+                                count2 += 1
+                dic_vals['calificacion2'] = puntaje2
+
+                if puntaje2 in range(0,21):
+                    valoracion = 'Incipiente'
+                elif puntaje2 in range(20,40):
+                    valoracion = 'Confiable'
+                elif puntaje2 in range(39,56):
+                    valoracion = 'Competente'
+                elif puntaje2 >= 56:
+                    valoracion = 'Excelencia'
+                dic_vals['valoracion_neg'] = valoracion
+    
             # elif 'PRODUCCIÓN' in results:
             #     dic_vals['crm_diagnostic_line_production_ids'] = [results.get('PRODUCCIÓN')]
             # elif 'INNOVACIÓN' in results:
             #     dic_vals['crm_diagnostic_line_innovation_ids'] = [results.get('INNOVACIÓN')]
-            elif 'FORMALIZACION' in results:
+            if 'FORMALIZACION' in results:
                 dic_vals['crm_diagnostic_line_formalization_ids'] = [results.get('FORMALIZACION')]
+                puntaje3 = 0
+                count3 = 0
+                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
+                    for dic in record:
+                        if type(dic).__name__ == 'dict':
+                            if 'puntaje' in dic.keys():
+                                print(dic.get('puntaje'))
+                                puntaje3 += int(dic.get('puntaje'))
+                                count3 += 1
+                        elif type(dic).__name__ == 'tuple':
+                            if 'puntaje' in dic[2].keys():
+                                puntaje3 += int(dic[2].get('puntaje'))
+                                count3 += 1
+                dic_vals['calificacion3'] = puntaje3
+
+                if puntaje3 <= 4.5:
+                    valoracion = 'Incipiente'
+                elif puntaje3 > 4.5 and puntaje3 <= 9:
+                    valoracion = 'Confiable'
+                elif puntaje3 > 9 and puntaje3 <= 13:
+                    valoracion = 'Competente'
+                elif puntaje3 >= 13:
+                    valoracion = 'Excelencia'
+                dic_vals['valoracion_forma'] = valoracion
+
             # elif 'ORGANIZACIÓN' in results:
             #     dic_vals['crm_diagnostic_line_organization_ids'] = [results.get('ORGANIZACIÓN')]
-            elif 'MERCADEO Y COMERCIALIZACION' in results:
+            if 'MERCADEO Y COMERCIALIZACION' in results:
                 dic_vals['crm_diagnostic_line_marketing_ids'] = [results.get('MERCADEO Y COMERCIALIZACION')]
-            elif 'FINANZAS' in results:
+                puntaje4 = 0
+                count4 = 0
+                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
+                    for dic in record:
+                        if type(dic).__name__ == 'dict':
+                            if 'puntaje' in dic.keys():
+                                print(dic.get('puntaje'))
+                                puntaje4 += int(dic.get('puntaje'))
+                                count4 += 1
+                                # dic.get('puntaje')
+                        elif type(dic).__name__ == 'tuple':
+                            if 'puntaje' in dic[2].keys():
+                                puntaje4 += int(dic[2].get('puntaje'))
+                                count4 += 1
+                dic_vals['calificacion4'] = puntaje4
+
+                if puntaje4 in range(0,10):
+                    valoracion = 'Incipiente'
+                elif puntaje4 in range(10,19):
+                    valoracion = 'Confiable'
+                elif puntaje4 in range(19,27):
+                    valoracion = 'Competente'
+                elif puntaje4 >= 27:
+                    valoracion = 'Excelencia'
+                dic_vals['valoracion_merca'] = valoracion
+
+            if 'FINANZAS' in results:
                 dic_vals['crm_diagnostic_line_finance_ids'] = [results.get('FINANZAS')]
+                puntaje5 = 0
+                count5 = 0
+                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
+                    for dic in record:
+                        count5 += 1
+                        if type(dic).__name__ == 'dict':
+                            if 'puntaje' in dic.keys():
+                                print(dic.get('puntaje'))
+                                puntaje5 += int(dic.get('puntaje'))
+                                count5 += 1
+                                # dic.get('puntaje')
+                        elif type(dic).__name__ == 'tuple':
+                            if 'puntaje' in dic[2].keys():
+                                puntaje5 += int(dic[2].get('puntaje'))
+                                count5 += 1
+                dic_vals['calificacion5'] = puntaje5
+
+                if puntaje5 in range(0,13):
+                    valoracion = 'Incipiente'
+                elif puntaje5 in range(13,25):
+                    valoracion = 'Confiable'
+                elif puntaje5 in range(25,35):
+                    valoracion = 'Competente'
+                elif puntaje5 >= 35:
+                    valoracion = 'Excelencia'
+                dic_vals['valoracion_finanza'] = valoracion
 
             
             return dic_vals
+
+    @api.model
+    def _get_valoracion_bio(self, puntaje):
+        if puntaje <= 2:
+            valoracion = 'Incipiente'
+        elif puntaje == 3:
+            valoracion = 'Confiable'
+        elif puntaje == 4:
+            valoracion = 'Competente'
+        elif puntaje >= 5:
+            valoracion = 'Excelencia'
+
+        return valoracion
+
 
     # getting str values from selection fields
     @api.model

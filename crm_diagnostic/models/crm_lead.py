@@ -163,6 +163,142 @@ SUGGEST_VALUATION = {
         5: '',
         'area': 'MODELO DE NEGOCIO'
         },
+    'x_financiero18': {
+        1: 'Orientacion al propietario del negocio en los habitos positivos financieros',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero20': {
+        1: 'Orientacion al propietario del negocio en los habitos positivos financieros',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero21': {
+        1: 'Acompañamiento en el proceso de calculo del punto de equilibrio',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero22': {
+        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero22': {
+        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero23': {
+        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero24': {
+        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero25': {
+        1: '',
+        2: '',
+        3: '',
+        4: '',
+        5: 'Remitir a la Cooperativa Minuto de Dios',
+        'area': 'FINANZAS'
+        },
+    'x_financiero26': {
+        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_mer_com30': {
+        1: 'Acompañamiento en el diseño de estrategias para la visibilidad de los productos o servicios',
+        2: '',
+        3: 'Acompañamiento en el diseño de estrategias para la visibilidad de los productos o servicios',
+        4: '',
+        5: '',
+        'area': 'MERCADEO Y COMERCIALIZACION'
+        },
+    'x_mer_com31': {
+        1: 'Acompañamiento en el diseño de estrategias para la visibilidad de los producto o servicios',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MERCADEO Y COMERCIALIZACION'
+        },
+    'x_mer_com38': {
+        1: 'Acompañamiento en el uso de redes sociales para promocionar y posicionar su negocio y productos',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MERCADEO Y COMERCIALIZACION'
+        },
+    'x_mer_com39': {
+        1: 'Acompañamiento en el uso de herramientas digitales para promoción de sus productos (uso de redes sociales o el desarrollo de paginas web)',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MERCADEO Y COMERCIALIZACION'
+        },
+    'x_forma44': {
+        1: 'Acompañamiento y asesoria en la formalizacion del negocio',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FORMALIZACION'
+        },
+    'x_forma45': {
+        1: 'Acompañamiento y asesoria en la formalizacion del negocio',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FORMALIZACION'
+        },
+    'x_forma46': {
+        1: 'Acompañamiento y asesoria en la formalizacion del negocio',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FORMALIZACION'
+        },
+    'x_forma50': {
+        1: 'Acompañamiento y asesoria en la formalizacion del negocio',
+        2: '',
+        3: '',
+        4: '',
+        5: 'Remitir al programa de Empleabilidad',
+        'area': 'FORMALIZACION'
+        },
     'x_in_empleo': {
         1: '',
         2: '',

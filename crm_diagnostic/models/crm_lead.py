@@ -35,7 +35,11 @@ ANSWER_VALUES = {
         'de_acuerdo': 4,
         'ni_de_acuerdo_ni_en_desacuerdo': 3,
         'en_desacuerdo': 2,
-        'totalmente_en_desacuerdo': 1
+        'totalmente_en_desacuerdo': 1,
+        'promociones': 5,
+        'referidos': 5, 
+        'redes_sociales': 5,
+        'ninguna': 1,
     }
 
 TEXT_VALUATION = {
@@ -47,6 +51,254 @@ TEXT_VALUATION = {
     }
 
 SUGGEST_VALUATION = {
+    'x_proto1_bio': {
+        1: 'Buscar proyectos y programas públicos y privados que subsidien o faciliten la obtención de tapabocas y elementos de protección para el micronegocio',
+        2: '',
+        3: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
+        4: '',
+        5: '',
+        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
+        },
+    'x_neg4': {
+        1: 'Definir para quién está creando valor y quienes son sus clientes más importantes y la posibilidad de agrupar estos por medio de sus características, definir como aumentar su satisfacción',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_neg5': {
+        1: 'Definir el valor que quiere entregar a sus clientes, clarificar que problemas o dolores quiere ayudar a resolver, validar  si los productos y/o servicios ofrecidos, realmente solucionan problemas o satisfacen las necesidades de los clientes',
+        2: '',
+        3: 'Validación de los productos y/o servicios ofrecidos, para lograr asegurar que realmente solucionan problemas o satisfacen las necesidades de los clientes',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_neg6': {
+        1: 'Definir para quién está creando valor y quienes son sus clientes más importantes y la posibilidad de agrupar estos por medio de sus características, definir como aumentar su satisfacción',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_neg7': {
+        1: 'Definir mecanismos de captación de los diferentes clientes potenciales de acuerdo a sus caracteriísticas',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_neg8': {
+        1: 'Definir mecanismos de captación de los diferentes clientes potenciales de acuerdo a sus caracteriísticas',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_neg9': {
+        1: 'Gestionar los recursos requeridos para el perfecto funcionamiento del modelo de negocio y para  el cumplimiento de la propuesta de valor',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_neg10': {
+        1: 'Gestionar los recursos requeridos para el perfecto funcionamiento del modelo de negocio y para  el cumplimiento de la propuesta de valor',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_neg11': {
+        1: 'Gestionar los recursos requeridos para el perfecto funcionamiento del modelo de negocio y para  el cumplimiento de la propuesta de valor',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_neg12': {
+        1: 'Gestionar acuerdos con proveedores',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_neg13': {
+        1: 'Gestionar acuerdos con proveedores',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_neg14': {
+        1: 'Gestionar acuerdos con proveedores',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_neg15': {
+        1: 'Identificar y definir la rentabilidad de cada producto o servicio que ofrece como la utilidad total del negocio',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_neg16': {
+        1: 'Definir el valor que quiere entregar a sus clientes, clarificar que problemas o dolores quiere ayudar a resolver, validar  si los productos y/o servicios ofrecidos, realmente solucionan problemas o satisfacen las necesidades de los clientes',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MODELO DE NEGOCIO'
+        },
+    'x_financiero18': {
+        1: 'Orientacion al propietario del negocio en los habitos positivos financieros',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero20': {
+        1: 'Orientacion al propietario del negocio en los habitos positivos financieros',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero21': {
+        1: 'Acompañamiento en el proceso de calculo del punto de equilibrio',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero22': {
+        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero22': {
+        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero23': {
+        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero24': {
+        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_financiero25': {
+        1: '',
+        2: '',
+        3: '',
+        4: '',
+        5: 'Remitir a la Cooperativa Minuto de Dios',
+        'area': 'FINANZAS'
+        },
+    'x_financiero26': {
+        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FINANZAS'
+        },
+    'x_mer_com30': {
+        1: 'Acompañamiento en el diseño de estrategias para la visibilidad de los productos o servicios',
+        2: '',
+        3: 'Acompañamiento en el diseño de estrategias para la visibilidad de los productos o servicios',
+        4: '',
+        5: '',
+        'area': 'MERCADEO Y COMERCIALIZACION'
+        },
+    'x_mer_com31': {
+        1: 'Acompañamiento en el diseño de estrategias para la visibilidad de los producto o servicios',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MERCADEO Y COMERCIALIZACION'
+        },
+    'x_mer_com38': {
+        1: 'Acompañamiento en el uso de redes sociales para promocionar y posicionar su negocio y productos',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MERCADEO Y COMERCIALIZACION'
+        },
+    'x_mer_com39': {
+        1: 'Acompañamiento en el uso de herramientas digitales para promoción de sus productos (uso de redes sociales o el desarrollo de paginas web)',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'MERCADEO Y COMERCIALIZACION'
+        },
+    'x_forma44': {
+        1: 'Acompañamiento y asesoria en la formalizacion del negocio',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FORMALIZACION'
+        },
+    'x_forma45': {
+        1: 'Acompañamiento y asesoria en la formalizacion del negocio',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FORMALIZACION'
+        },
+    'x_forma46': {
+        1: 'Acompañamiento y asesoria en la formalizacion del negocio',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'FORMALIZACION'
+        },
+    'x_forma50': {
+        1: 'Acompañamiento y asesoria en la formalizacion del negocio',
+        2: '',
+        3: '',
+        4: '',
+        5: 'Remitir al programa de Empleabilidad',
+        'area': 'FORMALIZACION'
+        },
     'x_in_empleo': {
         1: '',
         2: '',

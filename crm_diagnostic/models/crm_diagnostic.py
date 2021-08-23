@@ -150,7 +150,9 @@ class CrmDiagnostic(models.Model):
 
     def make_chart_barh(self, data):
         buf = io.BytesIO()
-        objects = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Producción', 'Innovación', 'Formalizacion', 'Organización',
+        # objects = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Producción', 'Innovación', 'Formalizacion', 'Organización',
+        #              'Mercadeo \n y \n Comercializacion ', 'Finanzas']
+        objects = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Formalizacion',
                      'Mercadeo \n y \n Comercializacion ', 'Finanzas']
         y_pos = np.arange(len(objects))
         performance = data
@@ -167,11 +169,11 @@ class CrmDiagnostic(models.Model):
 
     def make_chart_radar(self, data):
         buf = io.BytesIO()
-        values = [75, 85, 55, 25, 30, 40, 70, 45]
+        values = [75, 85, 30, 70, 45]
         data += data[:1]
         N = len(values)
         values += values[:1]
-        angles = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Producción', 'Innovación', 'Formalizacion', 'Organización',
+        angles = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Formalizacion',
                      'Mercadeo \n y \n Comercializacion ', 'Finanzas']
         plt.figure(figsize =(10, 6))
         plt.subplot(polar = True)
@@ -222,7 +224,7 @@ class CrmDiagnostic(models.Model):
 
 
             data = self.make_chart_radar(data_chart)
-            data2 = self.make_chart_barh([bioseguridad/0.75, modelonegocio/0.85, produccion/0.55, innovacion/0.25, formalizacon/0.30, organizacion/0.40, mercadeo/0.70, finanzas/0.45])
+            data2 = self.make_chart_barh([bioseguridad/0.75, modelonegocio/0.85, formalizacon/0.30, mercadeo/0.70, finanzas/0.45])
             diagnostic.char_img = base64.b64encode(data)
             diagnostic.char_img_bar = base64.b64encode(data2)
 

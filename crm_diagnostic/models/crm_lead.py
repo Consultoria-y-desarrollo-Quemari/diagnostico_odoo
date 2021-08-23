@@ -1359,11 +1359,11 @@ class CrmLead(models.Model):
         full_fields.extend(self.fields_module3_generalities())
         full_fields.extend(self.fields_module3_biosecurity())
         full_fields.extend(self.fields_module3_business_model())
-        full_fields.extend(self.fields_module3_production())
-        full_fields.extend(self.fields_module3_innovation())
+        # full_fields.extend(self.fields_module3_production())
+        # full_fields.extend(self.fields_module3_innovation())
         full_fields.extend(self.fields_module3_formalization())
-        full_fields.extend(self.fields_module3_organization())
-        full_fields.extend(self.fields_module3_marketing())
+        # full_fields.extend(self.fields_module3_organization())
+        # full_fields.extend(self.fields_module3_marketing())
         full_fields.extend(self.fields_module3_financial())
         full_fields.extend(['second_module_read'])
         return full_fields
@@ -1438,13 +1438,13 @@ class CrmLead(models.Model):
     def all_fields_module3_are_ok(self):
         result = []
         # fields = self.fields_module3()
-        result.append(self.check_generalities_fields(self.fields_module3_generalities()))
+        # result.append(self.check_generalities_fields(self.fields_module3_generalities()))
         result.append(self.check_biosecurity_fields(self.fields_module3_biosecurity()))
         result.append(self.check_business_model_fields(self.fields_module3_business_model()))
-        result.append(self.check_production_fields(self.fields_module3_production()))
-        result.append(self.check_innovation_fields(self.fields_module3_innovation()))
+        # result.append(self.check_production_fields(self.fields_module3_production()))
+        # result.append(self.check_innovation_fields(self.fields_module3_innovation()))
         result.append(self.check_formalization_fields(self.fields_module3_formalization()))
-        result.append(self.check_organization_fields(self.fields_module3_organization()))
+        # result.append(self.check_organization_fields(self.fields_module3_organization()))
         result.append(self.check_marketing_fields(self.fields_module3_marketing()))
         result.append(self.check_financial_fields(self.fields_module3_financial()))
         if any(r == False for r in result):

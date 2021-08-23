@@ -1330,7 +1330,8 @@ class CrmLead(models.Model):
     def fields_module3_production(self):
         return [
             'x_innova24', 'x_innova25', 'x_innova26', 'x_innova27', 'x_prodl42',
-            'x_prodl43', 'x_innova29', 'x_innova33', 'x_innova36', 'x_prodl47', 'x_innova39'
+            'x_prodl43', 'x_innova29', 'x_innova33', 'x_innova36', 
+            'x_prodl47', 'x_innova39'
         ]
 
     #Ya No Se Usa

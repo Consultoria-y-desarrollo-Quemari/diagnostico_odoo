@@ -12,11 +12,10 @@ _logger = logging.getLogger(__name__)
 
 
 RANGES = {
-        'incipiente': range(0, 76),
-        'aceptable': range(77, 152),
-        'confiable': range(153, 228),
-        'competente': range(229, 304),
-        'excelencia': range(305, 380)
+        'incipiente': range(0, 47),
+        'confiable': range(48, 93),
+        'competente': range(94, 132),
+        'excelencia': range(133, 155)
     }
 
 CRM_DIAGNOSTIC_SELECTION_FIELDS = {
@@ -1087,9 +1086,11 @@ class CrmLead(models.Model):
             #     dic_vals['crm_diagnostic_line_innovation_ids'] = [results.get('INNOVACIÓN')]
             if 'FORMALIZACION' in results:
                 dic_vals['crm_diagnostic_line_formalization_ids'] = [results.get('FORMALIZACION')]
+                _logger.info("$"*500)
+                _logger.info(results.get('FORMALIZACION'))
                 puntaje3 = 0
                 count3 = 0
-                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
+                for record in dic_vals['crm_diagnostic_line_formalization_ids']:
                     for dic in record:
                         if type(dic).__name__ == 'dict':
                             if 'puntaje' in dic.keys():
@@ -1118,7 +1119,7 @@ class CrmLead(models.Model):
                 dic_vals['crm_diagnostic_line_marketing_ids'] = [results.get('MERCADEO Y COMERCIALIZACION')]
                 puntaje4 = 0
                 count4 = 0
-                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
+                for record in dic_vals['crm_diagnostic_line_marketing_ids']:
                     for dic in record:
                         if type(dic).__name__ == 'dict':
                             if 'puntaje' in dic.keys():
@@ -1146,7 +1147,7 @@ class CrmLead(models.Model):
                 dic_vals['crm_diagnostic_line_finance_ids'] = [results.get('FINANZAS')]
                 puntaje5 = 0
                 count5 = 0
-                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
+                for record in dic_vals['crm_diagnostic_line_finance_ids']:
                     for dic in record:
                         count5 += 1
                         if type(dic).__name__ == 'dict':

@@ -208,31 +208,11 @@ class CrmDiagnostic(models.Model):
     @api.depends('crm_diagnostic_line_ids')
     def _get_chart(self):
         for diagnostic in self:
-            bioseguridad = 0
-            modelonegocio = 0
-            produccion = 0
-            innovacion = 0
-            formalizacon = 0
-            organizacion = 0
-            mercadeo = 0
-            finanzas = 0
-
-            for line in diagnostic.crm_diagnostic_line_orientation_ids:
-                bioseguridad += int(line.puntaje)
-            for line in diagnostic.crm_diagnostic_line_business_model_ids:
-                modelonegocio += int(line.puntaje)
-            for line in diagnostic.crm_diagnostic_line_production_ids:
-                produccion += int(line.puntaje)
-            for line in diagnostic.crm_diagnostic_line_innovation_ids:
-                innovacion += int(line.puntaje)
-            for line in diagnostic.crm_diagnostic_line_formalization_ids:
-                formalizacon += int(line.puntaje)
-            for line in diagnostic.crm_diagnostic_line_organization_ids:
-                organizacion += int(line.puntaje)
-            for line in diagnostic.crm_diagnostic_line_marketing_ids:
-                mercadeo += int(line.puntaje)
-            for line in diagnostic.crm_diagnostic_line_finance_ids:
-                finanzas += int(line.puntaje)
+            bioseguridad = float(diagnostic.calificacion)
+            modelonegocio = float(diagnostic.calificacion2)
+            formalizacon = float(diagnostic.calificacion3)
+            mercadeo = float(diagnostic.calificacion4)
+            finanzas = float(diagnostic.calificacion5)
 
             data_chart = [bioseguridad, modelonegocio, formalizacon, mercadeo, finanzas] 
 

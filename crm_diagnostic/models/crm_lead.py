@@ -12,11 +12,10 @@ _logger = logging.getLogger(__name__)
 
 
 RANGES = {
-        'incipiente': range(0, 76),
-        'aceptable': range(77, 152),
-        'confiable': range(153, 228),
-        'competente': range(229, 304),
-        'excelencia': range(305, 380)
+        'incipiente': range(0, 47),
+        'confiable': range(48, 93),
+        'competente': range(94, 132),
+        'excelencia': range(133, 155)
     }
 
 CRM_DIAGNOSTIC_SELECTION_FIELDS = {
@@ -1087,9 +1086,11 @@ class CrmLead(models.Model):
             #     dic_vals['crm_diagnostic_line_innovation_ids'] = [results.get('INNOVACIÓN')]
             if 'FORMALIZACION' in results:
                 dic_vals['crm_diagnostic_line_formalization_ids'] = [results.get('FORMALIZACION')]
+                _logger.info("$"*500)
+                _logger.info(results.get('FORMALIZACION'))
                 puntaje3 = 0
                 count3 = 0
-                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
+                for record in dic_vals['crm_diagnostic_line_formalization_ids']:
                     for dic in record:
                         if type(dic).__name__ == 'dict':
                             if 'puntaje' in dic.keys():
@@ -1118,7 +1119,7 @@ class CrmLead(models.Model):
                 dic_vals['crm_diagnostic_line_marketing_ids'] = [results.get('MERCADEO Y COMERCIALIZACION')]
                 puntaje4 = 0
                 count4 = 0
-                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
+                for record in dic_vals['crm_diagnostic_line_marketing_ids']:
                     for dic in record:
                         if type(dic).__name__ == 'dict':
                             if 'puntaje' in dic.keys():
@@ -1146,7 +1147,7 @@ class CrmLead(models.Model):
                 dic_vals['crm_diagnostic_line_finance_ids'] = [results.get('FINANZAS')]
                 puntaje5 = 0
                 count5 = 0
-                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
+                for record in dic_vals['crm_diagnostic_line_finance_ids']:
                     for dic in record:
                         count5 += 1
                         if type(dic).__name__ == 'dict':
@@ -1418,17 +1419,16 @@ class CrmLead(models.Model):
     # return the field list to validate the module1
     def fields_module1(self):
         return [
-            'x_nombre_negocio', 'x_nombre', 'doctype', 'x_identification', 'x_sexo',
-            'x_etnia', 'country_id', 'state_id', 'xcity', 'x_vereda', 'mobile',
-            'x_limitacion', 'x_escolaridad', 'x_grupos',
-            'x_estrato', 'x_situacion', 'x_sector', 'x_actcomer', 'x_state_id', 'x_city_id',
-            'x_ubic', 'x_dir_neg', 'x_com_cuenta', 'x_merc78_form', 'x_merc80_form',
-            'x_merc79_form', 'x_merc81_form', 'x_que_por_ren', 'x_que_por_ren_ant',
-            'x_tien_dur', 'tie_us_cre', 'tie_ca_ide', 'x_datos1', 'attach_file', 'x_ubicacion_negocio',]
+            'x_datos1', 'attach_file', "x_nombre_negocio", "x_nombre", "doctype",
+            "x_identification", "x_sexo", "x_edad", "country_id", "state_id", "xcity", "x_dir_res",
+            "x_comuna", "x_vereda", "x_ubicacion_negocio", "mobile", "email_from", "x_estrato", 
+            "x_pobl_esp", "x_tipo_vivienda", "x_no_personas_viven_propietario", "x_etnia", "x_sisben",
+            "x_afiliado", "x_escolaridad", "x_ubic", "x_com_cuenta", "x_tien_dur", "x_herramientas", "x_depend"
+            ]
 
     # return the field list to validate the module2
     def fields_module2(self):
-        return ['x_cont1', 'x_cont1_por', 'first_module_ready']
+        return ['x_cont1', 'first_module_ready']
 
     # methos that return list of fields by section
     def fields_module3_generalities(self):
@@ -1436,56 +1436,56 @@ class CrmLead(models.Model):
             'x_in_empleo', 'x_forma58_form', 'x_forma61_form', 'x_forma60_form',
             'x_forma65_inf', 'x_datos3']
 
+    #MODULO 3 BIOSEGURIDAD
     def fields_module3_biosecurity(self):
         return [
-            'x_proto1', 'x_proto2', 'x_proto3', 'x_proto4', 'x_proto6',
-            'x_proto7', 'x_proto8', 'x_proto9', 'x_proto10', 'x_proto11', 'x_proto12',
-            'x_proto13', 'x_proto14', 'x_proto15', 'x_proto16'
+            'x_proto1_bio'
         ]
 
+    #MODULO 3 NEGOCIOS
     def fields_module3_business_model(self):
         return [
-            'x_model21', 'x_model22', 'x_model23', 'x_model24', 'x_model25',
-            'x_model26', 'x_model27', 'x_model28', 'x_model29', 'x_model30', 'x_model31',
-            'x_model32', 'x_model33', 'x_model34', 'x_model35', 'x_model36', 'x_model37',
+            'x_neg4', 'x_neg5', 'x_neg6', 'x_neg7', 'x_neg8',
+            'x_neg12', 'x_neg13', 'x_neg14', 'x_neg15', 'x_neg16'
         ]
 
+    #Ya no esta en uso
     def fields_module3_production(self):
         return [
-            'x_innova24', 'x_innova25', 'x_innova26', 'x_innova27', 'x_prodl42',
-            'x_prodl43', 'x_innova29', 'x_innova33', 'x_innova36', 'x_prodl47', 'x_innova39'
         ]
 
+    #Ya No Se Usa
     def fields_module3_innovation(self):
         return [
-            'x_innova40', 'x_ninova50', 'x_innova43_inf', 'x_ninova52',
-            'x_ninova54'
         ]
 
+    #MODELO 3 FORMALIZACION
     def fields_module3_formalization(self):
         return [
-            'x_for55', 'x_forma50_inf', 'x_forma52_inf', 'x_forma54_inf',
-            'x_forma56_inf', 'n_los_empl'
+            'x_forma40', 'x_forma41', 'x_forma43', 'x_forma44',
+            'x_forma45', 'x_forma46', 'x_forma47', 'x_forma48', 'x_forma49',
+            'x_forma50', 'x_forma51', 'x_forma52'
         ]
 
+    #Ya No Se Usa
     def fields_module3_organization(self):
         return [
             'x_org61', 'x_org62', 'x_org63', 'x_org64', 'x_org65', 'x_org66',
             'x_org67', 'x_org68'
         ]
-
+    #MODELO 3 MERCADEO
     def fields_module3_marketing(self):
         return [
-            'x_mer69', 'x_mer70', 'x_mer71', 'x_mer72', 'x_mer73', 'x_mer74',
-            'x_mer75', 'prom77', 'prom78', 'x_merc86_form', 'prom79', 'prom80', 'prom81',
-            'prom82'
+            'x_mer_com30', 'x_mer_com31', 'x_mer_com32', 'x_mer_com33', 'x_mer_com34',
+            'x_mer_com35', 'x_mer_com36', 'x_mer_com37', 'x_mer_com38', 'x_mer_com39',
         ]
 
+    #MODELO 3 FINANCIERO
     def fields_module3_financial(self):
         return [
-            'x_finan92_form', 'x_finan93_form', 'x_fin85', 'x_finan98_form',
-            'x_fin87n','x_fin88n','x_fin89n','x_fin90n','x_fin91n','x_fin92n','x_fin93n',
-            'x_fin94n','x_fin95n','x_fin96n', 'x_fin97n'
+            'x_financiero18', 'x_financiero19', 'x_financiero20', 'x_financiero21',
+            'x_financiero22', 'x_financiero23', 'x_financiero24', 'x_financiero25',
+            'x_financiero26', 'x_financiero27', 'x_financiero28', 'x_financiero29',
         ]
 
     def full_list_field(self):
@@ -1493,11 +1493,11 @@ class CrmLead(models.Model):
         full_fields.extend(self.fields_module3_generalities())
         full_fields.extend(self.fields_module3_biosecurity())
         full_fields.extend(self.fields_module3_business_model())
-        full_fields.extend(self.fields_module3_production())
-        full_fields.extend(self.fields_module3_innovation())
+        # full_fields.extend(self.fields_module3_production())
+        # full_fields.extend(self.fields_module3_innovation())
         full_fields.extend(self.fields_module3_formalization())
-        full_fields.extend(self.fields_module3_organization())
-        full_fields.extend(self.fields_module3_marketing())
+        # full_fields.extend(self.fields_module3_organization())
+        # full_fields.extend(self.fields_module3_marketing())
         full_fields.extend(self.fields_module3_financial())
         full_fields.extend(['second_module_read'])
         return full_fields
@@ -1572,13 +1572,13 @@ class CrmLead(models.Model):
     def all_fields_module3_are_ok(self):
         result = []
         # fields = self.fields_module3()
-        result.append(self.check_generalities_fields(self.fields_module3_generalities()))
+        # result.append(self.check_generalities_fields(self.fields_module3_generalities()))
         result.append(self.check_biosecurity_fields(self.fields_module3_biosecurity()))
         result.append(self.check_business_model_fields(self.fields_module3_business_model()))
-        result.append(self.check_production_fields(self.fields_module3_production()))
-        result.append(self.check_innovation_fields(self.fields_module3_innovation()))
+        # result.append(self.check_production_fields(self.fields_module3_production()))
+        # result.append(self.check_innovation_fields(self.fields_module3_innovation()))
         result.append(self.check_formalization_fields(self.fields_module3_formalization()))
-        result.append(self.check_organization_fields(self.fields_module3_organization()))
+        # result.append(self.check_organization_fields(self.fields_module3_organization()))
         result.append(self.check_marketing_fields(self.fields_module3_marketing()))
         result.append(self.check_financial_fields(self.fields_module3_financial()))
         if any(r == False for r in result):

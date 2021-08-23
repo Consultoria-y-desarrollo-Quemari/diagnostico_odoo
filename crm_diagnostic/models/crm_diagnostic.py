@@ -85,6 +85,18 @@ class CrmDiagnostic(models.Model):
         'crm.diagnostic.line', 'diagnostic_id',
         )
 
+    calificacion = fields.Char()
+    calificacion2 = fields.Char()
+    calificacion3 = fields.Char()
+    calificacion4 = fields.Char()
+    calificacion5 = fields.Char()
+    valoracion_bio = fields.Char()
+    valoracion_neg = fields.Char()
+    valoracion_finanza = fields.Char()
+    valoracion_merca = fields.Char()
+    valoracion_forma = fields.Char()
+
+
     #diagnostic_chart = fields.Char(
     #    compute='_get_chart', store=False)
 

@@ -117,7 +117,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="invoice_tbody">
-                                            <t t-foreach="o.crm_diagnostic_line_orientation_ids.filtered(lambda x: x.sugerencia not in (False, ''))" t-as="o_line">
+                                            <t t-foreach="o.crm_diagnostic_line_orientation_ids" t-as="o_line">
                                                 <tr>
                                                     <td class="text-left">
                                                         <span t-field="o_line.sugerencia"/>
@@ -203,56 +203,10 @@
                                             </tr>
                                         </thead>
                                         <tbody class="invoice_tbody">
-                                            <t t-foreach="o.crm_diagnostic_line_business_model_ids.filtered(lambda v: v.sugerencia not in (False, ''))" t-as="line_model">
+                                            <t t-foreach="o.crm_diagnostic_line_business_model_ids" t-as="line_model">
                                                 <tr>
                                                     <td class="text-left">
                                                         <span t-field="line_model.sugerencia"/>
-                                                    </td>
-                                                </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="row" style="page-break-inside: avoid;">
-                                <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Producción</div>
-                            </div>
-                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
-                                <div class="col-12">
-                                    <table class="table borderless" style="page-break-inside: avoid;">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-left"><span>Sugerencia</span></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="invoice_tbody">
-                                            <t t-foreach="o.crm_diagnostic_line_production_ids.filtered(lambda p: p.sugerencia not in (False, ''))" t-as="p_line">
-                                                <tr>
-                                                    <td class="text-left">
-                                                        <span t-field="p_line.sugerencia"/>
-                                                    </td>
-                                                </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="row" style="page-break-inside: avoid;">
-                                <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Innovación</div>
-                            </div>
-                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
-                                <div class="col-12" style="page-break-inside: avoid;">
-                                    <table class="table borderless" style="page-break-inside: avoid;">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-left"><span>Sugerencia</span></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="invoice_tbody">
-                                            <t t-foreach="o.crm_diagnostic_line_innovation_ids.filtered(lambda i: i.sugerencia not in (False, ''))" t-as="i_line">
-                                                <tr>
-                                                    <td class="text-left">
-                                                        <span t-field="i_line.sugerencia"/>
                                                     </td>
                                                 </tr>
                                             </t>
@@ -284,29 +238,6 @@
                                 </div>
                             </div>
                             <div class="row" style="page-break-inside: avoid;">
-                                <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Organización</div>
-                            </div>
-                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
-                                <div class="col-12" style="page-break-inside: avoid;">
-                                    <table class="table borderless" style="page-break-inside: avoid;">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-left"><span>Sugerencia</span></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="invoice_tbody">
-                                            <t t-foreach="o.crm_diagnostic_line_organization_ids.filtered(lambda g: g.sugerencia not in (False, ''))" t-as="g_line">
-                                                <tr>
-                                                    <td class="text-left">
-                                                        <span t-field="g_line.sugerencia"/>
-                                                    </td>
-                                                </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="row" style="page-break-inside: avoid;">
                                 <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Mercadeo y Comercialización</div>
                             </div>
                             <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
@@ -318,7 +249,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="invoice_tbody">
-                                            <t t-foreach="o.crm_diagnostic_line_marketing_ids.filtered(lambda m: m.sugerencia not in (False, ''))" t-as="m_line">
+                                            <t t-foreach="o.crm_diagnostic_line_marketing_ids" t-as="m_line">
                                                 <tr>
                                                     <td class="text-left">
                                                         <span t-field="m_line.sugerencia"/>

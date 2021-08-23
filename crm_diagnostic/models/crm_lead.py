@@ -1284,13 +1284,18 @@ class CrmLead(models.Model):
     # return the field list to validate the module1
     def fields_module1(self):
         return [
-            'x_nombre_negocio', 'x_nombre', 'doctype', 'x_identification', 'x_sexo',
-            'x_etnia', 'country_id', 'state_id', 'xcity', 'x_vereda', 'mobile',
-            'x_limitacion', 'x_escolaridad', 'x_grupos',
-            'x_estrato', 'x_situacion', 'x_sector', 'x_actcomer', 'x_state_id', 'x_city_id',
-            'x_ubic', 'x_dir_neg', 'x_com_cuenta', 'x_merc78_form', 'x_merc80_form',
-            'x_merc79_form', 'x_merc81_form', 'x_que_por_ren', 'x_que_por_ren_ant',
-            'x_tien_dur', 'tie_us_cre', 'tie_ca_ide', 'x_datos1', 'attach_file', 'x_ubicacion_negocio',]
+            'x_datos1', 'attach_file', 'x_nombre_negocio', 'x_nombre', 'doctype', 
+            'x_identification', 'x_sexo', 'x_vereda', 'x_ubicacion_negocio',
+            'x_state_id', 'x_city_id', 'x_dir_neg', 'x_estrato', 'x_pobl_esp', 'x_tipo_vivienda',
+            'x_no_personas_viven_propietario', 'x_etnia', 'x_sisben', 'x_nsisben',
+            'x_afiliado', 'x_escolaridad', 'x_limitacion', 'x_grupos',
+            'x_situacion', 'x_actcomer', 'x_sector', 'x_com_cuenta',
+            'x_que_por_ren', 'x_que_por_ren_ant', 'x_tien_dur', 'x_herramientas',
+            'x_depend', 'tie_us_cre', 'tie_ca_ide', 'x_cual_34', 'x_por_34', 
+            'country_id', 'state_id', 'xcity',  'mobile',
+            # 'x_merc78_form', 'x_merc80_form', 'x_ubic', 
+            # 'x_merc79_form', 'x_merc81_form',   
+            ]
 
     # return the field list to validate the module2
     def fields_module2(self):
@@ -1302,56 +1307,74 @@ class CrmLead(models.Model):
             'x_in_empleo', 'x_forma58_form', 'x_forma61_form', 'x_forma60_form',
             'x_forma65_inf', 'x_datos3']
 
+    #MODULO 3 BIOSEGURIDAD
     def fields_module3_biosecurity(self):
         return [
-            'x_proto1', 'x_proto2', 'x_proto3', 'x_proto4', 'x_proto6',
-            'x_proto7', 'x_proto8', 'x_proto9', 'x_proto10', 'x_proto11', 'x_proto12',
-            'x_proto13', 'x_proto14', 'x_proto15', 'x_proto16'
+            'x_proto1_bio', 'x_proto2_bio', 'x_proto3_bio',
+            # 'x_proto1', 'x_proto2', 'x_proto3', 'x_proto4', 'x_proto6',
+            # 'x_proto7', 'x_proto8', 'x_proto9', 'x_proto10', 'x_proto11', 'x_proto12',
+            # 'x_proto13', 'x_proto14', 'x_proto15', 'x_proto16'
         ]
 
+    #MODULO 3 NEGOCIOS
     def fields_module3_business_model(self):
         return [
-            'x_model21', 'x_model22', 'x_model23', 'x_model24', 'x_model25',
-            'x_model26', 'x_model27', 'x_model28', 'x_model29', 'x_model30', 'x_model31',
-            'x_model32', 'x_model33', 'x_model34', 'x_model35', 'x_model36', 'x_model37',
+            'x_neg4', 'x_neg5', 'x_neg6', 'x_neg7', 'x_neg8', 'x_neg9', 'x_neg10',
+            'x_neg11', 'x_neg12', 'x_neg13', 'x_neg14', 'x_neg15', 'x_neg16', 'x_neg17',
+            # 'x_model21', 'x_model22', 'x_model23', 'x_model24', 'x_model25',
+            # 'x_model26', 'x_model27', 'x_model28', 'x_model29', 'x_model30', 'x_model31',
+            # 'x_model32', 'x_model33', 'x_model34', 'x_model35', 'x_model36', 'x_model37',
         ]
 
+    #Ya no esta en uso
     def fields_module3_production(self):
         return [
             'x_innova24', 'x_innova25', 'x_innova26', 'x_innova27', 'x_prodl42',
             'x_prodl43', 'x_innova29', 'x_innova33', 'x_innova36', 'x_prodl47', 'x_innova39'
         ]
 
+    #Ya No Se Usa
     def fields_module3_innovation(self):
         return [
             'x_innova40', 'x_ninova50', 'x_innova43_inf', 'x_ninova52',
             'x_ninova54'
         ]
 
+    #MODELO 3 FORMALIZACION
     def fields_module3_formalization(self):
         return [
-            'x_for55', 'x_forma50_inf', 'x_forma52_inf', 'x_forma54_inf',
-            'x_forma56_inf', 'n_los_empl'
+            'x_forma40', 'x_forma41', 'x_forma42', 'x_forma43', 'x_forma44',
+            'x_forma45', 'x_forma46', 'x_forma47', 'x_forma48', 'x_forma49',
+            'x_forma50', 'x_forma51', 'x_forma52'
+            # 'x_for55', 'x_forma50_inf', 'x_forma52_inf', 'x_forma54_inf',
+            # 'x_forma56_inf', 'n_los_empl'
         ]
 
+    #Ya No Se Usa
     def fields_module3_organization(self):
         return [
             'x_org61', 'x_org62', 'x_org63', 'x_org64', 'x_org65', 'x_org66',
             'x_org67', 'x_org68'
         ]
-
+    #MODELO 3 MERCADEO
     def fields_module3_marketing(self):
         return [
-            'x_mer69', 'x_mer70', 'x_mer71', 'x_mer72', 'x_mer73', 'x_mer74',
-            'x_mer75', 'prom77', 'prom78', 'x_merc86_form', 'prom79', 'prom80', 'prom81',
-            'prom82'
+            'x_mer_com30', 'x_mer_com31', 'x_mer_com32', 'x_mer_com33', 'x_mer_com34',
+            'x_mer_com35', 'x_mer_com36', 'x_mer_com37', 'x_mer_com38', 'x_mer_com39',
+            #'x_mer69', 'x_mer70', 'x_mer71', 'x_mer72', 'x_mer73', 'x_mer74',
+            #'x_mer75', 'prom77', 'prom78', 'x_merc86_form', 'prom79', 'prom80', 'prom81',
+            #'prom82'
         ]
 
+    #MODELO 3 FINANCIERO
     def fields_module3_financial(self):
         return [
-            'x_finan92_form', 'x_finan93_form', 'x_fin85', 'x_finan98_form',
-            'x_fin87n','x_fin88n','x_fin89n','x_fin90n','x_fin91n','x_fin92n','x_fin93n',
-            'x_fin94n','x_fin95n','x_fin96n', 'x_fin97n'
+            'x_financiero18', 'x_financiero19', 'x_financiero20', 'x_financiero21',
+            'x_financiero22', 'x_financiero23', 'x_financiero24', 'x_financiero25',
+            'x_financiero26', 'x_financiero27', 'x_financiero28', 'x_financiero29',
+            # 'x_finan92_form', 'x_finan93_form', 'x_fin85', 'x_finan98_form',
+            # 'x_fin87n','x_fin88n','x_fin89n','x_fin90n','x_fin91n','x_fin92n','x_fin93n',
+            # 'x_fin94n','x_fin95n','x_fin96n', 'x_fin97n',
         ]
 
     def full_list_field(self):

@@ -169,7 +169,9 @@ class CrmDiagnostic(models.Model):
 
     def make_chart_radar(self, data):
         buf = io.BytesIO()
-        values = [75, 85, 30, 70, 45]
+        _logger.info("="*500)
+        _logger.info(data)
+        values = [5, 65, 15, 30, 40]
         data += data[:1]
         N = len(values)
         values += values[:1]
@@ -220,11 +222,11 @@ class CrmDiagnostic(models.Model):
             for line in diagnostic.crm_diagnostic_line_finance_ids:
                 finanzas += int(line.puntaje)
 
-            data_chart = [bioseguridad, modelonegocio, produccion, innovacion, formalizacon, organizacion, mercadeo, finanzas] 
+            data_chart = [bioseguridad, modelonegocio, formalizacon, mercadeo, finanzas] 
 
 
             data = self.make_chart_radar(data_chart)
-            data2 = self.make_chart_barh([bioseguridad/0.75, modelonegocio/0.85, formalizacon/0.30, mercadeo/0.70, finanzas/0.45])
+            data2 = self.make_chart_barh([bioseguridad/0.05, modelonegocio/0.65, formalizacon/0.15, mercadeo/0.30, finanzas/0.40])
             diagnostic.char_img = base64.b64encode(data)
             diagnostic.char_img_bar = base64.b64encode(data2)
 

@@ -1518,9 +1518,38 @@ class CrmLead(models.Model):
             if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
                 return True
         return False
+
+    # validating if the current user has the cordinator profile
+    def is_mentor(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'mentor')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
     
     def is_orientador(self):
         role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'orientador')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+
+    def is_admin(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'admin')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+
+    def is_administrativo(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'administrativo')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+
+    def is_estudiante(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'estudiante')])
         for role in role_id:
             if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
                 return True

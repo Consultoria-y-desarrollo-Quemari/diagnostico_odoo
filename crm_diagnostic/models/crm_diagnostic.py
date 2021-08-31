@@ -168,6 +168,8 @@ class CrmDiagnostic(models.Model):
                      'Mercadeo \n y \n Comercializacion ', 'Finanzas']
         y_pos = np.arange(len(objects))
         performance = data
+        _logger.info("="*500)
+        _logger.info(data)
         plt.figure(figsize =(10, 6))
         plt.xlim(0, 100)
         plt.barh(y_pos, performance, align='center', alpha=0.5)
@@ -181,8 +183,7 @@ class CrmDiagnostic(models.Model):
 
     def make_chart_radar(self, data):
         buf = io.BytesIO()
-        _logger.info("="*500)
-        _logger.info(data)
+        
         values = [5, 65, 15, 30, 40]
         data += data[:1]
         N = len(values)

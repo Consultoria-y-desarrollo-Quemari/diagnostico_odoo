@@ -290,14 +290,6 @@ SUGGEST_VALUATION = {
         5: '',
         'area': 'FORMALIZACION'
         },
-    'x_forma50': {
-        1: 'Acompañamiento y asesoria en la formalizacion del negocio',
-        2: '',
-        3: '',
-        4: '',
-        5: 'Remitir al programa de Empleabilidad',
-        'area': 'FORMALIZACION'
-        },
     'x_in_empleo': {
         1: '',
         2: '',
@@ -1105,11 +1097,11 @@ class CrmLead(models.Model):
 
                 if puntaje3 <= 4.5:
                     valoracion = 'Incipiente'
-                elif puntaje3 > 4.5 and puntaje3 <= 9:
+                elif puntaje3 > 4.6 and puntaje3 <= 9:
                     valoracion = 'Confiable'
                 elif puntaje3 > 9 and puntaje3 <= 13:
                     valoracion = 'Competente'
-                elif puntaje3 >= 13:
+                elif puntaje3 >= 14:
                     valoracion = 'Excelencia'
                 dic_vals['valoracion_forma'] = valoracion
 
@@ -1326,7 +1318,7 @@ class CrmLead(models.Model):
                         lead_ids -= lead
                         count_max += 1
                         next_week = (event.start_datetime  + timedelta(weeks=2)).isocalendar()[1]
-                if count_max == 3:
+                if count_max == 1:
                     count_max = 0
                     next_week = False
                     user_ids = True

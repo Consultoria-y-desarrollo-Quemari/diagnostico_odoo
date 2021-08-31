@@ -1421,7 +1421,7 @@ class CrmLead(models.Model):
         return [
             'x_datos1', 'attach_file', "x_nombre_negocio", "x_nombre", "doctype",
             "x_identification", "x_sexo", "x_edad", "country_id", "state_id", "xcity", "x_dir_res",
-            "x_comuna", "x_vereda", "x_ubicacion_negocio", "mobile", "email_from", "x_estrato", 
+            "x_comuna", "x_vereda", "x_ubicacion_negocio", "mobile", "x_estrato", 
             "x_pobl_esp", "x_tipo_vivienda", "x_no_personas_viven_propietario", "x_etnia", "x_sisben",
             "x_afiliado", "x_escolaridad", "x_ubic", "x_com_cuenta", "x_tien_dur", "x_herramientas", "x_depend"
             ]
@@ -1433,8 +1433,9 @@ class CrmLead(models.Model):
     # methos that return list of fields by section
     def fields_module3_generalities(self):
         return [
-            'x_in_empleo', 'x_forma58_form', 'x_forma61_form', 'x_forma60_form',
-            'x_forma65_inf', 'x_datos3']
+            # 'x_in_empleo', 'x_forma58_form', 'x_forma61_form', 'x_forma60_form',
+            # 'x_forma65_inf', 
+            'x_datos3']
 
     #MODULO 3 BIOSEGURIDAD
     def fields_module3_biosecurity(self):
@@ -1470,8 +1471,8 @@ class CrmLead(models.Model):
     #Ya No Se Usa
     def fields_module3_organization(self):
         return [
-            'x_org61', 'x_org62', 'x_org63', 'x_org64', 'x_org65', 'x_org66',
-            'x_org67', 'x_org68'
+            # 'x_org61', 'x_org62', 'x_org63', 'x_org64', 'x_org65', 'x_org66',
+            # 'x_org67', 'x_org68'
         ]
     #MODELO 3 MERCADEO
     def fields_module3_marketing(self):

@@ -1443,7 +1443,7 @@ class CrmLead(models.Model):
     def fields_module3_business_model(self):
         return [
             'x_neg4', 'x_neg5', 'x_neg6', 'x_neg7', 'x_neg8',
-            'x_neg12', 'x_neg13', 'x_neg14', 'x_neg15', 'x_neg16'
+            'x_neg12', 'x_neg16'
         ]
 
     #Ya no esta en uso

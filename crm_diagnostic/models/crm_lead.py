@@ -1008,6 +1008,8 @@ class CrmLead(models.Model):
                 raise ValidationError('Para realizar el diagnostico, debe responder las preguntas de los 3 modulos.')
             crm_diagnostic_vals = record.getting_values_to_crm_diagnostic()
             crm_diagnostic_id = self.env['crm.diagnostic'].create(crm_diagnostic_vals)
+            _logger.info("&"*500)
+            _logger.info(crm_diagnostic_id.read())
             crm_diagnostic_id.valuacion_diagnostico = record.diagnostico
             return record.action_to_return_to_crm_diagnostic(crm_diagnostic_id)
 
@@ -1025,9 +1027,10 @@ class CrmLead(models.Model):
             dic_sel_fields = lead.getting_selection_fields_to_dignostic_form(lead)
             dic_vals.update(dic_sel_fields)
             results = lead.prepare_diagnostic_lines(lead)
+            
             if 'PROTOCOLOS DE BIOSEGURIDAD' in results:
                 area_val = 'bioseguridad'
-                dic_vals['crm_diagnostic_line_orientation_ids'] = [results.get('PROTOCOLOS DE BIOSEGURIDAD')]
+                dic_vals['crm_diagnostic_line_orientation_ids'] = results.get('PROTOCOLOS DE BIOSEGURIDAD')
                 puntaje1 = 0
                 count1 = 0
                 for record in dic_vals['crm_diagnostic_line_orientation_ids']:
@@ -1046,7 +1049,7 @@ class CrmLead(models.Model):
                 dic_vals['valoracion_bio'] = self._get_valoracion_bio(puntaje1)
 
             if 'MODELO DE NEGOCIO' in results:
-                dic_vals['crm_diagnostic_line_business_model_ids'] = [results.get('MODELO DE NEGOCIO')]
+                dic_vals['crm_diagnostic_line_business_model_ids'] = results.get('MODELO DE NEGOCIO')
                 puntaje2 = 0
                 count2 = 0
                 for record in dic_vals['crm_diagnostic_line_business_model_ids']:
@@ -1077,7 +1080,7 @@ class CrmLead(models.Model):
             # elif 'INNOVACIÓN' in results:
             #     dic_vals['crm_diagnostic_line_innovation_ids'] = [results.get('INNOVACIÓN')]
             if 'FORMALIZACION' in results:
-                dic_vals['crm_diagnostic_line_formalization_ids'] = [results.get('FORMALIZACION')]
+                dic_vals['crm_diagnostic_line_formalization_ids'] = results.get('FORMALIZACION')
                 _logger.info("$"*500)
                 _logger.info(results.get('FORMALIZACION'))
                 puntaje3 = 0
@@ -1108,7 +1111,7 @@ class CrmLead(models.Model):
             # elif 'ORGANIZACIÓN' in results:
             #     dic_vals['crm_diagnostic_line_organization_ids'] = [results.get('ORGANIZACIÓN')]
             if 'MERCADEO Y COMERCIALIZACION' in results:
-                dic_vals['crm_diagnostic_line_marketing_ids'] = [results.get('MERCADEO Y COMERCIALIZACION')]
+                dic_vals['crm_diagnostic_line_marketing_ids'] = results.get('MERCADEO Y COMERCIALIZACION')
                 puntaje4 = 0
                 count4 = 0
                 for record in dic_vals['crm_diagnostic_line_marketing_ids']:
@@ -1136,7 +1139,7 @@ class CrmLead(models.Model):
                 dic_vals['valoracion_merca'] = valoracion
 
             if 'FINANZAS' in results:
-                dic_vals['crm_diagnostic_line_finance_ids'] = [results.get('FINANZAS')]
+                dic_vals['crm_diagnostic_line_finance_ids'] = results.get('FINANZAS')
                 puntaje5 = 0
                 count5 = 0
                 for record in dic_vals['crm_diagnostic_line_finance_ids']:
@@ -1164,7 +1167,8 @@ class CrmLead(models.Model):
                     valoracion = 'Excelencia'
                 dic_vals['valoracion_finanza'] = valoracion
 
-            
+            _logger.info("?"*500)
+            _logger.info(dic_vals)
             return dic_vals
 
     @api.model
@@ -1217,7 +1221,7 @@ class CrmLead(models.Model):
                 valuation = TEXT_VALUATION.get(score)
                 suggestion, area = self.get_sugestion(field.name, score)
                 if area in lines_dict:
-                    tmp_list = list(lines_dict.get(area))
+                    tmp_list = lines_dict.get(area)
                     values = {
                             'name': field.field_description,
                             'respuesta': answer,
@@ -1239,7 +1243,7 @@ class CrmLead(models.Model):
                             'valoracion': valuation,
                             }
 
-                    lines_dict.update({area:(0,0,vals)})
+                    lines_dict.update({area: [(0,0,vals)] })
             else:
                 answer = dict(lead._fields[field.name].selection).get(getattr(lead, field.name))
                 score = ANSWER_VALUES.get(field_value)

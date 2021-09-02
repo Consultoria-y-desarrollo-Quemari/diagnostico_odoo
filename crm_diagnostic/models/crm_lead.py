@@ -1473,8 +1473,8 @@ class CrmLead(models.Model):
     #MODELO 3 MERCADEO
     def fields_module3_marketing(self):
         return [
-            'x_mer_com30', 'x_mer_com31', 'x_mer_com32', 'x_mer_com33', 'x_mer_com34',
-            'x_mer_com35', 'x_mer_com36', 'x_mer_com37', 'x_mer_com38', 'x_mer_com39',
+            'x_mer_com30', 'x_mer_com31', 'x_mer_com32', 'x_mer_com34',
+            'x_mer_com36', 'x_mer_com38', 'x_mer_com39',
         ]
 
     #MODELO 3 FINANCIERO

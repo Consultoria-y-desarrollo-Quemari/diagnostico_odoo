@@ -707,11 +707,11 @@ SUGGEST_VALUATION = {
         'area': 'FORMALIZACION'
         },
     'x_forma50_inf': {
-        1: 'Acompañamiento y asesoría en las obligaciones correspondientes del negocio',
-        2: 'Acompañamiento y asesoría en las obligaciones correspondientes del negocio',
+        1: '',
+        2: '',
         3: '',
         4: '',
-        5: '',
+        5: 'Remitir al programa de Empleabilidad',
         'area': 'FORMALIZACION'
         },
     'x_forma52_inf': {

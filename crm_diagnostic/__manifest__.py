@@ -16,7 +16,8 @@ CRM Diagnostic
         'base_user_role',
         'calendar',
         'hr_timesheet',
-        'project'
+        'project',
+        'bi_crm_task'
     ],
     'data': [
         'security/ir.model.access.csv',

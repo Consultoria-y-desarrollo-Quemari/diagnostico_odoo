@@ -1000,6 +1000,12 @@ class CrmLead(models.Model):
         compute='current_user_is_facilitator'
     )
 
+    social_plan = fields.Boolean(default = False)
+
+    def confirm_social_plan(self):
+        for lead in self:
+            lead.social_plan = True
+
     # returning an action to go to crm.diagnostic form view related to lead
     def action_crm_diagnostic_view(self):
         for record in self:

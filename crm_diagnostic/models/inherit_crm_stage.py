@@ -13,3 +13,6 @@ class CrmStage(models.Model):
                    ('espera_de_plan', 'En espera de plan de atención')],
         help='Esta campo sirve para el estado al que pertence la etapa'
     )
+
+    allow_mark_as_won = fields.Boolean(string='Permitir marcar como ganado',
+                                        default=False)

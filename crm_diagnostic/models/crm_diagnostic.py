@@ -23,7 +23,7 @@ class CrmDiagnostic(models.Model):
 
     lead_id = fields.Many2one('crm.lead')
     fecha = fields.Date("Fecha")
-    nombre_negocio = fields.Char(string="Nombre del Negocio")
+    nombre_negocio = fields.Char(string="Nombre del Negocio", required=True)
     nombre_propietario = fields.Char(string="Nombre del Propietario")
     tipo_documento = fields.Char(string="Tipo de Documento")
     ubicacion = fields.Char(string="Ubicación")
@@ -228,3 +228,16 @@ class CrmDiagnostic(models.Model):
         context = dict(self.env.context)
         res = super(CrmDiagnostic, self.with_context(context)).create(vals)
         return res
+
+    @api.onchange('nombre_propietario')
+    def _onchange_nombre_propietario(self):
+        if self.nombre_propietario:
+            self.nombre_propietario = str(self.nombre_propietario).upper()
+    
+    @api.constrains('nombre_propietario')
+    def _constrains_nombre_propritario(self):
+        chars = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '\\', ':', ';', '<', '=', '>', '?', '@', '[',  ']', '^', '_', '`', '{', '|', '}', '~']
+        delimiter = ''
+        for char in chars:
+            if char in str(self.nombre_propietario) :
+                raise ValidationError(('No se permiten caracteres especiales en el Nombre del Propietario: {}'.format(delimiter.join(chars))))

@@ -18,7 +18,7 @@
                             <group name="left data">
                                 <field name="lead_id" invisible="1"/>
                                 <field name="nombre_negocio" string="Nombre del Negocio" />
-                                <field name="nombre_propietario" string="Nombre del Propietario" />
+                                <field name="nombre_propietario" string="Nombre del Propietario" style="text-transform:uppercase"/>
                                 <field name="tipo_documento" string="Tipo de documento" />
                                 <field name="ubicacion" string="Ubicacion" />
                             </group>

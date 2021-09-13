@@ -999,6 +999,12 @@ class CrmLead(models.Model):
     current_user_facilitator = fields.Boolean(
         compute='current_user_is_facilitator'
     )
+    current_user_mentor = fields.Boolean(
+        compute="current_user_is_mentor"
+    )
+    current_user_admin = fields.Boolean(
+        compute="current_user_is_admin"
+    )
 
     # returning an action to go to crm.diagnostic form view related to lead
     def action_crm_diagnostic_view(self):
@@ -1397,6 +1403,24 @@ class CrmLead(models.Model):
                 lead.current_user_facilitator = True
             else:
                 lead.current_user_facilitator = False
+    
+    # check if the curren user is mentor
+    @api.depends('current_user')
+    def current_user_is_mentor(self):
+        for lead in self:
+            if lead.is_mentor():
+                lead.current_user_mentor = True
+            else:
+                lead.current_user_mentor = False
+
+    @api.depends('current_user')
+    def current_user_is_admin(self):
+        for lead in self:
+            if lead.is_admin():
+                lead.current_user_admin = True
+            else:
+                lead.current_user_admin = False
+
 
     # check if the current user is admin user
     @api.depends('current_user')
@@ -1750,6 +1774,15 @@ class CrmLead(models.Model):
                         options['no_create'] = False
                         options['no_open'] = False
                         node.attrib['options'] = json.dumps(options)
+
+                res['arch'] = etree.tostring(doc)
+
+            if self.is_mentor or self.is_admin:
+                for node in doc.xpath("//header/button[@name='action_set_won_rainbowman']"):
+                    if 'modifiers' in node.attrib:
+                        modifiers = json.loads(node.attrib['modifiers'])
+                        modifiers['invisible'] = True
+                        node.attrib['modifiers'] = json.dumps(modifiers)
 
                 res['arch'] = etree.tostring(doc)
 

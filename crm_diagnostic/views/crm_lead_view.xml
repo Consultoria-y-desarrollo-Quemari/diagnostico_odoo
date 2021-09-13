@@ -18,6 +18,8 @@
                 <field name="current_user" invisible="1"/>
                 <field name="root_current_user" invisible="1"/>
                 <field name="current_user_facilitator" invisible="1"/>
+                <field name="current_user_mentor" invisible="1"/>
+                <field name="current_user_admin" invisible="1"/>
                 <field name="first_module_ready" invisible="1"/>
                 <field name="second_module_read" invisible="1"/>
                 <field name="third_module_ready" invisible="1"/>
@@ -27,6 +29,9 @@
             </xpath>
             <xpath expr="//field[@name='user_id']" position="after">
                 <field name="coordinador"/>
+            </xpath>
+            <xpath expr="//header/button[@name='action_set_won_rainbowman']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|','|', ('active','=',False), ('probability', '=', 100), ('type', '=', 'lead'), ('current_user_mentor', '=', False), ('current_user_admin', '=', False)]}</attribute>
             </xpath>
         </field>
     </record>

@@ -1300,7 +1300,7 @@ class CrmLead(models.Model):
             return
         lead_ids = self.search(
             [('mentors', '=', False),
-             ('diagnostico', 'in', ('confiable', 'competente', 'excelencia'))])
+             ('diagnostico', 'in', ('confiable', 'incipiente'))])
         if not lead_ids:
             return
         count_max = 0

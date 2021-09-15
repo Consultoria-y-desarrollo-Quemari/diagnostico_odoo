@@ -28,8 +28,8 @@ class ResUsers(models.Model):
     def name_get(self):
         result = []
         for user in self:
-            if user.role_line_ids:
-                result.append((user.id,  user.name + ' - ' + user.role_line_ids[0].role_id.name))
+            if user.sudo().role_line_ids:
+                result.append((user.id,  user.name + ' - ' + user.sudo().role_line_ids[0].role_id.name))
             else:
                 result.append((user.id, user.name))
         return result

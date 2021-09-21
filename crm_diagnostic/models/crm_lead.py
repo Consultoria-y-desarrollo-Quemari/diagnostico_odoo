@@ -1436,6 +1436,19 @@ class CrmLead(models.Model):
                 lead.root_current_user = False
                 print(e)
 
+    def write(self, values):
+        if 'stage_id' in values:
+            stage = self.env['crm.stage'].search([('id', '=', values['stage_id'])])
+            if stage[0].is_won == True:
+                if not self.is_mentor():
+                    if not self.is_admin():
+                        raise ValidationError("No tienes permiso para marcar como ganado.")
+                    return super(CrmLead, self).write(values)
+                return super(CrmLead, self).write(values)
+            return super(CrmLead, self).write(values)
+        return super(CrmLead, self).write(values)
+
+
     # return the field list to validate the module1
     def fields_module1(self):
         return [
@@ -1540,7 +1553,7 @@ class CrmLead(models.Model):
                 return True
         return False
 
-    # validating if the current user has the cordinator profile
+    # validating if the current user has the mentor profile
     def is_mentor(self):
         role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'mentor')])
         for role in role_id:
@@ -1777,14 +1790,25 @@ class CrmLead(models.Model):
 
                 res['arch'] = etree.tostring(doc)
 
-            if self.is_mentor or self.is_admin:
-                for node in doc.xpath("//header/button[@name='action_set_won_rainbowman']"):
-                    if 'modifiers' in node.attrib:
-                        modifiers = json.loads(node.attrib['modifiers'])
-                        modifiers['invisible'] = True
-                        node.attrib['modifiers'] = json.dumps(modifiers)
+            if not self.is_mentor():
+                if not self.is_admin():
+                    for node in doc.xpath("//header/button[@name='action_set_won_rainbowman']"):
+                        if 'modifiers' in node.attrib:
+                            modifiers = json.loads(node.attrib['modifiers'])
+                            modifiers['invisible'] = True
+                            node.attrib['modifiers'] = json.dumps(modifiers)
 
-                res['arch'] = etree.tostring(doc)
+                    res['arch'] = etree.tostring(doc)
+
+            if not self.is_mentor():
+                if not self.is_admin():
+                    for node in doc.xpath("//header/field[@name='stage_id']"):
+                        if 'modifiers' in node.attrib:
+                            modifiers = json.loads(node.attrib['modifiers'])
+                            modifiers['invisible'] = True
+                            node.attrib['modifiers'] = json.dumps(modifiers)
+
+                    res['arch'] = etree.tostring(doc)
 
         return res
 

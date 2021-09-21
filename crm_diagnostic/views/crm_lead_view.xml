@@ -30,9 +30,6 @@
             <xpath expr="//field[@name='user_id']" position="after">
                 <field name="coordinador"/>
             </xpath>
-            <xpath expr="//header/button[@name='action_set_won_rainbowman']" position="attributes">
-                <attribute name="attrs">{'invisible': ['|','|', ('active','=',False), ('probability', '=', 100), ('type', '=', 'lead'), ('current_user_mentor', '=', False), ('current_user_admin', '=', False)]}</attribute>
-            </xpath>
         </field>
     </record>
 

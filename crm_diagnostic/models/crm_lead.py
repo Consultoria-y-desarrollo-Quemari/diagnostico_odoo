@@ -999,6 +999,12 @@ class CrmLead(models.Model):
     current_user_facilitator = fields.Boolean(
         compute='current_user_is_facilitator'
     )
+    current_user_mentor = fields.Boolean(
+        compute="current_user_is_mentor"
+    )
+    current_user_admin = fields.Boolean(
+        compute="current_user_is_admin"
+    )
 
     social_plan = fields.Boolean(default = False)
 
@@ -1403,6 +1409,24 @@ class CrmLead(models.Model):
                 lead.current_user_facilitator = True
             else:
                 lead.current_user_facilitator = False
+    
+    # check if the curren user is mentor
+    @api.depends('current_user')
+    def current_user_is_mentor(self):
+        for lead in self:
+            if lead.is_mentor():
+                lead.current_user_mentor = True
+            else:
+                lead.current_user_mentor = False
+
+    @api.depends('current_user')
+    def current_user_is_admin(self):
+        for lead in self:
+            if lead.is_admin():
+                lead.current_user_admin = True
+            else:
+                lead.current_user_admin = False
+
 
     # check if the current user is admin user
     @api.depends('current_user')
@@ -1417,6 +1441,19 @@ class CrmLead(models.Model):
             except Exception as e:
                 lead.root_current_user = False
                 print(e)
+
+    def write(self, values):
+        if 'stage_id' in values:
+            stage = self.env['crm.stage'].search([('id', '=', values['stage_id'])])
+            if stage[0].is_won == True:
+                if not self.is_mentor():
+                    if not self.is_admin():
+                        raise ValidationError("No tienes permiso para marcar como ganado.")
+                    return super(CrmLead, self).write(values)
+                return super(CrmLead, self).write(values)
+            return super(CrmLead, self).write(values)
+        return super(CrmLead, self).write(values)
+
 
     # return the field list to validate the module1
     def fields_module1(self):
@@ -1522,7 +1559,7 @@ class CrmLead(models.Model):
                 return True
         return False
 
-    # validating if the current user has the cordinator profile
+    # validating if the current user has the mentor profile
     def is_mentor(self):
         role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'mentor')])
         for role in role_id:
@@ -1758,6 +1795,26 @@ class CrmLead(models.Model):
                         node.attrib['options'] = json.dumps(options)
 
                 res['arch'] = etree.tostring(doc)
+
+            if not self.is_mentor():
+                if not self.is_admin():
+                    for node in doc.xpath("//header/button[@name='action_set_won_rainbowman']"):
+                        if 'modifiers' in node.attrib:
+                            modifiers = json.loads(node.attrib['modifiers'])
+                            modifiers['invisible'] = True
+                            node.attrib['modifiers'] = json.dumps(modifiers)
+
+                    res['arch'] = etree.tostring(doc)
+
+            if not self.is_mentor():
+                if not self.is_admin():
+                    for node in doc.xpath("//header/field[@name='stage_id']"):
+                        if 'modifiers' in node.attrib:
+                            modifiers = json.loads(node.attrib['modifiers'])
+                            modifiers['invisible'] = True
+                            node.attrib['modifiers'] = json.dumps(modifiers)
+
+                    res['arch'] = etree.tostring(doc)
 
         return res
 

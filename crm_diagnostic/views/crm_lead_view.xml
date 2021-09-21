@@ -18,6 +18,8 @@
                 <field name="current_user" invisible="1"/>
                 <field name="root_current_user" invisible="1"/>
                 <field name="current_user_facilitator" invisible="1"/>
+                <field name="current_user_mentor" invisible="1"/>
+                <field name="current_user_admin" invisible="1"/>
                 <field name="first_module_ready" invisible="1"/>
                 <field name="second_module_read" invisible="1"/>
                 <field name="third_module_ready" invisible="1"/>
@@ -43,9 +45,13 @@
         <field name="model">crm.stage</field>
         <field name="inherit_id" ref="crm.crm_stage_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='is_won']" position="before">
-                <field name="stage_state"/>
-            </xpath>
+        <xpath expr="//field[@name='is_won']" position="before">
+            <field name="stage_state"/>
+            <field name="allow_mark_as_won"/>
+        </xpath>
+        <xpath expr="//field[@name='is_won']" position="attributes">
+            <attribute name="attrs">{'invisible': [('allow_mark_as_won', '=', False)]}</attribute>
+        </xpath>
         </field>
     </record>
 

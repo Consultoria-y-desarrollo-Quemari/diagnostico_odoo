@@ -1445,14 +1445,9 @@ class CrmLead(models.Model):
 
     def write(self, values):
         if 'stage_id' in values:
-            stage = self.env['crm.stage'].search([('id', '=', values['stage_id'])])
-            if stage[0].is_won == True:
-                if not self.is_mentor():
-                    if not self.is_admin():
-                        raise ValidationError("No tienes permiso para marcar como ganado.")
-                    return super(CrmLead, self).write(values)
-                return super(CrmLead, self).write(values)
-            return super(CrmLead, self).write(values)
+            if not self.is_mentor():
+                if not self.is_admin():
+                    raise ValidationError("No tienes permiso para marcar como ganado.")
         return super(CrmLead, self).write(values)
 
 

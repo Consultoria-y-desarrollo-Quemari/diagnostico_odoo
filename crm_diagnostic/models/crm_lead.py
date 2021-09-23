@@ -1284,7 +1284,7 @@ class CrmLead(models.Model):
                             }
 
                     lines_dict.update({area:(0, 0, vals)})
-            if score:
+            if score and area:
                 puntaje += score
         self.set_diagnostico(puntaje, lead)
         return lines_dict

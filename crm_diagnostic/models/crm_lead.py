@@ -1812,7 +1812,7 @@ class CrmLead(models.Model):
                     for node in doc.xpath("//header/field[@name='stage_id']"):
                         if 'modifiers' in node.attrib:
                             modifiers = json.loads(node.attrib['modifiers'])
-                            modifiers['invisible'] = True
+                            modifiers['readonly'] = True
                             node.attrib['modifiers'] = json.dumps(modifiers)
 
                     res['arch'] = etree.tostring(doc)

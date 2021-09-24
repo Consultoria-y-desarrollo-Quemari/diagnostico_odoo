@@ -21,7 +21,8 @@ RANGES = {
 CRM_DIAGNOSTIC_SELECTION_FIELDS = {
     'doctype': 'tipo_documento',
     'x_ubic': 'ubicacion',
-    'x_actcomer': 'actividad_micronegocio',
+    # 'x_actcomer': 'actividad_micronegocio',
+    'x_forma41': 'actividad_micronegocio',
     'x_microneg': 'tipo_micronegocio',
     }
 

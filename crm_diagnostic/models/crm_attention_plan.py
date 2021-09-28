@@ -109,6 +109,10 @@ class CrmAttentionPlan(models.Model):
         'res.company',
         default=lambda self : self.env.company)
 
+    prioridad_related = fields.Char(related='plan_line_ids.prioridad')
+    actividad_related = fields.Char(related='plan_line_ids.actividades')
+    soluciones_related = fields.Char(related='plan_line_ids.soluciones')
+
 
 
 class CrmAttentionPlanLines(models.Model):
@@ -129,3 +133,4 @@ class CrmAttentionPlanLines(models.Model):
     reponsable = fields.Char(
         string='Responsable'
     )
+

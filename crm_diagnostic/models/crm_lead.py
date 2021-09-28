@@ -12,16 +12,17 @@ _logger = logging.getLogger(__name__)
 
 
 RANGES = {
-        'incipiente': range(0, 47),
-        'confiable': range(48, 93),
-        'competente': range(94, 132),
-        'excelencia': range(133, 155)
+        'incipiente': range(0, 48),
+        'confiable': range(48, 94),
+        'competente': range(94, 133),
+        'excelencia': range(133, 156)
     }
 
 CRM_DIAGNOSTIC_SELECTION_FIELDS = {
     'doctype': 'tipo_documento',
     'x_ubic': 'ubicacion',
-    'x_actcomer': 'actividad_micronegocio',
+    # 'x_actcomer': 'actividad_micronegocio',
+    'x_forma41': 'actividad_micronegocio',
     'x_microneg': 'tipo_micronegocio',
     }
 
@@ -1006,6 +1007,12 @@ class CrmLead(models.Model):
         compute="current_user_is_admin"
     )
 
+    social_plan = fields.Boolean(default = False)
+
+    def confirm_social_plan(self):
+        for lead in self:
+            lead.social_plan = True
+
     # returning an action to go to crm.diagnostic form view related to lead
     def action_crm_diagnostic_view(self):
         for record in self:
@@ -1278,7 +1285,7 @@ class CrmLead(models.Model):
                             }
 
                     lines_dict.update({area:(0, 0, vals)})
-            if score:
+            if score and area:
                 puntaje += score
         self.set_diagnostico(puntaje, lead)
         return lines_dict
@@ -1286,7 +1293,8 @@ class CrmLead(models.Model):
     # set diagnostico based on range
     @api.model
     def set_diagnostico(self, score, lead):
-        if score > 380:
+        _logger.info(score)
+        if score > 156:
             lead.diagnostico = 'excelencia'
             return
         for k, v in RANGES.items():
@@ -1300,7 +1308,7 @@ class CrmLead(models.Model):
             return
         lead_ids = self.search(
             [('mentors', '=', False),
-             ('diagnostico', 'in', ('confiable', 'competente', 'excelencia'))])
+             ('diagnostico', 'in', ('confiable', 'incipiente'))])
         if not lead_ids:
             return
         count_max = 0
@@ -1438,14 +1446,9 @@ class CrmLead(models.Model):
 
     def write(self, values):
         if 'stage_id' in values:
-            stage = self.env['crm.stage'].search([('id', '=', values['stage_id'])])
-            if stage[0].is_won == True:
-                if not self.is_mentor():
-                    if not self.is_admin():
-                        raise ValidationError("No tienes permiso para marcar como ganado.")
-                    return super(CrmLead, self).write(values)
-                return super(CrmLead, self).write(values)
-            return super(CrmLead, self).write(values)
+            if not self.is_mentor():
+                if not self.is_admin():
+                    raise ValidationError("No tienes permiso para marcar como ganado.")
         return super(CrmLead, self).write(values)
 
 
@@ -1805,7 +1808,7 @@ class CrmLead(models.Model):
                     for node in doc.xpath("//header/field[@name='stage_id']"):
                         if 'modifiers' in node.attrib:
                             modifiers = json.loads(node.attrib['modifiers'])
-                            modifiers['invisible'] = True
+                            modifiers['readonly'] = True
                             node.attrib['modifiers'] = json.dumps(modifiers)
 
                     res['arch'] = etree.tostring(doc)

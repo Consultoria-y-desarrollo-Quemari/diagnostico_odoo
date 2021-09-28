@@ -1448,7 +1448,8 @@ class CrmLead(models.Model):
         if 'stage_id' in values:
             if not self.is_mentor():
                 if not self.is_admin():
-                    raise ValidationError("No tienes permiso para marcar como ganado.")
+                    if not self.is_facilitator():
+                        raise ValidationError("No tienes permiso para marcar como ganado.")
         return super(CrmLead, self).write(values)
 
 
@@ -1795,23 +1796,25 @@ class CrmLead(models.Model):
 
             if not self.is_mentor():
                 if not self.is_admin():
-                    for node in doc.xpath("//header/button[@name='action_set_won_rainbowman']"):
-                        if 'modifiers' in node.attrib:
-                            modifiers = json.loads(node.attrib['modifiers'])
-                            modifiers['invisible'] = True
-                            node.attrib['modifiers'] = json.dumps(modifiers)
+                    if not self.is_facilitator():
+                        for node in doc.xpath("//header/button[@name='action_set_won_rainbowman']"):
+                            if 'modifiers' in node.attrib:
+                                modifiers = json.loads(node.attrib['modifiers'])
+                                modifiers['invisible'] = True
+                                node.attrib['modifiers'] = json.dumps(modifiers)
 
-                    res['arch'] = etree.tostring(doc)
+                        res['arch'] = etree.tostring(doc)
 
             if not self.is_mentor():
                 if not self.is_admin():
-                    for node in doc.xpath("//header/field[@name='stage_id']"):
-                        if 'modifiers' in node.attrib:
-                            modifiers = json.loads(node.attrib['modifiers'])
-                            modifiers['readonly'] = True
-                            node.attrib['modifiers'] = json.dumps(modifiers)
+                    if not self.is_facilitator():
+                        for node in doc.xpath("//header/field[@name='stage_id']"):
+                            if 'modifiers' in node.attrib:
+                                modifiers = json.loads(node.attrib['modifiers'])
+                                modifiers['readonly'] = True
+                                node.attrib['modifiers'] = json.dumps(modifiers)
 
-                    res['arch'] = etree.tostring(doc)
+                        res['arch'] = etree.tostring(doc)
 
         return res
 

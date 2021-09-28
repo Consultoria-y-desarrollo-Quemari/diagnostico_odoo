@@ -5,7 +5,7 @@
             <field name="name">Mentores asignados</field>
             <field name="model_id" ref="crm.model_crm_lead"/>
             <field name="subject">Asignación de mentoria: ${object.name}</field>
-            <field name="email_to">${object.coordinador.partner_id.email}</field>
+            <field name="email_to">${object.coordinador.partner_id.email, object.partner_id.email}</field>
             <field name="auto_delete" eval="False"/>
             <field name="body_html" type="html">
                 <p style="margin: 0px; padding: 0px; font-size: 13px;">

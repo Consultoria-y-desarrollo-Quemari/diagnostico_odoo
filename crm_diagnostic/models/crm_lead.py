@@ -1009,6 +1009,8 @@ class CrmLead(models.Model):
 
     social_plan = fields.Boolean(default = False)
 
+    facilitator_role = fields.Char(compute="get_facilitator_role")
+
     def confirm_social_plan(self):
         for lead in self:
             lead.social_plan = True
@@ -1428,6 +1430,21 @@ class CrmLead(models.Model):
                 lead.current_user_admin = True
             else:
                 lead.current_user_admin = False
+                
+    @api.depends('user_id')
+    def get_facilitator_role(self):
+        for lead in self:
+            facilitator_roles = lead.user_id.role_ids
+            if facilitator_roles:
+                facilitator_role = facilitator_roles[0].name
+
+                if facilitator_role:
+                    lead.facilitator_role = facilitator_role
+                else:
+                    lead.facilitator_role = ''
+            else:
+                lead.facilitator_role = ''
+
 
 
     # check if the current user is admin user

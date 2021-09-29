@@ -1463,9 +1463,7 @@ class CrmLead(models.Model):
 
     def write(self, values):
         if 'stage_id' in values:
-            if not self.is_mentor():
-                if not self.is_admin():
-                    if not self.is_facilitator():
+                    if self.is_facilitator():
                         raise ValidationError("No tienes permiso para marcar como ganado.")
         return super(CrmLead, self).write(values)
 
@@ -1835,6 +1833,26 @@ class CrmLead(models.Model):
 
         return res
 
+    @api.onchange('x_nombre_negocio')
+    def _onchange_x_nombre_negocio(self):
+        if self.x_nombre_negocio:
+            self.x_nombre_negocio = str(self.x_nombre_negocio).upper()
+
+    @api.onchange('name')
+    def _onchange_name(self):
+        chars = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '\\', ':', ';', '<', '=', '>', '?', '@', '[',  ']', '^', '_', '`', '{', '|', '}', '~']
+        delimiter = ''
+        for char in chars:
+            if char in str(self.name) :
+                raise ValidationError(('No se permiten caracteres especiales en el Nombre del Propietario: {}'.format(delimiter.join(chars))))
+    
+    @api.onchange('x_nombre')
+    def _onchange_x_nombre(self):
+        chars = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '\\', ':', ';', '<', '=', '>', '?', '@', '[',  ']', '^', '_', '`', '{', '|', '}', '~']
+        delimiter = ''
+        for char in chars:
+            if char in str(self.x_nombre) :
+                raise ValidationError(('No se permiten caracteres especiales en el Nombre del Propietario: {}'.format(delimiter.join(chars))))
 ##########################################################################
 #                           ATTENTION PLAN METHODS
 ##########################################################################

@@ -1310,7 +1310,7 @@ class CrmLead(models.Model):
             return
         lead_ids = self.search(
             [('mentors', '=', False),
-             ('diagnostico', 'in', ('confiable', 'incipiente'))])
+             ('diagnostico', 'in', ('confiable', 'incipiente', 'competente'))])
         if not lead_ids:
             return
         count_max = 0
@@ -1350,7 +1350,7 @@ class CrmLead(models.Model):
     def send_mail_notification(self, lead_id):
         try:
             template_id = self.env.ref('crm_diagnostic.q_mail_template_event_notification')
-            template_id.send_mail(lead_id.id, force_send=True)
+            template_id.send_mail(lead_id.id, force_send=False)
         except Exception as e:
             print(e)
 
@@ -1462,9 +1462,9 @@ class CrmLead(models.Model):
                 print(e)
 
     def write(self, values):
-        if 'stage_id' in values:
+        if len(values) == 1 and 'stage_id' in values:
                     if self.is_facilitator():
-                        raise ValidationError("No tienes permiso para marcar como ganado.")
+                        raise ValidationError("No tienes permiso para cambiar de etapa directamente. {}".format(values))
         return super(CrmLead, self).write(values)
 
 
@@ -1761,13 +1761,13 @@ class CrmLead(models.Model):
         if (self.is_facilitator()  or self.is_cordinator()):
             if self.first_module_ready:
                 second_stage =  self.get_stage('segundo_encuentro')
-                self.stage_id = second_stage if second_stage else self.stage_id
+                self.with_user(SUPERUSER_ID).stage_id = second_stage if second_stage else self.stage_id
             if self.first_module_ready and self.second_module_read:
                 third_stage =  self.get_stage('tercer_encuentro')
-                self.stage_id = third_stage if third_stage else self.stage_id
+                self.with_user(SUPERUSER_ID).stage_id = third_stage if third_stage else self.stage_id
             if self.first_module_ready and self.second_module_read and self.third_module_ready:
                 fourth_stage =  self.get_stage('espera_de_plan')
-                self.stage_id = fourth_stage if fourth_stage else self.stage_id
+                self.with_user(SUPERUSER_ID).stage_id = fourth_stage if fourth_stage else self.stage_id
 
     # inherit method to validate if the current user has the cordinator profile
     # if so then we set readonly=False on mentors field
@@ -1792,13 +1792,13 @@ class CrmLead(models.Model):
                         options['no_open'] = True
                         node.attrib['options'] = json.dumps(options)
 
-                res['arch'] = etree.tostring(doc)
+                #res['arch'] = etree.tostring(doc)
             if self.is_facilitator():
                 for node in doc.xpath("//header/field[@name='stage_id']"):
                     if 'options' in node.attrib:
                         node.attrib.pop('options')
 
-                res['arch'] = etree.tostring(doc)
+                #res['arch'] = etree.tostring(doc)
 
                 for node in doc.xpath("//field[@name='mentors']"):
                     if not 'options' in node.attrib:
@@ -1807,7 +1807,16 @@ class CrmLead(models.Model):
                         options['no_open'] = False
                         node.attrib['options'] = json.dumps(options)
 
-                res['arch'] = etree.tostring(doc)
+                #res['arch'] = etree.tostring(doc)
+
+            #if not self.stage_id.allow_mark_as_won:
+            #    for node in doc.xpath("//header/button[@name='action_set_won_rainbowman']"):
+            #        if 'modifiers' in node.attrib:
+            #            modifiers = json.loads(node.attrib['modifiers'])
+            #            modifiers['invisible'] = True
+            #            node.attrib['modifiers'] = json.dumps(modifiers)
+
+                #res['arch'] = etree.tostring(doc)
 
             if not self.is_mentor():
                 if not self.is_admin():
@@ -1818,7 +1827,7 @@ class CrmLead(models.Model):
                                 modifiers['invisible'] = True
                                 node.attrib['modifiers'] = json.dumps(modifiers)
 
-                        res['arch'] = etree.tostring(doc)
+            #            res['arch'] = etree.tostring(doc)
 
             if not self.is_mentor():
                 if not self.is_admin():
@@ -1829,8 +1838,8 @@ class CrmLead(models.Model):
                                 modifiers['readonly'] = True
                                 node.attrib['modifiers'] = json.dumps(modifiers)
 
-                        res['arch'] = etree.tostring(doc)
-
+            res['arch'] = etree.tostring(doc)
+        #import pdb; pdb.set_trace()
         return res
 
     @api.onchange('x_nombre_negocio')

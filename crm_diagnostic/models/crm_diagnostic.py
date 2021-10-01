@@ -228,16 +228,3 @@ class CrmDiagnostic(models.Model):
         context = dict(self.env.context)
         res = super(CrmDiagnostic, self.with_context(context)).create(vals)
         return res
-
-    @api.onchange('nombre_propietario')
-    def _onchange_nombre_propietario(self):
-        if self.nombre_propietario:
-            self.nombre_propietario = str(self.nombre_propietario).upper()
-    
-    @api.constrains('nombre_propietario')
-    def _constrains_nombre_propritario(self):
-        chars = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '\\', ':', ';', '<', '=', '>', '?', '@', '[',  ']', '^', '_', '`', '{', '|', '}', '~']
-        delimiter = ''
-        for char in chars:
-            if char in str(self.nombre_propietario) :
-                raise ValidationError(('No se permiten caracteres especiales en el Nombre del Propietario: {}'.format(delimiter.join(chars))))

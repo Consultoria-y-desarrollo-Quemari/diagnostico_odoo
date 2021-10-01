@@ -32,6 +32,7 @@ CRM Diagnostic
         'views/inherit_base_user_role_view.xml',
         'views/crm_attention_plan_view.xml',
         'views/account_analytic_line_view.xml',
+        'views/hide_create_button_task_form_view.xml',
         'views/project_task_view.xml',
         'report/crm_diagnostic_report_template.xml',
         'report/crm_diagnostic_report.xml',

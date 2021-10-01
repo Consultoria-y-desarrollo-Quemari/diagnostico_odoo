@@ -1009,6 +1009,8 @@ class CrmLead(models.Model):
 
     social_plan = fields.Boolean(default = False)
 
+    facilitator_role = fields.Char(compute="get_facilitator_role")
+
     def confirm_social_plan(self):
         for lead in self:
             lead.social_plan = True
@@ -1308,7 +1310,7 @@ class CrmLead(models.Model):
             return
         lead_ids = self.search(
             [('mentors', '=', False),
-             ('diagnostico', 'in', ('confiable', 'incipiente'))])
+             ('diagnostico', 'in', ('confiable', 'incipiente', 'competente'))])
         if not lead_ids:
             return
         count_max = 0
@@ -1348,7 +1350,7 @@ class CrmLead(models.Model):
     def send_mail_notification(self, lead_id):
         try:
             template_id = self.env.ref('crm_diagnostic.q_mail_template_event_notification')
-            template_id.send_mail(lead_id.id, force_send=True)
+            template_id.send_mail(lead_id.id, force_send=False)
         except Exception as e:
             print(e)
 
@@ -1428,6 +1430,21 @@ class CrmLead(models.Model):
                 lead.current_user_admin = True
             else:
                 lead.current_user_admin = False
+                
+    @api.depends('user_id')
+    def get_facilitator_role(self):
+        for lead in self:
+            facilitator_roles = lead.user_id.role_ids
+            if facilitator_roles:
+                facilitator_role = facilitator_roles[0].name
+
+                if facilitator_role:
+                    lead.facilitator_role = facilitator_role
+                else:
+                    lead.facilitator_role = ''
+            else:
+                lead.facilitator_role = ''
+
 
 
     # check if the current user is admin user
@@ -1445,10 +1462,9 @@ class CrmLead(models.Model):
                 print(e)
 
     def write(self, values):
-        if 'stage_id' in values:
-            if not self.is_mentor():
-                if not self.is_admin():
-                    raise ValidationError("No tienes permiso para marcar como ganado.")
+        if len(values) == 1 and 'stage_id' in values:
+                    if self.is_facilitator():
+                        raise ValidationError("No tienes permiso para cambiar de etapa directamente. {}".format(values))
         return super(CrmLead, self).write(values)
 
 
@@ -1596,7 +1612,7 @@ class CrmLead(models.Model):
     @api.depends(fields_module1)
     def compute_first_module(self):
         for lead in self:
-            if lead.is_facilitator():
+            if lead.is_facilitator() or lead.is_admin():
                 if lead.all_fields_module1_are_ok():
                     lead.first_module_ready = True
                 else:
@@ -1610,7 +1626,7 @@ class CrmLead(models.Model):
     @api.depends(fields_module2)
     def compute_second_module(self):
         for lead in self:
-            if lead.is_facilitator() and lead.first_module_ready:
+            if (lead.is_facilitator() or lead.is_admin()) and lead.first_module_ready:
                 if lead.all_fields_module2_are_ok():
                     lead.second_module_read = True
                 else:
@@ -1624,7 +1640,7 @@ class CrmLead(models.Model):
     @api.depends(full_list_field)
     def compute_third_module(self):
         for lead in self:
-            if lead.is_facilitator() and lead.second_module_read:
+            if (lead.is_facilitator() or lead.is_admin()) and lead.second_module_read:
                 if lead.all_fields_module3_are_ok():
                     lead.third_module_ready = True
                 else:
@@ -1745,13 +1761,13 @@ class CrmLead(models.Model):
         if (self.is_facilitator()  or self.is_cordinator()):
             if self.first_module_ready:
                 second_stage =  self.get_stage('segundo_encuentro')
-                self.stage_id = second_stage if second_stage else self.stage_id
+                self.with_user(SUPERUSER_ID).stage_id = second_stage if second_stage else self.stage_id
             if self.first_module_ready and self.second_module_read:
                 third_stage =  self.get_stage('tercer_encuentro')
-                self.stage_id = third_stage if third_stage else self.stage_id
+                self.with_user(SUPERUSER_ID).stage_id = third_stage if third_stage else self.stage_id
             if self.first_module_ready and self.second_module_read and self.third_module_ready:
                 fourth_stage =  self.get_stage('espera_de_plan')
-                self.stage_id = fourth_stage if fourth_stage else self.stage_id
+                self.with_user(SUPERUSER_ID).stage_id = fourth_stage if fourth_stage else self.stage_id
 
     # inherit method to validate if the current user has the cordinator profile
     # if so then we set readonly=False on mentors field
@@ -1776,13 +1792,13 @@ class CrmLead(models.Model):
                         options['no_open'] = True
                         node.attrib['options'] = json.dumps(options)
 
-                res['arch'] = etree.tostring(doc)
+                #res['arch'] = etree.tostring(doc)
             if self.is_facilitator():
                 for node in doc.xpath("//header/field[@name='stage_id']"):
                     if 'options' in node.attrib:
                         node.attrib.pop('options')
 
-                res['arch'] = etree.tostring(doc)
+                #res['arch'] = etree.tostring(doc)
 
                 for node in doc.xpath("//field[@name='mentors']"):
                     if not 'options' in node.attrib:
@@ -1791,30 +1807,61 @@ class CrmLead(models.Model):
                         options['no_open'] = False
                         node.attrib['options'] = json.dumps(options)
 
-                res['arch'] = etree.tostring(doc)
+                #res['arch'] = etree.tostring(doc)
+
+            #if not self.stage_id.allow_mark_as_won:
+            #    for node in doc.xpath("//header/button[@name='action_set_won_rainbowman']"):
+            #        if 'modifiers' in node.attrib:
+            #            modifiers = json.loads(node.attrib['modifiers'])
+            #            modifiers['invisible'] = True
+            #            node.attrib['modifiers'] = json.dumps(modifiers)
+
+                #res['arch'] = etree.tostring(doc)
 
             if not self.is_mentor():
                 if not self.is_admin():
-                    for node in doc.xpath("//header/button[@name='action_set_won_rainbowman']"):
-                        if 'modifiers' in node.attrib:
-                            modifiers = json.loads(node.attrib['modifiers'])
-                            modifiers['invisible'] = True
-                            node.attrib['modifiers'] = json.dumps(modifiers)
+                    if not self.is_facilitator():
+                        for node in doc.xpath("//header/button[@name='action_set_won_rainbowman']"):
+                            if 'modifiers' in node.attrib:
+                                modifiers = json.loads(node.attrib['modifiers'])
+                                modifiers['invisible'] = True
+                                node.attrib['modifiers'] = json.dumps(modifiers)
 
-                    res['arch'] = etree.tostring(doc)
+            #            res['arch'] = etree.tostring(doc)
 
             if not self.is_mentor():
                 if not self.is_admin():
-                    for node in doc.xpath("//header/field[@name='stage_id']"):
-                        if 'modifiers' in node.attrib:
-                            modifiers = json.loads(node.attrib['modifiers'])
-                            modifiers['readonly'] = True
-                            node.attrib['modifiers'] = json.dumps(modifiers)
+                    if not self.is_facilitator():
+                        for node in doc.xpath("//header/field[@name='stage_id']"):
+                            if 'modifiers' in node.attrib:
+                                modifiers = json.loads(node.attrib['modifiers'])
+                                modifiers['readonly'] = True
+                                node.attrib['modifiers'] = json.dumps(modifiers)
 
-                    res['arch'] = etree.tostring(doc)
-
+            res['arch'] = etree.tostring(doc)
+        #import pdb; pdb.set_trace()
         return res
 
+    @api.onchange('x_nombre_negocio')
+    def _onchange_x_nombre_negocio(self):
+        if self.x_nombre_negocio:
+            self.x_nombre_negocio = str(self.x_nombre_negocio).upper()
+
+    @api.onchange('name')
+    def _onchange_name(self):
+        chars = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '\\', ':', ';', '<', '=', '>', '?', '@', '[',  ']', '^', '_', '`', '{', '|', '}', '~']
+        delimiter = ''
+        for char in chars:
+            if char in str(self.name) :
+                raise ValidationError(('No se permiten caracteres especiales en el Nombre del Propietario: {}'.format(delimiter.join(chars))))
+    
+    @api.onchange('x_nombre')
+    def _onchange_x_nombre(self):
+        chars = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '\\', ':', ';', '<', '=', '>', '?', '@', '[',  ']', '^', '_', '`', '{', '|', '}', '~']
+        delimiter = ''
+        for char in chars:
+            if char in str(self.x_nombre) :
+                raise ValidationError(('No se permiten caracteres especiales en el Nombre del Propietario: {}'.format(delimiter.join(chars))))
 ##########################################################################
 #                           ATTENTION PLAN METHODS
 ##########################################################################

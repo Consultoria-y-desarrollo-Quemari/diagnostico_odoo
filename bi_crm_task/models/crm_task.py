@@ -70,7 +70,7 @@ class crm_task_wizard(models.TransientModel):
                 'task_id': task.id or False,
                 'user_id': task.user_id.id or False,
                 'date': date.today(),
-                'employee_id': self.env.user.partner_id.id,
+                'employee_id': self.env.user.employee_id.id,
                 }
         self.env['account.analytic.line'].create(vals)
         

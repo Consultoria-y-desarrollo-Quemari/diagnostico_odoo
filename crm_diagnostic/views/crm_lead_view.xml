@@ -49,6 +49,9 @@
             <field name="stage_state"/>
             <field name="allow_mark_as_won"/>
         </xpath>
+        <xpath expr="//field[@name='allow_mark_as_won']" position="before">
+            <field name="stage_after_confirm_social_plan"/>
+        </xpath>
         <xpath expr="//field[@name='is_won']" position="attributes">
             <attribute name="attrs">{'invisible': [('allow_mark_as_won', '=', False)]}</attribute>
         </xpath>

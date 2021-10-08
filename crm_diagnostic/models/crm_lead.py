@@ -1011,6 +1011,8 @@ class CrmLead(models.Model):
 
     facilitator_role = fields.Char(compute="get_facilitator_role")
 
+    show_action_set_rainbowman = fields.Boolean(compute="compute_show_action_set_rainbowman")
+
     def confirm_social_plan(self):
         stage_after = self.env['crm.stage'].search([('stage_after_confirm_social_plan', '=', True)])
         for lead in self:
@@ -1465,6 +1467,14 @@ class CrmLead(models.Model):
             else:
                 lead.facilitator_role = ''
 
+    @api.depends()
+    def compute_show_action_set_rainbowman(self):
+        for lead in self:
+            if lead.stage_id.allow_mark_as_won:
+                lead.show_action_set_rainbowman = True
+            else:
+                lead.show_action_set_rainbowman = False
+
 
 
     # check if the current user is admin user
@@ -1826,17 +1836,6 @@ class CrmLead(models.Model):
                         options['no_create'] = False
                         options['no_open'] = False
                         node.attrib['options'] = json.dumps(options)
-
-                #res['arch'] = etree.tostring(doc)
-
-            #if not self.stage_id.allow_mark_as_won:
-            #    for node in doc.xpath("//header/button[@name='action_set_won_rainbowman']"):
-            #        if 'modifiers' in node.attrib:
-            #            modifiers = json.loads(node.attrib['modifiers'])
-            #            modifiers['invisible'] = True
-            #            node.attrib['modifiers'] = json.dumps(modifiers)
-
-                #res['arch'] = etree.tostring(doc)
 
             if not self.is_mentor():
                 if not self.is_admin():

@@ -1341,6 +1341,7 @@ class CrmLead(models.Model):
                         lead_ids -= lead
                         count_max += 1
                         next_week = (event.start_datetime  + timedelta(weeks=2)).isocalendar()[1]
+                        self.env.cr.commit()
                 if count_max == 1:
                     count_max = 0
                     next_week = False

@@ -1012,8 +1012,11 @@ class CrmLead(models.Model):
     facilitator_role = fields.Char(compute="get_facilitator_role")
 
     def confirm_social_plan(self):
+        stage_after = self.env['crm.stage'].search([('stage_after_confirm_social_plan', '=', True)])
         for lead in self:
             lead.social_plan = True
+            if stage_after:
+                lead.with_user(SUPERUSER_ID).stage_id = stage_after[0]
 
     # returning an action to go to crm.diagnostic form view related to lead
     def action_crm_diagnostic_view(self):

@@ -1647,7 +1647,7 @@ class CrmLead(models.Model):
                     lead.first_module_ready = True
                 else:
                     lead.first_module_ready = False
-            elif lead.is_cordinator() or lead.is_orientador():
+            elif lead.is_cordinator() or lead.is_orientador() or lead.is_mentor() or lead.is_admin():
                 lead.first_module_ready = True
             else:
                 lead.first_module_ready = False
@@ -1661,7 +1661,7 @@ class CrmLead(models.Model):
                     lead.second_module_read = True
                 else:
                     lead.second_module_read = False
-            elif lead.is_cordinator() or lead.is_orientador():
+            elif lead.is_cordinator() or lead.is_orientador() or lead.is_mentor() or lead.is_admin():
                 lead.second_module_read = True
             else:
                 lead.second_module_read = False
@@ -1675,7 +1675,7 @@ class CrmLead(models.Model):
                     lead.third_module_ready = True
                 else:
                     lead.third_module_ready = False
-            elif lead.is_cordinator() or lead.is_orientador():
+            elif lead.is_cordinator() or lead.is_orientador() or lead.is_mentor() or lead.is_admin():
                 lead.third_module_ready = True
             else:
                 lead.third_module_ready = False

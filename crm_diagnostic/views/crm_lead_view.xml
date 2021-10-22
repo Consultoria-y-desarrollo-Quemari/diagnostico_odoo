@@ -25,7 +25,7 @@
                 <field name="third_module_ready" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='company_id']" position="after">
-                <field name="mentors" options="{}" />
+                <field name="mentors" options="{}" attrs="{'readonly': [('current_user_admin', '=', False)]}"/>
             </xpath>
             <xpath expr="//field[@name='user_id']" position="after">
                 <field name="coordinador"/>

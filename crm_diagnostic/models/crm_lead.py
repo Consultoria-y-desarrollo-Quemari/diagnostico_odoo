@@ -963,7 +963,6 @@ class CrmLead(models.Model):
     mentors = fields.Many2one(
         'res.partner',
         string='Mentores',
-        readonly=True
     )
 
     coordinador = fields.Many2one(

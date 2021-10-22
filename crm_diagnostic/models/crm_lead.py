@@ -1321,6 +1321,7 @@ class CrmLead(models.Model):
             if event_ids and lead_ids:
                 event_ids[0].opportunity_id = lead.id
                 lead.mentors = event_ids[0].partner_ids[0]
+                self.send_mail_notification(lead)
                 event_ids -= event_ids[0]
                 lead_ids -= lead
                 self.env.cr.commit()

@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
-from odoo import models, fields
+from odoo import models, fields, api
+from lxml import etree
+import json
 
 
 class CrmAttentionPlan(models.Model):
@@ -112,6 +114,84 @@ class CrmAttentionPlan(models.Model):
     prioridad_related = fields.Char(related='plan_line_ids.prioridad')
     actividad_related = fields.Char(related='plan_line_ids.actividades')
     soluciones_related = fields.Char(related='plan_line_ids.soluciones')
+
+    # validating if the current user has the facilitador profile
+    def is_facilitator(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'facilitador')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+
+    # validating if the current user has the cordinator profile
+    def is_cordinator(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'coordinador')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+
+    # validating if the current user has the mentor profile
+    def is_mentor(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'mentor')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+    
+    def is_orientador(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'orientador')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+
+    def is_admin(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'admin')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+
+    def is_administrativo(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'administrativo')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+
+    def is_estudiante(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'estudiante')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+
+    @api.model
+    def fields_view_get(
+            self, view_id=None, view_type='form', toolbar=False,
+            submenu=False):
+        res = super(CrmAttentionPlan, self).fields_view_get(
+            view_id=view_id, view_type=view_type, toolbar=toolbar,
+            submenu=submenu)
+        if view_type == 'form':
+            doc = etree.XML(res['arch'])
+
+            if self.is_facilitator():
+                for node in doc.xpath("//form"):
+                    node.set("create", 'false')
+                    node.set("edit", 'false')
+            res['arch'] = etree.tostring(doc)
+
+        if view_type == 'tree':
+            doc = etree.XML(res['arch'])
+
+            if self.is_facilitator():
+                for node in doc.xpath("//tree"):
+                    node.set("create", 'false')
+            res['arch'] = etree.tostring(doc)
+
+        return res
 
 
 

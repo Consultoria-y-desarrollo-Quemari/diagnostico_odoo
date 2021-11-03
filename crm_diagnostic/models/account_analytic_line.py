@@ -14,7 +14,7 @@ class AccountAnalyticLine(models.Model):
     stage_state =  fields.Selection(
         string='Estado de la Mentoria',
         selection=[('en_espera', 'En Espera'),
-                   ('en_proceso', 'En Proceso'),
+                   ('en_proceso', 'Programado'),
                    ('finalizado', 'Finalizado')],
     )
 

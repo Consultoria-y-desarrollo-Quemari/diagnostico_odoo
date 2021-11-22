@@ -14,6 +14,7 @@
             </xpath>
             <xpath expr="//field[@name='partner_ids']" position="attributes">
                 <attribute name="groups">crm_diagnostic.q_show_events_normally</attribute>
+                <attribute name="domain">[('contact_type', '=', 'mentor')]</attribute>
             </xpath>
             <xpath expr="//page[@name='page_options']" position="attributes">
                 <attribute name="groups">crm_diagnostic.q_show_events_normally</attribute>

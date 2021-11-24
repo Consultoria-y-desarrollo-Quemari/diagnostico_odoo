@@ -111,34 +111,34 @@ class AccountAnalyticLine(models.Model):
 
         return res
 
-    def validate_parte_horas(self, data, context):
-        parte_horas = self.env['account.analytic.line'].search([])
-        if context.get('active_ids'):
-            for record in parte_horas.filtered(lambda rec: rec.task_id.lead_id.id == context.get('active_ids')[0]):
-                if record.stage_state != 'finalizado':
-                    raise ValidationError(
-                        _(
-                            "No se puede crear un registro nuevo. "
-                            "Debe terminar antes la mentoria pendiente."
-                        )
-                    )
-        else:
-            for record in parte_horas.filtered(lambda rec: rec.task_id.id == data.get('task_id') and rec.task_id.project_id.id == data.get('project_id')):
-                if record.stage_state != 'finalizado':
-                    raise ValidationError(
-                        _(
-                            "No se puede crear un registro nuevo. "
-                            "Debe terminar antes la mentoria pendiente."
-                        )
-                    )
+    # def validate_parte_horas(self, data, context):
+    #     parte_horas = self.env['account.analytic.line'].search([])
+    #     if context.get('active_ids'):
+    #         for record in parte_horas.filtered(lambda rec: rec.task_id.lead_id.id == context.get('active_ids')[0]):
+    #             if record.stage_state != 'finalizado':
+    #                 raise ValidationError(
+    #                     _(
+    #                         "No se puede crear un registro nuevo. "
+    #                         "Debe terminar antes la mentoria pendiente."
+    #                     )
+    #                 )
+    #     else:
+    #         for record in parte_horas.filtered(lambda rec: rec.task_id.id == data.get('task_id') and rec.task_id.project_id.id == data.get('project_id')):
+    #             if record.stage_state != 'finalizado':
+    #                 raise ValidationError(
+    #                     _(
+    #                         "No se puede crear un registro nuevo. "
+    #                         "Debe terminar antes la mentoria pendiente."
+    #                     )
+    #                 )
 
-        return True
+    #     return True
 
     @api.model
     def create(self, values):
         
         context = self._context
-        self.validate_parte_horas(values, context)
+        # self.validate_parte_horas(values, context)
         result = super(AccountAnalyticLine, self).create(values)
         
         if result:

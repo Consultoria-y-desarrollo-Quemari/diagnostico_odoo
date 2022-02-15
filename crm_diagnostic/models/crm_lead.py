@@ -1046,26 +1046,6 @@ class CrmLead(models.Model):
             dic_sel_fields = lead.getting_selection_fields_to_dignostic_form(lead)
             dic_vals.update(dic_sel_fields)
             results = lead.prepare_diagnostic_lines(lead)
-            
-            if 'PROTOCOLOS DE BIOSEGURIDAD' in results:
-                area_val = 'bioseguridad'
-                dic_vals['crm_diagnostic_line_orientation_ids'] = results.get('PROTOCOLOS DE BIOSEGURIDAD')
-                puntaje1 = 0
-                count1 = 0
-                for record in dic_vals['crm_diagnostic_line_orientation_ids']:
-                    for dic in record:
-                        if type(dic).__name__ == 'dict':
-                            if 'puntaje' in dic.keys():
-                                print(dic.get('puntaje'))
-                                puntaje1 += int(dic.get('puntaje'))
-                                count1 += 1
-                                # dic.get('puntaje')
-                        elif type(dic).__name__ == 'tuple':
-                            if 'puntaje' in dic[2].keys():
-                                puntaje1 += int(dic[2].get('puntaje'))
-                                count1 += 1
-                dic_vals['calificacion'] = puntaje1
-                dic_vals['valoracion_bio'] = self._get_valoracion_bio(puntaje1)
 
             if 'MODELO DE NEGOCIO' in results:
                 dic_vals['crm_diagnostic_line_business_model_ids'] = results.get('MODELO DE NEGOCIO')
@@ -1235,6 +1215,7 @@ class CrmLead(models.Model):
             # validating if the field value is in ANSWER_VALUES
             # we obtain certain values from lead on its field what is iterating
             if field_value in ANSWER_VALUES:
+                raise ValidationError('{}'.format(field.name))
                 answer = dict(lead._fields[field.name].selection).get(getattr(lead, field.name))
                 score = ANSWER_VALUES.get(field_value)
                 valuation = TEXT_VALUATION.get(score)
@@ -1325,47 +1306,6 @@ class CrmLead(models.Model):
                 event_ids -= event_ids[0]
                 lead_ids -= lead
                 self.env.cr.commit()
-        
-        # event_ids = self.available_events()
-        # if not event_ids:
-        #     return
-        # lead_ids = self.search(
-        #     [('mentors', '=', False),
-        #      ('diagnostico', 'in', ('confiable', 'incipiente', 'competente'))])
-        # if not lead_ids:
-        #     return
-        # count_max = 0
-        # last_week = True
-        # _logger.info("&"*100)
-        # next_week = True
-        # user_ids = True
-
-        # for lead in lead_ids:
-
-        #     for event in event_ids.sorted(reverse=True):
-
-        #         if user_ids == True:
-        #             user_ids = event.partner_ids
-        #         _logger.info(next_week)
-        #         if last_week and last_week != event.start_datetime.isocalendar()[1]:
-        #             if next_week == True:
-        #                 next_week = event.start_datetime.isocalendar()[1]
-        #             if next_week == event.start_datetime.isocalendar()[1] and user_ids == event.partner_ids:
-        #                 last_week = event.start_datetime.isocalendar()[1]
-        #                 event.opportunity_id = lead.id
-        #                 lead.mentors += event.partner_ids[0]
-        #                 self.send_mail_notification(lead)
-        #                 event_ids -= event
-        #                 lead_ids -= lead
-        #                 count_max += 1
-        #                 next_week = (event.start_datetime  + timedelta(weeks=2)).isocalendar()[1]
-        #                 self.env.cr.commit()
-        #         if count_max == 1:
-        #             count_max = 0
-        #             next_week = False
-        #             user_ids = True
-        #             last_week = True
-        #             break
 
     # send email notification to coordinador and facilitador
     @api.model
@@ -1515,73 +1455,54 @@ class CrmLead(models.Model):
     # methos that return list of fields by section
     def fields_module3_generalities(self):
         return [
-            # 'x_in_empleo', 'x_forma58_form', 'x_forma61_form', 'x_forma60_form',
-            # 'x_forma65_inf', 
-            'x_datos3']
-
-    #MODULO 3 BIOSEGURIDAD
-    def fields_module3_biosecurity(self):
-        return [
-            'x_proto1_bio'
+            'x_datos3'
         ]
 
-    #MODULO 3 NEGOCIOS
+    # MÓDULO 3 INNOVACIÓN, OPERACIÓN Y ORGANIZACIÓN
+    def fields_module3_inno_org_op(self):
+        return [
+            'x_innova_org_1', 'x_innova_org_2', 'x_innova_org_3',
+            'x_innova_org_4', 'x_innova_org_5', 'x_innova_org_6',
+        ]
+
+    #MODULO 3 MODELO DE NEGOCIOS
     def fields_module3_business_model(self):
         return [
-            'x_neg4', 'x_neg5', 'x_neg6', 'x_neg7', 'x_neg8',
-            'x_neg12', 'x_neg16'
-        ]
-
-    #Ya no esta en uso
-    def fields_module3_production(self):
-        return [
-        ]
-
-    #Ya No Se Usa
-    def fields_module3_innovation(self):
-        return [
-        ]
-
-    #MODELO 3 FORMALIZACION
-    def fields_module3_formalization(self):
-        return [
-            'x_forma40', 'x_forma41', 'x_forma43', 'x_forma44',
-            'x_forma45', 'x_forma46', 'x_forma47', 'x_forma48', 'x_forma49',
-            'x_forma50', 'x_forma51', 'x_forma52'
-        ]
-
-    #Ya No Se Usa
-    def fields_module3_organization(self):
-        return [
-            # 'x_org61', 'x_org62', 'x_org63', 'x_org64', 'x_org65', 'x_org66',
-            # 'x_org67', 'x_org68'
-        ]
-    #MODELO 3 MERCADEO
-    def fields_module3_marketing(self):
-        return [
-            'x_mer_com30', 'x_mer_com31', 'x_mer_com32', 'x_mer_com34',
-            'x_mer_com36', 'x_mer_com38', 'x_mer_com39',
+            'x_neg4', 'x_neg6', 'x_neg7',
+            'x_neg8', 'x_neg14',
         ]
 
     #MODELO 3 FINANCIERO
     def fields_module3_financial(self):
         return [
-            'x_financiero18', 'x_financiero19', 'x_financiero20', 'x_financiero21',
-            'x_financiero22', 'x_financiero23', 'x_financiero24', 'x_financiero25',
-            'x_financiero26', 'x_financiero27', 'x_financiero28', 'x_financiero29',
+            'x_financiero18', 'x_financiero20', 'x_financiero21',
+            'x_financiero22', 'x_financiero23', 'x_financiero24',
+            'x_financiero25',
+        ]
+
+    #MODELO 3 MERCADEO
+    def fields_module3_marketing(self):
+        return [
+            'x_neg5', 'x_mer_com30', 'x_mer_com31',
+            'x_mer_com32', 'x_mer_com34', 'x_mer_com38',
+            'x_mer_com39',
+        ]
+
+    #MODELO 3 FORMALIZACION
+    def fields_module3_formalization(self):
+        return [
+            'x_forma44', 'x_forma45', 'x_forma46',
+            'x_forma47_1', 'x_forma49_1',
         ]
 
     def full_list_field(self):
         full_fields = []
         full_fields.extend(self.fields_module3_generalities())
-        full_fields.extend(self.fields_module3_biosecurity())
+        full_fields.extend(self.fields_module3_inno_org_op())
         full_fields.extend(self.fields_module3_business_model())
-        # full_fields.extend(self.fields_module3_production())
-        # full_fields.extend(self.fields_module3_innovation())
-        full_fields.extend(self.fields_module3_formalization())
-        # full_fields.extend(self.fields_module3_organization())
-        # full_fields.extend(self.fields_module3_marketing())
         full_fields.extend(self.fields_module3_financial())
+        full_fields.extend(self.fields_module3_marketing())
+        full_fields.extend(self.fields_module3_formalization())
         full_fields.extend(['second_module_read'])
         return full_fields
     # ended section
@@ -1683,16 +1604,11 @@ class CrmLead(models.Model):
     # validating it all fields of module3 were filled
     def all_fields_module3_are_ok(self):
         result = []
-        # fields = self.fields_module3()
-        # result.append(self.check_generalities_fields(self.fields_module3_generalities()))
-        result.append(self.check_biosecurity_fields(self.fields_module3_biosecurity()))
+        result.append(self.check_inno_org_op(self.fields_module3_inno_org_op()))
         result.append(self.check_business_model_fields(self.fields_module3_business_model()))
-        # result.append(self.check_production_fields(self.fields_module3_production()))
-        # result.append(self.check_innovation_fields(self.fields_module3_innovation()))
-        result.append(self.check_formalization_fields(self.fields_module3_formalization()))
-        # result.append(self.check_organization_fields(self.fields_module3_organization()))
-        result.append(self.check_marketing_fields(self.fields_module3_marketing()))
         result.append(self.check_financial_fields(self.fields_module3_financial()))
+        result.append(self.check_marketing_fields(self.fields_module3_marketing()))
+        result.append(self.check_formalization_fields(self.fields_module3_formalization()))
         if any(r == False for r in result):
             return False
         else:
@@ -1705,8 +1621,8 @@ class CrmLead(models.Model):
         else:
             return True
 
-    # checking if all biosecurity field section are ok
-    def check_biosecurity_fields(self, fields):
+    # cheking if all innovation fields section are ok
+    def check_inno_org_op(self, fields):
         if any(not getattr(self, field) for field in fields):
             return False
         else:
@@ -1719,29 +1635,8 @@ class CrmLead(models.Model):
         else:
             return True
 
-    # checking if all production field section are ok
-    def check_production_fields(self, fields):
-        if any(not getattr(self, field) for field in fields):
-            return False
-        else:
-            return True
-
-    # checking if all innovation field section are ok
-    def check_innovation_fields(self, fields):
-        if any(not getattr(self, field) for field in fields):
-            return False
-        else:
-            return True
-
-    # checking if all formalization field section are ok
-    def check_formalization_fields(self, fields):
-        if any(not getattr(self, field) for field in fields):
-            return False
-        else:
-            return True
-
-    # checking if all organization field section are ok
-    def check_organization_fields(self, fields):
+    # checking if all financial field section are ok
+    def check_financial_fields(self, fields):
         if any(not getattr(self, field) for field in fields):
             return False
         else:
@@ -1754,13 +1649,12 @@ class CrmLead(models.Model):
         else:
             return True
 
-    # checking if all financial field section are ok
-    def check_financial_fields(self, fields):
+    # checking if all formalization field section are ok
+    def check_formalization_fields(self, fields):
         if any(not getattr(self, field) for field in fields):
             return False
         else:
             return True
-
 
     # validating it all fields of module1 were filled
     def all_fields_module1_are_ok(self):

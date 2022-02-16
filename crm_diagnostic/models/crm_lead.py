@@ -21,7 +21,6 @@ RANGES = {
 CRM_DIAGNOSTIC_SELECTION_FIELDS = {
     'doctype': 'tipo_documento',
     'x_ubic': 'ubicacion',
-    # 'x_actcomer': 'actividad_micronegocio',
     'x_forma41': 'actividad_micronegocio',
     'x_microneg': 'tipo_micronegocio',
     }
@@ -29,36 +28,76 @@ CRM_DIAGNOSTIC_SELECTION_FIELDS = {
 ANSWER_VALUES = {
         'si': 5,
         'en_proceso': 3,
+        'parcialmente' : 3,
         'no': 1,
-        'no_aplica': 0,
-        'totalmente_de_acuerdo': 5,
-        'de_acuerdo': 4,
-        'ni_de_acuerdo_ni_en_desacuerdo': 3,
-        'en_desacuerdo': 2,
-        'totalmente_en_desacuerdo': 1,
-        'promociones': 5,
-        'referidos': 5, 
-        'redes_sociales': 5,
-        'ninguna': 1,
     }
 
 TEXT_VALUATION = {
         1: 'Incipiente',
-        2: 'Aceptable',
+        2: 'Confiable',
         3: 'Confiable',
         4: 'Competente',
         5: 'Excelencia'
     }
 
+M2M_FIELDS = ['x_neg6', 'x_neg5', 'x_mer_com32', 'x_mer_com34', 'x_forma51']
+
 SUGGEST_VALUATION = {
-    'x_proto1_bio': {
-        1: 'Buscar proyectos y programas públicos y privados que subsidien o faciliten la obtención de tapabocas y elementos de protección para el micronegocio',
+    # 1
+    'x_innova_org_1': {
+        1: 'Remitir a talleres o cursos de innovación con el objetivo de prototipar y lanzar nuevos productos o servicios en su micronegocio',
         2: '',
-        3: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
+        3: '',
         4: '',
         5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
+        'area': 'INNOVACION'
         },
+    # 2
+    'x_innova_org_2': {
+        1: 'Buscar y explicar de nuevas herramientas tecnológicas que puedan mejorar los procesos o productividad del micronegocio',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'INNOVACION'
+        },
+    # 3
+    'x_innova_org_3': {
+        1: 'Acompañar y capacitar acerca de hábitos de planeación y organización, así como el diseño de un registro para llevar el cumplimiento de un plan y las metas',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'INNOVACION'
+        },
+    # 4
+    'x_innova_org_4': {
+        1: 'Acompañar y capacitar aspectos de planeación estratégica, así como la definición de una misión, visión y objetivos a largo plazo del micronegocio',
+        2: 'Revisar y hacer sugerencias acerca de la misión, visión y objetivos a largo plazo del micronegocio',
+        3: 'Revisar y hacer sugerencias acerca de la misión, visión y objetivos a largo plazo del micronegocio',
+        4: '',
+        5: '',
+        'area': 'INNOVACION'
+        },
+    # 5
+    'x_innova_org_5': {
+        1: 'Acompañar y capacitar acerca de la elaboración y seguimientos de los registros de inventario',
+        2: '',
+        3: '',
+        4: '',
+        5: '',
+        'area': 'INNOVACION'
+        },
+    # 6
+    'x_innova_org_6': {
+        1: 'Identificar alternativas y/o acciones necesarias para adecuar su espacio de trabajo',
+        2: 'Revisar y hacer sugerencias acerca de los cambios necesarios para adecuar correctamente su espacio de trabajo',
+        3: 'Revisar y hacer sugerencias acerca de los cambios necesarios para adecuar correctamente su espacio de trabajo',
+        4: '',
+        5: '',
+        'area': 'INNOVACION'
+        },
+    # 7
     'x_neg4': {
         1: 'Definir para quién está creando valor y quienes son sus clientes más importantes y la posibilidad de agrupar estos por medio de sus características, definir como aumentar su satisfacción',
         2: '',
@@ -67,78 +106,34 @@ SUGGEST_VALUATION = {
         5: '',
         'area': 'MODELO DE NEGOCIO'
         },
-    'x_neg5': {
-        1: 'Definir el valor que quiere entregar a sus clientes, clarificar que problemas o dolores quiere ayudar a resolver, validar  si los productos y/o servicios ofrecidos, realmente solucionan problemas o satisfacen las necesidades de los clientes',
-        2: '',
-        3: 'Validación de los productos y/o servicios ofrecidos, para lograr asegurar que realmente solucionan problemas o satisfacen las necesidades de los clientes',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
+    # 8 
     'x_neg6': {
-        1: 'Definir para quién está creando valor y quienes son sus clientes más importantes y la posibilidad de agrupar estos por medio de sus características, definir como aumentar su satisfacción',
-        2: '',
-        3: '',
+        1: 'Ajustar los canales comerciales de acuerdo a la propuesta de valor y sus clientes',
+        2: 'Requiere explorar más canales , afinarlos y ponerlos a funcionar',
+        3: 'Requiere explorar más canales , afinarlos y ponerlos a funcionar',
         4: '',
         5: '',
         'area': 'MODELO DE NEGOCIO'
         },
+    # 9
     'x_neg7': {
-        1: 'Definir mecanismos de captación de los diferentes clientes potenciales de acuerdo a sus caracteriísticas',
+        1: 'Buscar apoyo en herramientas tecnológicas o registros donde pueda llevar el control y supervisión de los clientes para generar estrategias de fidelización y compra más frecuente',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'MODELO DE NEGOCIO'
         },
+    # 10
     'x_neg8': {
-        1: 'Definir mecanismos de captación de los diferentes clientes potenciales de acuerdo a sus caracteriísticas',
+        1: '',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'MODELO DE NEGOCIO'
         },
-    'x_neg9': {
-        1: 'Gestionar los recursos requeridos para el perfecto funcionamiento del modelo de negocio y para  el cumplimiento de la propuesta de valor',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_neg10': {
-        1: 'Gestionar los recursos requeridos para el perfecto funcionamiento del modelo de negocio y para  el cumplimiento de la propuesta de valor',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_neg11': {
-        1: 'Gestionar los recursos requeridos para el perfecto funcionamiento del modelo de negocio y para  el cumplimiento de la propuesta de valor',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_neg12': {
-        1: 'Gestionar acuerdos con proveedores',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_neg13': {
-        1: 'Gestionar acuerdos con proveedores',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
+    # 14
     'x_neg14': {
         1: 'Gestionar acuerdos con proveedores',
         2: '',
@@ -147,807 +142,177 @@ SUGGEST_VALUATION = {
         5: '',
         'area': 'MODELO DE NEGOCIO'
         },
-    'x_neg15': {
-        1: 'Identificar y definir la rentabilidad de cada producto o servicio que ofrece como la utilidad total del negocio',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_neg16': {
-        1: 'Definir el valor que quiere entregar a sus clientes, clarificar que problemas o dolores quiere ayudar a resolver, validar  si los productos y/o servicios ofrecidos, realmente solucionan problemas o satisfacen las necesidades de los clientes',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
+    # 17
     'x_financiero18': {
-        1: 'Orientacion al propietario del negocio en los habitos positivos financieros',
+        1: 'Orientar al propietario del negocio acerca de los hábitos positivos financieros y la importancia de llevar registros económicos',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'FINANZAS'
         },
+    # 19
     'x_financiero20': {
-        1: 'Orientacion al propietario del negocio en los habitos positivos financieros',
+        1: 'Orientar al propietario del negocio acerca de los hábitos positivos financieros y la importancia de llevar registros económicos',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'FINANZAS'
         },
+    # 20
     'x_financiero21': {
-        1: 'Acompañamiento en el proceso de calculo del punto de equilibrio',
+        1: 'Acompañar y explicar el proceso para calcular el punto de equilibrio',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'FINANZAS'
         },
+    # 21
     'x_financiero22': {
-        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        1: 'Acompañar y explicar los beneficios de la Inclusión financiera para el acceso a los productos del sistema bancario',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'FINANZAS'
         },
-    'x_financiero22': {
-        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'FINANZAS'
-        },
+    # 22
     'x_financiero23': {
-        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        1: 'Explicar procesos de agrupación y reestructuración de los pagos de la deuda, idealmente para que todo quede asociado a un solo acreedor',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'FINANZAS'
         },
+    # 23
     'x_financiero24': {
-        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        1: 'Remitir a un asesor de una entidad bancaria para que realicen el proceso de asesoramiento y determinación del monto máximo de endeudamiento',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'FINANZAS'
         },
+    # 24
     'x_financiero25': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: 'Remitir a la Cooperativa Minuto de Dios',
-        'area': 'FINANZAS'
-        },
-    'x_financiero26': {
-        1: 'Acompañamiento en la Inclusión financiera para el acceso a los productos financieros del sistema bancario',
+        1: 'Acompañar y capacitar aspectos de educación financiera para la búsqueda e implementación de una herramienta (Excel, SIIGO) que permita realizar los registros contables del negocio',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'FINANZAS'
         },
+    # 27
+    'x_neg5': {
+        1: 'Definir el valor que quiere entregar a sus clientes, clarificar que problemas o dolores quiere ayudar a resolver, validar si los productos y/o servicios ofrecidos, realmente solucionan problemas o satisfacen las necesidades de los clientes',
+        2: 'Validar los productos y/o servicios ofrecidos, para lograr asegurar que realmente solucionan problemas o satisfacen las necesidades de los clientes',
+        3: 'Validar los productos y/o servicios ofrecidos, para lograr asegurar que realmente solucionan problemas o satisfacen las necesidades de los clientes',
+        4: '',
+        5: '',
+        'area': 'MERCADEO Y COMERCIALIZACION'
+        },
+    # 28
     'x_mer_com30': {
-        1: 'Acompañamiento en el diseño de estrategias para la visibilidad de los productos o servicios',
-        2: '',
-        3: 'Acompañamiento en el diseño de estrategias para la visibilidad de los productos o servicios',
+        1: 'Acompañar en el diseño de estrategias para la visibilidad de los productos o servicios',
+        2: 'Acompañar en el diseño de estrategias para la visibilidad de los productos o servicios',
+        3: 'Acompañar en el diseño de estrategias para la visibilidad de los productos o servicios',
         4: '',
         5: '',
         'area': 'MERCADEO Y COMERCIALIZACION'
         },
+    # 29
     'x_mer_com31': {
-        1: 'Acompañamiento en el diseño de estrategias para la visibilidad de los producto o servicios',
+        1: 'Acompañar en el diseño de estrategias para la visibilidad de los productos o servicios',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'MERCADEO Y COMERCIALIZACION'
         },
+    # 30
+    'x_mer_com32': {
+        1: 'Acompañar en la identificación de oportunidades de mercado y nuevos segmentos de clientes',
+        2: 'Acompañar en la definición del plan de marketing',
+        3: 'Acompañar en la definición del plan de marketing',
+        4: '',
+        5: '',
+        'area': 'MERCADEO Y COMERCIALIZACION'
+        },
+    # 32
+    'x_mer_com34': {
+        1: 'Acompañar en el diseño de estrategias para la visibilidad de los producto o servicios',
+        2: 'Acompañar en la definición del plan de marketing',
+        3: 'Acompañar en la definición del plan de marketing',
+        4: '',
+        5: '',
+        'area': 'MERCADEO Y COMERCIALIZACION'
+        },
+    # 34
     'x_mer_com38': {
-        1: 'Acompañamiento en el uso de redes sociales para promocionar y posicionar su negocio y productos',
+        1: 'Acompañar en el uso de redes sociales para promocionar y posicionar su negocio y productos',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'MERCADEO Y COMERCIALIZACION'
         },
+    # 35
     'x_mer_com39': {
-        1: 'Acompañamiento en el uso de herramientas digitales para promoción de sus productos (uso de redes sociales o el desarrollo de paginas web)',
+        1: 'Acompañar en el uso de herramientas digitales para promoción de sus productos (uso de redes sociales o el desarrollo de páginas web)',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'MERCADEO Y COMERCIALIZACION'
         },
+    # 36
     'x_forma44': {
-        1: 'Acompañamiento y asesoria en la formalizacion del negocio',
+        1: 'Acompañar y asesorar en los procesos para la formalización del negocio',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'FORMALIZACION'
         },
+    # 37
     'x_forma45': {
-        1: 'Acompañamiento y asesoria en la formalizacion del negocio',
+        1: 'Acompañar y asesorar en los procesos para la formalización del negocio',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'FORMALIZACION'
         },
+    # 38
     'x_forma46': {
-        1: 'Acompañamiento y asesoria en la formalizacion del negocio',
+        1: 'Acompañar y asesorar en los procesos para la formalización del negocio',
         2: '',
         3: '',
         4: '',
         5: '',
         'area': 'FORMALIZACION'
         },
-    'x_in_empleo': {
-        1: '',
+    # 40
+    'x_forma47_1': {
+        1: 'Acompañar y asesorar en los procesos de pagos parafiscales para sus empleados',
         2: '',
-        3: '',
-        4: '',
-        5: 'Remitir al programa de Empleabilidad',
-        'area': 'FINANZAS'
-        },
-    'x_fin97n': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: 'Remitir a la Cooperativa Minuto de Dios',
-        'area': 'FINANZAS'
-        },
-    'x_proto1': {
-        1: 'Acompañamiento y asesoría en la implementación de los protocolos de bioseguridad según la actividad económica del micronegocio.',
-        2: 'Acompañamiento y asesoría en la implementación de los protocolos de bioseguridad según la actividad económica del micronegocio.',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto2': {
-        1: 'Acompañamiento y asesoría en la implementación de los protocolos de bioseguridad según la actividad económica del micronegocio.',
-        2: 'Acompañamiento y asesoría en la implementación de los protocolos de bioseguridad según la actividad económica del micronegocio.',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto3': {
-        1: 'Buscar proyectos y programas públicos y privados que subsidien o faciliten la obtención de tapabocas y elementos de protección para el micronegocio',
-        2: 'Buscar proyectos y programas públicos y privados que subsidien o faciliten la obtención de tapabocas y elementos de protección para el micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto4': {
-        1: 'Buscar proyectos y programas públicos y privados que subsidien o faciliten la obtención de tapabocas y elementos de protección para el micronegocio',
-        2: 'Buscar proyectos y programas públicos y privados que subsidien o faciliten la obtención de tapabocas y elementos de protección para el micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto6': {
-        1: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        2: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto7': {
-        1: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        2: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto8': {
-        1: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        2: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto9': {
-        1: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        2: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto10': {
-        1: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        2: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto11': {
-        1: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        2: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto12': {
-        1: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        2: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto13': {
-        1: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        2: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto14': {
-        1: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        2: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto15': {
-        1: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        2: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_proto16': {
-        1: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        2: 'Capacitación e implementación en protocolos de bioseguridad para el funcionamiento seguro del micronegocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PROTOCOLOS DE BIOSEGURIDAD'
-        },
-    'x_model21': {
-        1: 'Capacitar al propietario en el diseño del modelo de negocio.',
-        2: 'Capacitar al propietario en el diseño del modelo de negocio.',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model22': {
-        1: 'Capacitar al propietario en el diseño del modelo de negocio.',
-        2: 'Capacitar al propietario en el diseño del modelo de negocio.',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model23': {
-        1: 'Capacitar al propietario del negocio sobre los canales de distribución y definir cuál es el más adecuado para el producto o servicio',
-        2: 'Capacitar al propietario del negocio sobre los canales de distribución y definir cuál es el más adecuado para el producto o servicio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model24': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model25': {
-        1: 'Determinar los conocimiento y habilidades que requieren los trabajadores para laborar en el micronegocio',
-        2: 'Determinar los conocimiento y habilidades que requieren los trabajadores para laborar en el micronegocio',
-        3: 'Fortalecer los conocimiento y habilidades que requieren los trabajadores para laborar en el micronegocio',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model26': {
-        1: 'Acompañamiento en programas de manipulación de alimentos',
-        2: 'Acompañamiento en programas de manipulación de alimentos',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model27': {
-        1: 'Capacitar al propietario del negocio en seguridad y salud en el trabajo',
-        2: 'Capacitar al propietario del negocio en seguridad y salud en el trabajo',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model28': {
-        1: 'Definir procedimientos, instrucciones y normas que se deben tener para producir alimentos saludables',
-        2: 'Definir procedimientos, instrucciones y normas que se deben tener para producir alimentos saludables',
-        3: 'Fortalecer los procedimientos e instrucciones para cumplir con las normas que se requiere al producir alimentos.',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model29': {
-        1: 'Acompañamiento en la búsqueda y selección de proveedores que mejor se adecuen a las necesidades del negocio',
-        2: 'Acompañamiento en la búsqueda y selección de proveedores que mejor se adecuen a las necesidades del negocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model30': {
-        1: 'Orientar al personal sobre los beneficios que puede obtener en cada uno de los pagos.',
-        2: 'Orientar al personal sobre los beneficios que puede obtener en cada uno de los pagos.',
-        3: 'Fortalecer al propietario en finanzas para que tenga claridad en los pagos a crédito.',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model31': {
-        1: 'Capacitar al propietario del negocio en proyecciones de compra.',
-        2: 'Capacitar al propietario del negocio en proyecciones de compra.',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model32': {
-        1: 'Acompañamiento en la definición de procesos estandarizado para la producción o manipulación del producto',
-        2: 'Acompañamiento en la definición de procesos estandarizado para la producción o manipulación del producto',
-        3: 'Fortalecimiento en los procesos estandarizado para la producción o manipulación del producto',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model33': {
-        1: 'Acompañamiento en la definición de proceso estandarizado para la producción o manipulación del producto',
-        2: 'Acompañamiento en la definición de proceso estandarizado para la producción o manipulación del producto',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model34': {
-        1: 'Acompañamiento en la definición de controles de existencias, que permitan conocer los productos de mayor demanda y realizar compras inteligentes.',
-        2: 'Acompañamiento en la definición de controles de existencias, que permitan conocer los productos de mayor demanda y realizar compras inteligentes.',
-        3: 'Fortalecer los controles de existencias, que permitan conocer los productos de mayor demanda y realizar compras inteligentes.',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model35': {
-        1: 'Acompañamiento para el diseño de instrumentos que les permita tener los registro de las entradas y salidas para mayor control de los inventarios.',
-        2: 'Acompañamiento para el diseño de instrumentos que les permita tener los registro de las entradas y salidas para mayor control de los inventarios.',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model36': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_model37': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MODELO DE NEGOCIO'
-        },
-    'x_innova24': {
-        1: 'Capacitar al propietario en la identificación de costos y gastos propios del negocio.',
-        2: 'Capacitar al propietario en la identificación de costos y gastos propios del negocio.',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PRODUCCIÓN'
-        },
-    'x_innova25': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PRODUCCIÓN'
-        },
-    'x_innova26': {
-        1: 'Capacitar al propietario en la definición del punto de equilibrio del negocio.',
-        2: 'Capacitar al propietario en la definición del punto de equilibrio del negocio.',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PRODUCCIÓN'
-        },
-    'x_innova27': {
-        1: 'Capacitar al propietario en la definición del punto de equilibrio del negocio.',
-        2: 'Capacitar al propietario en la definición del punto de equilibrio del negocio.',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PRODUCCIÓN'
-        },
-    'x_prodl42': {
-        1: 'Acompañamiento en diseño modelo de negocio innovador',
-        2: 'Acompañamiento en diseño modelo de negocio innovador',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PRODUCCIÓN'
-        },
-    'x_prodl43': {
-        1: 'Diseñar un plan de formación para los trabajadores',
-        2: 'Diseñar un plan de formación para los trabajadores',
-        3: 'Fortalecimiento del plan de formación para los trabadores',
-        4: '',
-        5: '',
-        'area': 'PRODUCCIÓN'
-        },
-    'x_innova29': {
-        1: 'Apoyo en el diseño de la cultura organizacional',
-        2: 'Apoyo en el diseño de la cultura organizacional',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PRODUCCIÓN'
-        },
-    'x_innova33': {
-        1: 'Formar al propietario en creatividad e innovación',
-        2: 'Formar al propietario en creatividad e innovación',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PRODUCCIÓN'
-        },
-    'x_prodl46': {
-        1: 'Acompañamiento en diseño modelo de negocio innovador',
-        2: 'Acompañamiento en diseño modelo de negocio innovador',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PRODUCCIÓN'
-        },
-    'x_prodl47': {
-        1: 'Acompañamiento en diseño modelo de negocio innovador',
-        2: 'Acompañamiento en diseño modelo de negocio innovador',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PRODUCCIÓN'
-        },
-    'x_innova39': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'PRODUCCIÓN'
-        },
-    'x_innova40': {
-        1: 'Acompañamiento para el análisis interno y externo del negocio para identificar los factores que influyen positiva y negativamente, y las oportunidades, fortalezas, debilidades y amenazas propias del negocio.',
-        2: 'Acompañamiento para el análisis interno y externo del negocio para identificar los factores que influyen positiva y negativamente, y las oportunidades, fortalezas, debilidades y amenazas propias del negocio.',
-        3: 'Fortalecer el análisis interno y externo que realiza el propietario del negocio para identificar los factores que influyen positiva y negativamente, y las oportunidades, fortalezas, debilidades y amenazas propias del negocio.',
-        4: '',
-        5: '',
-        'area': 'INNOVACIÓN'
-        },
-    'x_ninova50': {
-        1: 'Acompañamiento para el análisis interno y externo del negocio para identificar los factores que influyen positiva y negativamente, y las oportunidades, fortalezas, debilidades y amenazas propias del negocio.',
-        2: 'Acompañamiento para el análisis interno y externo del negocio para identificar los factores que influyen positiva y negativamente, y las oportunidades, fortalezas, debilidades y amenazas propias del negocio.',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'INNOVACIÓN'
-        },
-    'x_innova43_inf': {
-        1: 'Acompañamiento para el análisis interno y externo del negocio para identificar los factores que influyen positiva y negativamente, y las oportunidades, fortalezas, debilidades y amenazas propias del negocio.',
-        2: 'Acompañamiento para el análisis interno y externo del negocio para identificar los factores que influyen positiva y negativamente, y las oportunidades, fortalezas, debilidades y amenazas propias del negocio.',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'INNOVACIÓN'
-        },
-    'x_ninova52': {
-        1: 'Acompañar al propietario del negocio en la definición de la planeación estratégica del negocio.',
-        2: 'Acompañar al propietario del negocio en la definición de la planeación estratégica del negocio.',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'INNOVACIÓN'
-        },
-    'x_ninova53': {
-        1: 'Diseñar una estrategia para que los trabajadores apropien la cultura organizacional',
-        2: 'Diseñar una estrategia para que los trabajadores apropien la cultura organizacional',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'INNOVACIÓN'
-        },
-    'x_ninova54': {
-        1: 'Orientar al propietario del negocio en normas y estándares de calidad',
-        2: 'Orientar al propietario del negocio en normas y estándares de calidad',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'INNOVACIÓN'
-        },
-    'x_for55': {
-        1: 'Orientar al propietario del negocio en normas y estándares de calidad',
-        2: 'Orientar al propietario del negocio en normas y estándares de calidad',
         3: '',
         4: '',
         5: '',
         'area': 'FORMALIZACION'
         },
-    'x_forma50_inf': {
-        1: '',
+    # 43
+    'x_forma49_1': {
+        1: 'Revisar las regulaciones del sector y plantear con el propietario un plan de trabajo para empezar a cumplirlas',
         2: '',
-        3: '',
-        4: '',
-        5: 'Remitir al programa de Empleabilidad',
-        'area': 'FORMALIZACION'
-        },
-    'x_forma52_inf': {
-        1: 'Acompañamiento y asesoría en las obligaciones correspondientes del negocio',
-        2: 'Acompañamiento y asesoría en las obligaciones correspondientes del negocio',
         3: '',
         4: '',
         5: '',
         'area': 'FORMALIZACION'
         },
-    'x_forma54_inf': {
-        1: 'Acompañamiento en Innovación en el modelo de Negocio',
-        2: 'Acompañamiento en Innovación en el modelo de Negocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'FORMALIZACION'
-        },
-    'x_forma56_inf': {
-        1: 'Acompañamiento y asesoría sobre las obligaciones tributarias correspondientes a la actividad económica del negocio',
-        2: 'Acompañamiento y asesoría sobre las obligaciones tributarias correspondientes a la actividad económica del negocio',
-        3: 'Acompañamiento para realizar una adecuada liquides de las obligaciones tributarias correspondientes a la actividad económica del negocio',
-        4: '',
-        5: '',
-        'area': 'FORMALIZACION'
-        },
-    'x_los_empl': {
-        1: 'Acompañamiento en Innovación en el modelo de Negocio',
-        2: 'Acompañamiento en Innovación en el modelo de Negocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'FORMALIZACION'
-        },
-    'x_org61': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'ORGANIZACIÓN'
-        },
-    'x_org62': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'ORGANIZACIÓN'
-        },
-    'x_org63': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'ORGANIZACIÓN'
-        },
-    'x_org64': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'ORGANIZACIÓN'
-        },
-    'x_org65': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'ORGANIZACIÓN'
-        },
-    'x_org66': {
-        1: 'Acompañamiento y asesoría sobre las obligaciones correspondientes a los trabajadores que laboran en el negocio',
-        2: 'Acompañamiento y asesoría sobre las obligaciones correspondientes a los trabajadores que laboran en el negocio',
-        3: 'Acompañamiento para realizar una adecuada liquides de las obligaciones correspondientes a los trabajadores que laboran en el negocio',
-        4: '',
-        5: '',
-        'area': 'ORGANIZACIÓN'
-        },
-    'x_org67': {
-        1: 'Acompañamiento en el diseño de estrategias para comercialización de producto o servicios',
-        2: 'Acompañamiento en el diseño de estrategias para comercialización de producto o servicios',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'ORGANIZACIÓN'
-        },
-    'x_org68': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'ORGANIZACIÓN'
-        },
-    'x_mer69': {
-        1: 'Acompañamiento en el diseño de estrategias para la visibilidad de los producto o servicios',
-        2: 'Acompañamiento en el diseño de estrategias para la visibilidad de los producto o servicios',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MERCADEO Y COMERCIALIZACION'
-        },
-    'x_mer70': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MERCADEO Y COMERCIALIZACION'
-        },
-    'x_mer71': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MERCADEO Y COMERCIALIZACION'
-        },
-    'x_mer72': {
-        1: 'Acompañamiento en el diseño de estrategias de marketing digital',
-        2: 'Acompañamiento en el diseño de estrategias de marketing digital',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MERCADEO Y COMERCIALIZACION'
-        },
-    'x_mer73': {
-        1: 'Acompañamiento en el diseño de estrategias de marketing digital',
-        2: 'Acompañamiento en el diseño de estrategias de marketing digital',
-        3: 'Fortalecimiento en el diseño de estrategias de marketing digital',
-        4: '',
-        5: '',
-        'area': 'MERCADEO Y COMERCIALIZACION'
-        },
-    'x_mer74': {
-        1: 'Diseñar e implementar estrategias que permitan visibilizar y comercializar el producto o servicio a través de redes sociales',
-        2: 'Diseñar e implementar estrategias que permitan visibilizar y comercializar el producto o servicio a través de redes sociales',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MERCADEO Y COMERCIALIZACION'
-        },
-    'x_mer75': {
-        1: 'Acompañamiento y asesoría en el uso de internet para realizar actividades propias del negocio',
-        2: 'Acompañamiento y asesoría en el uso de internet para realizar actividades propias del negocio',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MERCADEO Y COMERCIALIZACION'
-        },
-    'x_merc86_form': {
-        1: 'Acompañamiento en el diseño e implementación de planes de seguimiento y fidelización de clientes',
-        2: 'Acompañamiento en el diseño e implementación de planes de seguimiento y fidelización de clientes',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'MERCADEO Y COMERCIALIZACION'
-        },
-    'x_finan92_form': {
-        1: 'Acompañamiento en la definición de la Marca',
-        2: 'Acompañamiento en la definición de la Marca',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'FINANZAS'
-        },
-    'x_finan93_form': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'FINANZAS'
-        },
-    'x_fin85': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'FINANZAS'
-        },
-    'x_finan98_form': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'FINANZAS'
-        },
-    'x_finan99_form': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'FINANZAS'
-        },
-    'x_fin88': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'FINANZAS'
-        },
-    'x_fin89': {
-        1: '',
-        2: '',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'FINANZAS'
-        },
-    'x_fin90': {
-        1: 'Acompañamiento en el diseño de estrategias de fidelización de clientes',
-        2: 'Acompañamiento en el diseño de estrategias de fidelización de clientes',
-        3: 'Fortalecimiento en el diseño de estrategias de fidelización de clientes',
-        4: '',
-        5: '',
-        'area': 'FINANZAS'
-        },
-    'x_finan104_form': {
-        1: 'Acompañamiento en el diseño de técnicas y estrategias para la captación de nuevos clientes',
-        2: 'Acompañamiento en el diseño de técnicas y estrategias para la captación de nuevos clientes',
-        3: '',
-        4: '',
-        5: '',
-        'area': 'FINANZAS'
-        },
-
 }
 
 class CrmLead(models.Model):
@@ -1046,7 +411,33 @@ class CrmLead(models.Model):
             dic_sel_fields = lead.getting_selection_fields_to_dignostic_form(lead)
             dic_vals.update(dic_sel_fields)
             results = lead.prepare_diagnostic_lines(lead)
+            if 'INNOVACION' in results:
+                dic_vals['crm_diagnostic_line_business_model_ids'] = results.get('MODELO DE NEGOCIO')
+                puntaje1 = 0
+                count1 = 0
+                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
+                    for dic in record:
+                        if type(dic).__name__ == 'dict':
+                            if 'puntaje' in dic.keys():
+                                print(dic.get('puntaje'))
+                                puntaje1 += int(dic.get('puntaje'))
+                                count1 += 1
+                        elif type(dic).__name__ == 'tuple':
+                            if 'puntaje' in dic[2].keys():
+                                puntaje1 += int(dic[1].get('puntaje'))
+                                count1 += 1
+                dic_vals['calificacion1'] = puntaje1
 
+                if puntaje1 in range(0,21):
+                    valoracion = 'Incipiente'
+                elif puntaje1 in range(20,40):
+                    valoracion = 'Confiable'
+                elif puntaje1 in range(39,56):
+                    valoracion = 'Competente'
+                elif puntaje1 >= 56:
+                    valoracion = 'Excelencia'
+                dic_vals['valoracion_neg'] = valoracion
+                
             if 'MODELO DE NEGOCIO' in results:
                 dic_vals['crm_diagnostic_line_business_model_ids'] = results.get('MODELO DE NEGOCIO')
                 puntaje2 = 0
@@ -1074,10 +465,6 @@ class CrmLead(models.Model):
                     valoracion = 'Excelencia'
                 dic_vals['valoracion_neg'] = valoracion
     
-            # elif 'PRODUCCIÓN' in results:
-            #     dic_vals['crm_diagnostic_line_production_ids'] = [results.get('PRODUCCIÓN')]
-            # elif 'INNOVACIÓN' in results:
-            #     dic_vals['crm_diagnostic_line_innovation_ids'] = [results.get('INNOVACIÓN')]
             if 'FORMALIZACION' in results:
                 dic_vals['crm_diagnostic_line_formalization_ids'] = results.get('FORMALIZACION')
                 _logger.info("$"*500)
@@ -1139,6 +526,7 @@ class CrmLead(models.Model):
 
             if 'FINANZAS' in results:
                 dic_vals['crm_diagnostic_line_finance_ids'] = results.get('FINANZAS')
+                raise ValidationError('{}'.format(dic_vals['crm_diagnostic_line_finance_ids']))
                 puntaje5 = 0
                 count5 = 0
                 for record in dic_vals['crm_diagnostic_line_finance_ids']:
@@ -1155,7 +543,7 @@ class CrmLead(models.Model):
                                 puntaje5 += int(dic[2].get('puntaje'))
                                 count5 += 1
                 dic_vals['calificacion5'] = puntaje5
-
+                
                 if puntaje5 in range(0,13):
                     valoracion = 'Incipiente'
                 elif puntaje5 in range(13,25):
@@ -1203,9 +591,7 @@ class CrmLead(models.Model):
         dic_fields = lead.read()[0]
         _fields = self.env['ir.model.fields'].search(
             [('name', 'ilike', 'x_'),
-             ('model_id.model', '=', lead._name),
-             ('selectable', '=', True),
-             ('ttype', '=', 'selection')]).filtered(
+             ('model_id.model', '=', lead._name)]).filtered(
                  lambda f : f.name.startswith('x_'))
         puntaje = 0
         for field in _fields:
@@ -1214,46 +600,50 @@ class CrmLead(models.Model):
             # TODO
             # validating if the field value is in ANSWER_VALUES
             # we obtain certain values from lead on its field what is iterating
-            if field_value in ANSWER_VALUES:
-                raise ValidationError('{}'.format(field.name))
-                answer = dict(lead._fields[field.name].selection).get(getattr(lead, field.name))
-                score = ANSWER_VALUES.get(field_value)
-                valuation = TEXT_VALUATION.get(score)
-                suggestion, area = self.get_sugestion(field.name, score)
-                if area in lines_dict:
-                    tmp_list = lines_dict.get(area)
-                    values = {
-                            'name': field.field_description,
-                            'respuesta': answer,
-                            'puntaje': score,
-                            'area': area,
-                            'sugerencia': suggestion,
-                            'valoracion': valuation,
-                            }
-                    tmp_list.append((0, 0, values))
-                    lines_dict.update({area:tmp_list})
+            if field.ttype == 'selection':
+                if field_value in ANSWER_VALUES:
+                    answer = dict(lead._fields[field.name].selection).get(getattr(lead, field.name))
+                    score = ANSWER_VALUES.get(field_value)
+                    valuation = TEXT_VALUATION.get(score)
+                    suggestion, area = self.get_sugestion(field.name, score)
+                    if area in lines_dict:
+                        tmp_list = lines_dict.get(area)
+                        values = {
+                                'name': field.field_description,
+                                'respuesta': answer,
+                                'puntaje': score,
+                                'area': area,
+                                'sugerencia': suggestion,
+                                'valoracion': valuation,
+                                }
+                        tmp_list.append((0, 0, values))
+                        lines_dict.update({area:tmp_list})
 
-                else:
-                    vals = {
-                            'name': field.field_description,
-                            'respuesta': answer,
-                            'puntaje': score,
-                            'area': area,
-                            'sugerencia': suggestion,
-                            'valoracion': valuation,
-                            }
+                    # else:
+                    #     vals = {
+                    #             'name': field.field_description,
+                    #             'respuesta': answer,
+                    #             'puntaje': score,
+                    #             'area': area,
+                    #             'sugerencia': suggestion,
+                    #             'valoracion': valuation,
+                                # }
 
                     lines_dict.update({area: [(0,0,vals)] })
-            else:
-                answer = dict(lead._fields[field.name].selection).get(getattr(lead, field.name))
-                score = ANSWER_VALUES.get(field_value)
+            if field.ttype == 'many2many' and field.name in M2M_FIELDS:
+                answers = getattr(lead, field.name)
+                score = 0
+                for answer in answers:
+                    score += answer.puntaje
+                if score > 5:
+                    score = 5
                 valuation = TEXT_VALUATION.get(score)
                 suggestion, area = self.get_sugestion(field.name, score)
                 if area in lines_dict:
                     tmp_list = list(lines_dict.get(area))
                     values = {
                             'name': field.field_description,
-                            'respuesta': answer,
+                            'respuesta': answers,
                             'puntaje': score,
                             'area': area,
                             'sugerencia': suggestion,
@@ -1261,19 +651,19 @@ class CrmLead(models.Model):
                             }
                     tmp_list.append((0, 0, values))
                     lines_dict.update({area:tmp_list})
-                else:
-                    vals = {
-                            'name': field.field_description,
-                            'respuesta': answer,
-                            'puntaje': score,
-                            'area': area,
-                            'sugerencia': suggestion,
-                            'valoracion': valuation,
-                            }
+                # else:
+                #     vals = {
+                #             'name': field.field_description,
+                #             'respuesta': answers,
+                #             'puntaje': score,
+                #             'area': area,
+                #             'sugerencia': suggestion,
+                #             'valoracion': valuation,
+                #             }
 
                     lines_dict.update({area:(0, 0, vals)})
-            if score and area:
-                puntaje += score
+                if score and area:
+                    puntaje += score
         self.set_diagnostico(puntaje, lead)
         return lines_dict
 

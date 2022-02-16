@@ -48,9 +48,9 @@
                             </group>
                         </group>
                         <div class="alert alert-success text-center" role="alert">
-                            <h3>Orientaciones de bioseguridad</h3><field name="calificacion"/> - <field name="valoracion_bio"/>
-                        </div> 
-                        <field name="crm_diagnostic_line_orientation_ids" mode="tree">
+                            <h3>Innovación, organización y operación</h3><field name="calificacion2"/> - <field name="valoracion_neg"/>
+                        </div>
+                        <field name="crm_diagnostic_line_business_model_ids" mode="tree">
                             <tree>
                                 <field name="sugerencia"/>
                             </tree>
@@ -63,22 +63,6 @@
                                 <field name="sugerencia"/>
                             </tree>
                         </field>
-                        <!-- <div class="alert alert-success text-center" role="alert">
-                            <h3>Producción</h3>
-                        </div>
-                        <field name="crm_diagnostic_line_production_ids" mode="tree">
-                            <tree>
-                                <field name="sugerencia"/>
-                            </tree>
-                        </field> -->
-                        <!-- <div class="alert alert-success text-center" role="alert">
-                            <h3>Innovación</h3>
-                        </div>
-                        <field name="crm_diagnostic_line_innovation_ids" mode="tree">
-                            <tree>
-                                <field name="sugerencia"/>
-                            </tree>
-                        </field> -->
                         <div class="alert alert-success text-center" role="alert">
                             <h3>Formalización</h3> <field name="calificacion3"/> - <field name="valoracion_forma"/>
                         </div>
@@ -87,14 +71,6 @@
                                 <field name="sugerencia"/>
                             </tree>
                         </field>
-                        <!-- <div class="alert alert-primary text-center" role="alert">
-                            <h3>Organización</h3>
-                        </div>
-                        <field name="crm_diagnostic_line_organization_ids" mode="tree">
-                            <tree>
-                                <field name="sugerencia"/>
-                            </tree>
-                        </field> -->
                         <div class="alert alert-primary text-center" role="alert">
                             <h3>Mercadeo y Comercialización</h3><field name="calificacion4"/> - <field name="valoracion_merca"/>
                         </div>
@@ -140,7 +116,6 @@
             <field name="name">crm_diagnostic_view_search</field>
             <field name="model">crm.diagnostic</field>
             <field name="priority">15</field>
-            <!-- <field name="mode">primary</field> -->
             <field name="arch" type="xml">
                 <search string="Search Sales Order">
                     <field name="diagnostico" string="PROTOCOLOS DE BIOSEGURIDAD" filter_domain="[('crm_diagnostic_line_orientation_ids.sugerencia', 'ilike', self)]"/>
@@ -148,16 +123,6 @@
                     <field name="diagnostico" string="FORMALIZACION" filter_domain="[('crm_diagnostic_line_formalization_ids.sugerencia', 'ilike', self)]"/>
                     <field name="diagnostico" string="MERCADEO Y COMERCIALIZACION" filter_domain="[('crm_diagnostic_line_marketing_ids.sugerencia', 'ilike', self)]"/>
                     <field name="diagnostico" string="FINANZAS" filter_domain="[('crm_diagnostic_line_finance_ids.sugerencia', 'ilike', self)]"/>
-                    <!-- <field name="partner_id" operator="child_of"/>
-                    <field name="user_id"/>
-                    <field name="team_id" string="Sales Team"/>
-                    <field name="order_line" string="Product" filter_domain="[('order_line.product_id', 'ilike', self)]"/>
-                    <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/> -->
-                    <!-- <filter string="Bioseguridad" domain="[('crm_diagnostic_line_finance_ids.area', '=', 'PROTOCOLOS DE BIOSEGURIDAD')]" name="bioseguridad_filter"/>
-                    <filter string="Modelo de Seguridad" domain="[('crm_diagnostic_line_finance_ids.area', '=', 'ORGANIZACIÓN')]" name="seguridad_filter"/>
-                    <filter string="Financiaero y Contable" domain="[('crm_diagnostic_line_finance_ids.area', '=', 'FINANZAS')]" name="finanzas_filter"/>
-                    <filter string="Mercadeo y Comercializacion" domain="[('crm_diagnostic_line_finance_ids.area', '=', 'MERCADEO Y COMERCIALIZACION')]" name="mercadeo_comercializacion_filter"/>
-                    <filter string="Formalizacion" domain="[('crm_diagnostic_line_finance_ids.area', '=', 'FORMALIZACION')]" name="formalizacion_filter"/> -->
                </search>
             </field>
         </record>
@@ -168,9 +133,6 @@
             <field name="view_mode">tree,form</field>
             <field name="domain">[]</field>
             <field name="search_view_id" ref="crm_diagnostic_view_search"/>
-            <!-- <field name="context">{
-                }
-            </field> -->
         </record>
 
         <record id="crm_lead_all_leads_view_tree" model="ir.actions.act_window.view">

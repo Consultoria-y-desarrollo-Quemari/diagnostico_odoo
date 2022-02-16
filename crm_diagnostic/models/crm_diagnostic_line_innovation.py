@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
+
 from odoo import fields, models, api
 from odoo.exceptions import ValidationError
 
-
-
-class CrmDiagnosticLineOrientation(models.Model):
-    _name = 'crm.diagnostic.line.orientation'
-    _description = 'Líneas de diagnostico orientacion'
+class CrmDiagnosticLineInnovation(models.Model):
+    _name = 'crm.diagnostic.line.innovation'
+    _description = 'Líneas de diagnostico innovation'
     # _rec_name = 'area'
 
     ANSWER_VALUES = {
@@ -52,4 +51,4 @@ class CrmDiagnosticLineOrientation(models.Model):
 
     @api.model
     def create(self, values):
-        return super(CrmDiagnosticLineOrientation, self).create(values)
+        return super(CrmDiagnosticLineInnovation, self).create(values)

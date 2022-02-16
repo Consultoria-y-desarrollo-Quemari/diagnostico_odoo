@@ -52,8 +52,8 @@ class CrmDiagnostic(models.Model):
         'diagnostic_id', store=True
     )
     # records for Orientaciones de bioseguridad
-    crm_diagnostic_line_orientation_ids = fields.One2many(
-        'crm.diagnostic.line.orientation', 'diagnostic_id')
+    # crm_diagnostic_line_orientation_ids = fields.One2many(
+    #     'crm.diagnostic.line.orientation', 'diagnostic_id')
 
     # records for Modelo de Negocio
     crm_diagnostic_line_business_model_ids = fields.One2many(
@@ -86,6 +86,7 @@ class CrmDiagnostic(models.Model):
         )
 
     calificacion = fields.Char()
+    calificacion1 = fields.Char()
     calificacion2 = fields.Char()
     calificacion3 = fields.Char()
     calificacion4 = fields.Char()
@@ -95,10 +96,6 @@ class CrmDiagnostic(models.Model):
     valoracion_finanza = fields.Char()
     valoracion_merca = fields.Char()
     valoracion_forma = fields.Char()
-
-
-    #diagnostic_chart = fields.Char(
-    #    compute='_get_chart', store=False)
 
     diagnostic_chart = fields.Html(
         compute='_get_chart', store=True, sanitize=False)
@@ -110,38 +107,38 @@ class CrmDiagnostic(models.Model):
     @api.depends('crm_diagnostic_line_ids')
     def _get_lines_for_areas(self):
       for record in self:
-          record.crm_diagnostic_line_orientation_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
-                  lambda line : line.area == 'PROTOCOLOS DE BIOSEGURIDAD')
-          )
-          record.crm_diagnostic_line_business_model_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
+        record.crm_diagnostic_line_orientation_ids = self.remove_duplicate_suggest_lines(
+        record.crm_diagnostic_line_ids.filtered(
+            lambda line : line.area == 'PROTOCOLOS DE BIOSEGURIDAD')
+        )
+        record.crm_diagnostic_line_business_model_ids = self.remove_duplicate_suggest_lines(
+            record.crm_diagnostic_line_ids.filtered(
                   lambda line : line.area == 'MODELO DE NEGOCIO')
-          )
-          record.crm_diagnostic_line_production_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
+        )
+        record.crm_diagnostic_line_production_ids = self.remove_duplicate_suggest_lines(
+            record.crm_diagnostic_line_ids.filtered(
                   lambda line : line.area == 'PRODUCCIÓN')
-          )
-          record.crm_diagnostic_line_innovation_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
-                  lambda line : line.area == 'INNOVACIÓN')
-          )
-          record.crm_diagnostic_line_formalization_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
+        )
+        record.crm_diagnostic_line_innovation_ids = self.remove_duplicate_suggest_lines(
+            record.crm_diagnostic_line_ids.filtered(
+                  lambda line : line.area == 'INNOVACION')
+        )
+        record.crm_diagnostic_line_formalization_ids = self.remove_duplicate_suggest_lines(
+            record.crm_diagnostic_line_ids.filtered(
                   lambda line : line.area == 'FORMALIZACION')
-          )
-          record.crm_diagnostic_line_organization_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
+        )
+        record.crm_diagnostic_line_organization_ids = self.remove_duplicate_suggest_lines(
+            record.crm_diagnostic_line_ids.filtered(
                   lambda line : line.area == 'ORGANIZACIÓN')
-          )
-          record.crm_diagnostic_line_marketing_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
+        )
+        record.crm_diagnostic_line_marketing_ids = self.remove_duplicate_suggest_lines(
+            record.crm_diagnostic_line_ids.filtered(
                   lambda line : line.area == 'MERCADEO Y COMERCIALIZACION')
-          )
-          record.crm_diagnostic_line_finance_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
+        )
+        record.crm_diagnostic_line_finance_ids = self.remove_duplicate_suggest_lines(
+            record.crm_diagnostic_line_ids.filtered(
                   lambda line : line.area == 'FINANZAS')
-          )
+        )
 
     @api.model
     def remove_duplicate_suggest_lines(self, line_ids):
@@ -162,9 +159,7 @@ class CrmDiagnostic(models.Model):
 
     def make_chart_barh(self, data):
         buf = io.BytesIO()
-        # objects = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Producción', 'Innovación', 'Formalizacion', 'Organización',
-        #              'Mercadeo \n y \n Comercializacion ', 'Finanzas']
-        objects = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Formalizacion',
+        objects = ['Innovación, \n Organización y \n Operación', 'Modelo \n de Negocio', 'Formalizacion',
                      'Mercadeo \n y \n Comercializacion ', 'Finanzas']
         y_pos = np.arange(len(objects))
         performance = data
@@ -184,11 +179,11 @@ class CrmDiagnostic(models.Model):
     def make_chart_radar(self, data):
         buf = io.BytesIO()
         
-        values = [5, 65, 15, 30, 40]
+        values = [24, 25, 25, 35, 40]
         data += data[:1]
         N = len(values)
         values += values[:1]
-        angles = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Formalizacion',
+        angles = ['Innovación, \n Organización y \n Operación', 'Modelo \n de Negocio', 'Formalizacion',
                      'Mercadeo \n y \n Comercializacion ', 'Finanzas']
         plt.figure(figsize =(10, 6))
         plt.subplot(polar = True)
@@ -209,17 +204,17 @@ class CrmDiagnostic(models.Model):
     @api.depends('crm_diagnostic_line_ids')
     def _get_chart(self):
         for diagnostic in self:
-            bioseguridad = float(diagnostic.calificacion)
+            innovacion = float(diagnostic.calificacion1)
             modelonegocio = float(diagnostic.calificacion2)
             formalizacon = float(diagnostic.calificacion3)
             mercadeo = float(diagnostic.calificacion4)
             finanzas = float(diagnostic.calificacion5)
 
-            data_chart = [bioseguridad, modelonegocio, formalizacon, mercadeo, finanzas] 
+            data_chart = [innovacion, modelonegocio, formalizacon, mercadeo, finanzas] 
 
 
             data = self.make_chart_radar(data_chart)
-            data2 = self.make_chart_barh([bioseguridad/0.05, modelonegocio/0.65, formalizacon/0.15, mercadeo/0.30, finanzas/0.40])
+            data2 = self.make_chart_barh([innovacion/0.3, modelonegocio/0.25, finanzas/0.40, mercadeo/0.35, formalizacon/0.25])
             diagnostic.char_img = base64.b64encode(data)
             diagnostic.char_img_bar = base64.b64encode(data2)
 

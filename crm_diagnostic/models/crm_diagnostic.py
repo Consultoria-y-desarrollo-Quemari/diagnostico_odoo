@@ -107,10 +107,10 @@ class CrmDiagnostic(models.Model):
     @api.depends('crm_diagnostic_line_ids')
     def _get_lines_for_areas(self):
       for record in self:
-        record.crm_diagnostic_line_orientation_ids = self.remove_duplicate_suggest_lines(
-        record.crm_diagnostic_line_ids.filtered(
-            lambda line : line.area == 'PROTOCOLOS DE BIOSEGURIDAD')
-        )
+        # record.crm_diagnostic_line_orientation_ids = self.remove_duplicate_suggest_lines(
+        # record.crm_diagnostic_line_ids.filtered(
+        #     lambda line : line.area == 'PROTOCOLOS DE BIOSEGURIDAD')
+        # )
         record.crm_diagnostic_line_business_model_ids = self.remove_duplicate_suggest_lines(
             record.crm_diagnostic_line_ids.filtered(
                   lambda line : line.area == 'MODELO DE NEGOCIO')

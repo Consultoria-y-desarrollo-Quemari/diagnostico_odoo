@@ -526,7 +526,6 @@ class CrmLead(models.Model):
 
             if 'FINANZAS' in results:
                 dic_vals['crm_diagnostic_line_finance_ids'] = results.get('FINANZAS')
-                raise ValidationError('{}'.format(dic_vals['crm_diagnostic_line_finance_ids']))
                 puntaje5 = 0
                 count5 = 0
                 for record in dic_vals['crm_diagnostic_line_finance_ids']:
@@ -587,7 +586,7 @@ class CrmLead(models.Model):
     @api.model
     def prepare_diagnostic_lines(self, lead):
         lines = []
-        lines_dict = {}
+        lines_dict = []
         dic_fields = lead.read()[0]
         _fields = self.env['ir.model.fields'].search(
             [('name', 'ilike', 'x_'),
@@ -595,7 +594,7 @@ class CrmLead(models.Model):
                  lambda f : f.name.startswith('x_'))
         puntaje = 0
         for field in _fields:
-            tmp_list = []
+            # tmp_list = []
             field_value = dic_fields.get(field.name)
             # TODO
             # validating if the field value is in ANSWER_VALUES
@@ -606,8 +605,8 @@ class CrmLead(models.Model):
                     score = ANSWER_VALUES.get(field_value)
                     valuation = TEXT_VALUATION.get(score)
                     suggestion, area = self.get_sugestion(field.name, score)
-                    if area in lines_dict:
-                        tmp_list = lines_dict.get(area)
+                    if area:#in lines_dict:
+                        # tmp_list = lines_dict.get(area)
                         values = {
                                 'name': field.field_description,
                                 'respuesta': answer,
@@ -616,8 +615,8 @@ class CrmLead(models.Model):
                                 'sugerencia': suggestion,
                                 'valoracion': valuation,
                                 }
-                        tmp_list.append((0, 0, values))
-                        lines_dict.update({area:tmp_list})
+                        # tmp_list.append((0, 0, values))
+                        lines_dict.append({area:values})
 
                     # else:
                     #     vals = {
@@ -629,7 +628,7 @@ class CrmLead(models.Model):
                     #             'valoracion': valuation,
                                 # }
 
-                    lines_dict.update({area: [(0,0,vals)] })
+                    # lines_dict.update({area: [(0,0,vals)] })
             if field.ttype == 'many2many' and field.name in M2M_FIELDS:
                 answers = getattr(lead, field.name)
                 score = 0
@@ -639,8 +638,8 @@ class CrmLead(models.Model):
                     score = 5
                 valuation = TEXT_VALUATION.get(score)
                 suggestion, area = self.get_sugestion(field.name, score)
-                if area in lines_dict:
-                    tmp_list = list(lines_dict.get(area))
+                if area: #in lines_dict:
+                    # tmp_list = list(lines_dict.get(area))
                     values = {
                             'name': field.field_description,
                             'respuesta': answers,
@@ -649,8 +648,8 @@ class CrmLead(models.Model):
                             'sugerencia': suggestion,
                             'valoracion': valuation,
                             }
-                    tmp_list.append((0, 0, values))
-                    lines_dict.update({area:tmp_list})
+                    # tmp_list.append((0, 0, values))
+                    lines_dict.append({area:values})
                 # else:
                 #     vals = {
                 #             'name': field.field_description,
@@ -661,7 +660,7 @@ class CrmLead(models.Model):
                 #             'valoracion': valuation,
                 #             }
 
-                    lines_dict.update({area:(0, 0, vals)})
+                    # lines_dict.update({area:(0, 0, vals)})
                 if score and area:
                     puntaje += score
         self.set_diagnostico(puntaje, lead)

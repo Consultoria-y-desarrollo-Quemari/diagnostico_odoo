@@ -48,9 +48,9 @@
                             </group>
                         </group>
                         <div class="alert alert-success text-center" role="alert">
-                            <h3>Innovación, organización y operación</h3><field name="calificacion2"/> - <field name="valoracion_neg"/>
+                            <h3>Innovación, organización y operación</h3><field name="calificacion1"/> - <field name="valoracion_innovation"/>
                         </div>
-                        <field name="crm_diagnostic_line_business_model_ids" mode="tree">
+                        <field name="crm_diagnostic_line_innovation_model_ids" mode="tree">
                             <tree>
                                 <field name="sugerencia"/>
                             </tree>
@@ -118,11 +118,9 @@
             <field name="priority">15</field>
             <field name="arch" type="xml">
                 <search string="Search Sales Order">
-                    <field name="diagnostico" string="PROTOCOLOS DE BIOSEGURIDAD" filter_domain="[('crm_diagnostic_line_orientation_ids.sugerencia', 'ilike', self)]"/>
-                    <field name="diagnostico" string="MODELO DE NEGOCIOS" filter_domain="[('crm_diagnostic_line_business_model_ids.sugerencia', 'ilike', self)]"/>
-                    <field name="diagnostico" string="FORMALIZACION" filter_domain="[('crm_diagnostic_line_formalization_ids.sugerencia', 'ilike', self)]"/>
-                    <field name="diagnostico" string="MERCADEO Y COMERCIALIZACION" filter_domain="[('crm_diagnostic_line_marketing_ids.sugerencia', 'ilike', self)]"/>
-                    <field name="diagnostico" string="FINANZAS" filter_domain="[('crm_diagnostic_line_finance_ids.sugerencia', 'ilike', self)]"/>
+                    <field name="diagnostico" string="NOMBRE DEL PROPIETARIO" filter_domain="[('nombre_propietario', 'ilike', self)]"/>
+                    <field name="diagnostico" string="NOMBRE DEL NEGOCIO" filter_domain="[('nombre_negocio', 'ilike', self)]"/>
+                    <field name="diagnostico" string="VALUACIÓN" filter_domain="[('valuacion_diagnostico', 'ilike', self)]"/>
                </search>
             </field>
         </record>

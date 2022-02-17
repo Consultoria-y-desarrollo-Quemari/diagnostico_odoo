@@ -392,6 +392,7 @@ class CrmLead(models.Model):
                 raise ValidationError('Para realizar el diagnostico, debe responder las preguntas de los 3 modulos.')
             crm_diagnostic_vals = record.getting_values_to_crm_diagnostic()
             crm_diagnostic_id = self.env['crm.diagnostic'].create(crm_diagnostic_vals)
+            crm_diagnostic_id._get_lines_for_areas()
             _logger.info("&"*500)
             _logger.info(crm_diagnostic_id.read())
             crm_diagnostic_id.valuacion_diagnostico = record.diagnostico
@@ -411,21 +412,39 @@ class CrmLead(models.Model):
             dic_sel_fields = lead.getting_selection_fields_to_dignostic_form(lead)
             dic_vals.update(dic_sel_fields)
             results = lead.prepare_diagnostic_lines(lead)
-            if 'INNOVACION' in results:
-                dic_vals['crm_diagnostic_line_business_model_ids'] = results.get('MODELO DE NEGOCIO')
+            innovation = []
+            bussiness = []
+            formalization = []
+            marketing = []
+            finance = []
+
+            for result in results:
+                if 'INNOVACION' in result:
+                    innovation.append(result.get('INNOVACION'))
+                if 'MODELO DE NEGOCIO' in result:
+                    bussiness.append(result.get('MODELO DE NEGOCIO'))
+                if 'FORMALIZACION' in result:
+                    formalization.append(result.get('FORMALIZACION'))
+                if 'MERCADEO Y COMERCIALIZACION' in result:
+                    marketing.append(result.get('MERCADEO Y COMERCIALIZACION'))
+                if 'FINANZAS' in result:
+                    finance.append(result.get('FINANZAS'))
+
+            if len(innovation):
                 puntaje1 = 0
                 count1 = 0
-                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
-                    for dic in record:
-                        if type(dic).__name__ == 'dict':
-                            if 'puntaje' in dic.keys():
-                                print(dic.get('puntaje'))
-                                puntaje1 += int(dic.get('puntaje'))
-                                count1 += 1
-                        elif type(dic).__name__ == 'tuple':
-                            if 'puntaje' in dic[2].keys():
-                                puntaje1 += int(dic[1].get('puntaje'))
-                                count1 += 1
+                for dic in innovation:
+                    if type(dic).__name__ == 'dict':
+                        if 'puntaje' in dic.keys():
+                            print(dic.get('puntaje'))
+                            puntaje1 += int(dic.get('puntaje'))
+                            count1 += 1
+                            dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
+                    elif type(dic).__name__ == 'tuple':
+                        if 'puntaje' in dic[2].keys():
+                            puntaje1 += int(dic[1].get('puntaje'))
+                            count1 += 1
+                            dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
                 dic_vals['calificacion1'] = puntaje1
 
                 if puntaje1 in range(0,21):
@@ -436,23 +455,23 @@ class CrmLead(models.Model):
                     valoracion = 'Competente'
                 elif puntaje1 >= 56:
                     valoracion = 'Excelencia'
-                dic_vals['valoracion_neg'] = valoracion
+                dic_vals['valoracion_innovation'] = valoracion
                 
-            if 'MODELO DE NEGOCIO' in results:
-                dic_vals['crm_diagnostic_line_business_model_ids'] = results.get('MODELO DE NEGOCIO')
+            if len(bussiness):
                 puntaje2 = 0
                 count2 = 0
-                for record in dic_vals['crm_diagnostic_line_business_model_ids']:
-                    for dic in record:
-                        if type(dic).__name__ == 'dict':
-                            if 'puntaje' in dic.keys():
-                                print(dic.get('puntaje'))
-                                puntaje2 += int(dic.get('puntaje'))
-                                count2 += 1
-                        elif type(dic).__name__ == 'tuple':
-                            if 'puntaje' in dic[2].keys():
-                                puntaje2 += int(dic[2].get('puntaje'))
-                                count2 += 1
+                for dic in bussiness:
+                    if type(dic).__name__ == 'dict':
+                        if 'puntaje' in dic.keys():
+                            print(dic.get('puntaje'))
+                            puntaje2 += int(dic.get('puntaje'))
+                            count2 += 1
+                            dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
+                    elif type(dic).__name__ == 'tuple':
+                        if 'puntaje' in dic[2].keys():
+                            puntaje2 += int(dic[2].get('puntaje'))
+                            count2 += 1
+                            dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
                 dic_vals['calificacion2'] = puntaje2
 
                 if puntaje2 in range(0,21):
@@ -465,23 +484,21 @@ class CrmLead(models.Model):
                     valoracion = 'Excelencia'
                 dic_vals['valoracion_neg'] = valoracion
     
-            if 'FORMALIZACION' in results:
-                dic_vals['crm_diagnostic_line_formalization_ids'] = results.get('FORMALIZACION')
-                _logger.info("$"*500)
-                _logger.info(results.get('FORMALIZACION'))
+            if len(formalization):
                 puntaje3 = 0
                 count3 = 0
-                for record in dic_vals['crm_diagnostic_line_formalization_ids']:
-                    for dic in record:
-                        if type(dic).__name__ == 'dict':
-                            if 'puntaje' in dic.keys():
-                                print(dic.get('puntaje'))
-                                puntaje3 += int(dic.get('puntaje'))
-                                count3 += 1
-                        elif type(dic).__name__ == 'tuple':
-                            if 'puntaje' in dic[2].keys():
-                                puntaje3 += int(dic[2].get('puntaje'))
-                                count3 += 1
+                for dic in formalization:
+                    if type(dic).__name__ == 'dict':
+                        if 'puntaje' in dic.keys():
+                            print(dic.get('puntaje'))
+                            puntaje3 += int(dic.get('puntaje'))
+                            count3 += 1
+                            dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
+                    elif type(dic).__name__ == 'tuple':
+                        if 'puntaje' in dic[2].keys():
+                            puntaje3 += int(dic[2].get('puntaje'))
+                            count3 += 1
+                            dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
                 dic_vals['calificacion3'] = puntaje3
 
                 if puntaje3 <= 4.5:
@@ -494,24 +511,21 @@ class CrmLead(models.Model):
                     valoracion = 'Excelencia'
                 dic_vals['valoracion_forma'] = valoracion
 
-            # elif 'ORGANIZACIÓN' in results:
-            #     dic_vals['crm_diagnostic_line_organization_ids'] = [results.get('ORGANIZACIÓN')]
-            if 'MERCADEO Y COMERCIALIZACION' in results:
-                dic_vals['crm_diagnostic_line_marketing_ids'] = results.get('MERCADEO Y COMERCIALIZACION')
+            if len(marketing):
                 puntaje4 = 0
                 count4 = 0
-                for record in dic_vals['crm_diagnostic_line_marketing_ids']:
-                    for dic in record:
-                        if type(dic).__name__ == 'dict':
-                            if 'puntaje' in dic.keys():
-                                print(dic.get('puntaje'))
-                                puntaje4 += int(dic.get('puntaje'))
-                                count4 += 1
-                                # dic.get('puntaje')
-                        elif type(dic).__name__ == 'tuple':
-                            if 'puntaje' in dic[2].keys():
-                                puntaje4 += int(dic[2].get('puntaje'))
-                                count4 += 1
+                for dic in marketing:
+                    if type(dic).__name__ == 'dict':
+                        if 'puntaje' in dic.keys():
+                            print(dic.get('puntaje'))
+                            puntaje4 += int(dic.get('puntaje'))
+                            count4 += 1
+                            dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
+                    elif type(dic).__name__ == 'tuple':
+                        if 'puntaje' in dic[2].keys():
+                            puntaje4 += int(dic[2].get('puntaje'))
+                            count4 += 1
+                            dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
                 dic_vals['calificacion4'] = puntaje4
 
                 if puntaje4 in range(0,10):
@@ -524,23 +538,22 @@ class CrmLead(models.Model):
                     valoracion = 'Excelencia'
                 dic_vals['valoracion_merca'] = valoracion
 
-            if 'FINANZAS' in results:
-                dic_vals['crm_diagnostic_line_finance_ids'] = results.get('FINANZAS')
+            if len(finance):
                 puntaje5 = 0
                 count5 = 0
-                for record in dic_vals['crm_diagnostic_line_finance_ids']:
-                    for dic in record:
-                        count5 += 1
-                        if type(dic).__name__ == 'dict':
-                            if 'puntaje' in dic.keys():
-                                print(dic.get('puntaje'))
-                                puntaje5 += int(dic.get('puntaje'))
-                                count5 += 1
-                                # dic.get('puntaje')
-                        elif type(dic).__name__ == 'tuple':
-                            if 'puntaje' in dic[2].keys():
-                                puntaje5 += int(dic[2].get('puntaje'))
-                                count5 += 1
+                for dic in finance:
+                    count5 += 1
+                    if type(dic).__name__ == 'dict':
+                        if 'puntaje' in dic.keys():
+                            print(dic.get('puntaje'))
+                            puntaje5 += int(dic.get('puntaje'))
+                            count5 += 1
+                            dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
+                    elif type(dic).__name__ == 'tuple':
+                        if 'puntaje' in dic[2].keys():
+                            puntaje5 += int(dic[2].get('puntaje'))
+                            count5 += 1
+                            dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
                 dic_vals['calificacion5'] = puntaje5
                 
                 if puntaje5 in range(0,13):
@@ -555,7 +568,7 @@ class CrmLead(models.Model):
 
             _logger.info("?"*500)
             _logger.info(dic_vals)
-            return dic_vals
+        return dic_vals
 
     @api.model
     def _get_valoracion_bio(self, puntaje):
@@ -594,7 +607,6 @@ class CrmLead(models.Model):
                  lambda f : f.name.startswith('x_'))
         puntaje = 0
         for field in _fields:
-            # tmp_list = []
             field_value = dic_fields.get(field.name)
             # TODO
             # validating if the field value is in ANSWER_VALUES
@@ -605,8 +617,7 @@ class CrmLead(models.Model):
                     score = ANSWER_VALUES.get(field_value)
                     valuation = TEXT_VALUATION.get(score)
                     suggestion, area = self.get_sugestion(field.name, score)
-                    if area:#in lines_dict:
-                        # tmp_list = lines_dict.get(area)
+                    if area:
                         values = {
                                 'name': field.field_description,
                                 'respuesta': answer,
@@ -615,21 +626,11 @@ class CrmLead(models.Model):
                                 'sugerencia': suggestion,
                                 'valoracion': valuation,
                                 }
-                        # tmp_list.append((0, 0, values))
                         lines_dict.append({area:values})
 
-                    # else:
-                    #     vals = {
-                    #             'name': field.field_description,
-                    #             'respuesta': answer,
-                    #             'puntaje': score,
-                    #             'area': area,
-                    #             'sugerencia': suggestion,
-                    #             'valoracion': valuation,
-                                # }
-
-                    # lines_dict.update({area: [(0,0,vals)] })
             if field.ttype == 'many2many' and field.name in M2M_FIELDS:
+                if field.name == 'x_forma51':
+                    continue
                 answers = getattr(lead, field.name)
                 score = 0
                 for answer in answers:
@@ -638,8 +639,7 @@ class CrmLead(models.Model):
                     score = 5
                 valuation = TEXT_VALUATION.get(score)
                 suggestion, area = self.get_sugestion(field.name, score)
-                if area: #in lines_dict:
-                    # tmp_list = list(lines_dict.get(area))
+                if area:
                     values = {
                             'name': field.field_description,
                             'respuesta': answers,
@@ -648,19 +648,7 @@ class CrmLead(models.Model):
                             'sugerencia': suggestion,
                             'valoracion': valuation,
                             }
-                    # tmp_list.append((0, 0, values))
                     lines_dict.append({area:values})
-                # else:
-                #     vals = {
-                #             'name': field.field_description,
-                #             'respuesta': answers,
-                #             'puntaje': score,
-                #             'area': area,
-                #             'sugerencia': suggestion,
-                #             'valoracion': valuation,
-                #             }
-
-                    # lines_dict.update({area:(0, 0, vals)})
                 if score and area:
                     puntaje += score
         self.set_diagnostico(puntaje, lead)
@@ -831,7 +819,7 @@ class CrmLead(models.Model):
     def fields_module1(self):
         return [
             'x_datos1', 'attach_file', "x_nombre_negocio", "x_nombre", "doctype",
-            "x_identification", "x_sexo", "x_edad", "country_id", "state_id", "xcity", "x_dir_res",
+            "x_identification", "x_sexo", "x_edad", "state_id", "xcity", "x_dir_res",
             "x_comuna", "x_vereda", "x_ubicacion_negocio", "mobile", "x_estrato", 
             "x_pobl_esp", "x_tipo_vivienda", "x_no_personas_viven_propietario", "x_etnia", "x_sisben",
             "x_afiliado", "x_escolaridad", "x_ubic", "x_com_cuenta", "x_tien_dur", "x_herramientas", "x_depend"

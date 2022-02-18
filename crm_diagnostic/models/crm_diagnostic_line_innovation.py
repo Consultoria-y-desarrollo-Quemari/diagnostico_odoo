@@ -13,6 +13,12 @@ class CrmDiagnosticLineInnovation(models.Model):
         'en_proceso': 3,
         'parcialmente' : 3,
         'no': 1,
+        'cuenta_del_negocio' : 5,
+        'cuenta_personal' : 5,
+        'los_dos_tipos_cuenta' : 5,
+        'no_tiene' : 1,
+        'no_empleados' : 5,
+        'no_regulaciones' : 5,
     }
 
     TEXT_VALUATION = {

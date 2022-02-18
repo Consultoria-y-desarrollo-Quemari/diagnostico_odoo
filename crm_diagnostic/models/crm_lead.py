@@ -30,6 +30,12 @@ ANSWER_VALUES = {
         'en_proceso': 3,
         'parcialmente' : 3,
         'no': 1,
+        'cuenta_del_negocio' : 5,
+        'cuenta_personal' : 5,
+        'los_dos_tipos_cuenta' : 5,
+        'no_tiene' : 1,
+        'no_empleados' : 5,
+        'no_regulaciones' : 5,
     }
 
 TEXT_VALUATION = {
@@ -41,6 +47,19 @@ TEXT_VALUATION = {
     }
 
 M2M_FIELDS = ['x_neg6', 'x_neg5', 'x_mer_com32', 'x_mer_com34', 'x_forma51']
+
+SELECTION_FIELDS = [
+    'x_innova_org_1', 'x_innova_org_2', 'x_innova_org_3', 'x_innova_org_4', 'x_innova_org_5',
+    'x_innova_org_6', 'x_neg7', 'x_neg8', 'x_neg14', 'x_financiero18',
+    'x_financiero20', 'x_financiero21', 'x_financiero22', 'x_financiero23', 'x_financiero24',
+    'x_financiero25', 'x_mer_com30', 'x_mer_com31', 'x_mer_com38', 'x_mer_com39',
+    'x_forma44', 'x_forma45', 'x_forma46', 'x_forma47_1', 'x_forma49_1',
+    'x_neg16', 'x_financiero26', 'x_fin97n'
+    ]
+
+SELECTION_FIELDS_WO_POINTS = [
+    'x_neg16', 'x_financiero26', 'x_fin97n'
+    ]
 
 SUGGEST_VALUATION = {
     # 1
@@ -142,6 +161,11 @@ SUGGEST_VALUATION = {
         5: '',
         'area': 'MODELO DE NEGOCIO'
         },
+    # 15
+    'x_neg16': {
+        0: 'Definir el valor que quiere entregar a sus clientes, clarificar que problemas o dolores quiere ayudar a resolver, validar si los productos y/o servicios ofrecidos, realmente solucionan problemas o satisfacen las necesidades de los clientes',
+        'area': 'MODELO DE NEGOCIO'
+        },
     # 17
     'x_financiero18': {
         1: 'Orientar al propietario del negocio acerca de los hábitos positivos financieros y la importancia de llevar registros económicos',
@@ -203,6 +227,11 @@ SUGGEST_VALUATION = {
         3: '',
         4: '',
         5: '',
+        'area': 'FINANZAS'
+        },
+    # 25
+    'x_financiero26': {
+        0: 'Remitir a la Cooperativa Minuto de Dios',
         'area': 'FINANZAS'
         },
     # 27
@@ -311,6 +340,11 @@ SUGGEST_VALUATION = {
         3: '',
         4: '',
         5: '',
+        'area': 'FORMALIZACION'
+        },
+    # 44
+    'x_fin97n': {
+        0: 'Remitir al programa de Empleabilidad',
         'area': 'FORMALIZACION'
         },
 }
@@ -611,10 +645,12 @@ class CrmLead(models.Model):
             # TODO
             # validating if the field value is in ANSWER_VALUES
             # we obtain certain values from lead on its field what is iterating
-            if field.ttype == 'selection':
+            if field.ttype == 'selection' and field.name in SELECTION_FIELDS:
                 if field_value in ANSWER_VALUES:
                     answer = dict(lead._fields[field.name].selection).get(getattr(lead, field.name))
                     score = ANSWER_VALUES.get(field_value)
+                    if field.name in SELECTION_FIELDS_WO_POINTS and answer == 'Si':
+                        score = 0
                     valuation = TEXT_VALUATION.get(score)
                     suggestion, area = self.get_sugestion(field.name, score)
                     if area:
@@ -710,11 +746,11 @@ class CrmLead(models.Model):
     # returning area and suggestion base on field_name and score
     @api.model
     def get_sugestion(self, field_name, score):
-        suggestion = False
-        area = False
+        # suggestion = False
+        # area = False
         # TODO if any param comes in False we immediatly return values in False
-        if not score or not field_name:
-            return suggestion, area
+        # if not score or not field_name:
+        #     return suggestion, area
         if field_name in SUGGEST_VALUATION:
             suggestion = SUGGEST_VALUATION[field_name].get(score, False)
             area = SUGGEST_VALUATION[field_name].get('area', False)

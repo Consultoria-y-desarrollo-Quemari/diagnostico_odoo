@@ -196,7 +196,7 @@ class CrmDiagnostic(models.Model):
 
 
             data = self.make_chart_radar(data_chart)
-            data2 = self.make_chart_barh([(innovacion * 100) / 30, (modelonegocio * 100) /25, (formalizacion * 100) / 40, (mercadeo * 100) / 35, (finanzas * 100) / 25])
+            data2 = self.make_chart_barh([(innovacion * 100) / 30, (modelonegocio * 100) /25, (formalizacion * 100) / 25, (mercadeo * 100) / 35, (finanzas * 100) / 45])
             diagnostic.char_img = base64.b64encode(data)
             diagnostic.char_img_bar = base64.b64encode(data2)
 

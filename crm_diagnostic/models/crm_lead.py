@@ -50,7 +50,7 @@ M2M_FIELDS = ['x_neg6', 'x_neg5', 'x_mer_com32', 'x_mer_com34', 'x_forma51']
 
 SELECTION_FIELDS = [
     'x_innova_org_1', 'x_innova_org_2', 'x_innova_org_3', 'x_innova_org_4', 'x_innova_org_5',
-    'x_innova_org_6', 'x_neg7', 'x_neg8', 'x_neg14', 'x_financiero18',
+    'x_innova_org_6', 'x_neg4','x_neg7', 'x_neg8', 'x_neg14', 'x_financiero18',
     'x_financiero20', 'x_financiero21', 'x_financiero22', 'x_financiero23', 'x_financiero24',
     'x_financiero25', 'x_mer_com30', 'x_mer_com31', 'x_mer_com38', 'x_mer_com39',
     'x_forma44', 'x_forma45', 'x_forma46', 'x_forma47_1', 'x_forma49_1',

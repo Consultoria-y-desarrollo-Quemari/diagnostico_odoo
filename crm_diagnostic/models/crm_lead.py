@@ -663,7 +663,8 @@ class CrmLead(models.Model):
                                 'valoracion': valuation,
                                 }
                         lines_dict.append({area:values})
-
+                    if score and area:
+                        puntaje += score
             if field.ttype == 'many2many' and field.name in M2M_FIELDS:
                 if field.name == 'x_forma51':
                     continue
@@ -694,9 +695,6 @@ class CrmLead(models.Model):
     @api.model
     def set_diagnostico(self, score, lead):
         _logger.info(score)
-        if score > 156:
-            lead.diagnostico = 'excelencia'
-            return
         for k, v in RANGES.items():
             if score in v:
                 lead.diagnostico = k

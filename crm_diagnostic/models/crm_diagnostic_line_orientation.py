@@ -12,22 +12,23 @@ class CrmDiagnosticLineOrientation(models.Model):
     ANSWER_VALUES = {
         'si': 5,
         'en_proceso': 3,
+        'parcialmente' : 3,
         'no': 1,
-        'no_aplica': 0,
-        'totalmente_de_acuerdo': 5,
-        'de_acuerdo': 4,
-        'ni_de_acuerdo_ni_en_desacuerdo': 3,
-        'en_desacuerdo': 2,
-        'totalmente_en_desacuerdo': 1
+        'cuenta_del_negocio' : 5,
+        'cuenta_personal' : 5,
+        'los_dos_tipos_cuenta' : 5,
+        'no_tiene' : 1,
+        'no_empleados' : 5,
+        'no_regulaciones' : 5,
     }
 
     TEXT_VALUATION = {
-        1: 'Incipiente',
-        2: 'Aceptable',
-        3: 'Confiable',
-        4: 'Competente',
-        5: 'Excelencia'
-    }
+            1: 'Incipiente',
+            2: 'Confiable',
+            3: 'Confiable',
+            4: 'Competente',
+            5: 'Excelencia'
+        }
 
 
     sequence = fields.Integer(

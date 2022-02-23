@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 from odoo import fields, models, api, SUPERUSER_ID, _
 from odoo.exceptions import ValidationError
 from datetime import datetime, date, time, timedelta
@@ -36,7 +37,7 @@ class CrmDiagnostic(models.Model):
     valuacion_diagnostico = fields.Selection(
         selection=[
             ('competitividad', 'Nivel de competitividad'),
-            ('incipiente', 'Incipiento'),
+            ('incipiente', 'Incipiente'),
             ('aceptable', 'Aceptable'),
             ('confiable', 'Confiable'),
             ('competente', 'Competente'),
@@ -51,10 +52,9 @@ class CrmDiagnostic(models.Model):
         'crm.diagnostic.line',
         'diagnostic_id', store=True
     )
-    # records for Orientaciones de bioseguridad
-    crm_diagnostic_line_orientation_ids = fields.One2many(
-        'crm.diagnostic.line.orientation', 'diagnostic_id')
-
+    crm_diagnostic_line_innovation_model_ids = fields.One2many(
+        'crm.diagnostic.line.innovation', 'diagnostic_id',
+        )
     # records for Modelo de Negocio
     crm_diagnostic_line_business_model_ids = fields.One2many(
         'crm.diagnostic.line.business', 'diagnostic_id',
@@ -86,19 +86,17 @@ class CrmDiagnostic(models.Model):
         )
 
     calificacion = fields.Char()
+    calificacion1 = fields.Char()
     calificacion2 = fields.Char()
     calificacion3 = fields.Char()
     calificacion4 = fields.Char()
     calificacion5 = fields.Char()
     valoracion_bio = fields.Char()
+    valoracion_innovation = fields.Char()
     valoracion_neg = fields.Char()
     valoracion_finanza = fields.Char()
     valoracion_merca = fields.Char()
     valoracion_forma = fields.Char()
-
-
-    #diagnostic_chart = fields.Char(
-    #    compute='_get_chart', store=False)
 
     diagnostic_chart = fields.Html(
         compute='_get_chart', store=True, sanitize=False)
@@ -107,64 +105,43 @@ class CrmDiagnostic(models.Model):
     diagnostic_chart_two = fields.Char(
     compute='_get_chart', store=True)
 
-    @api.depends('crm_diagnostic_line_ids')
+    # @api.depends('crm_diagnostic_line_ids')
     def _get_lines_for_areas(self):
       for record in self:
-          record.crm_diagnostic_line_orientation_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
-                  lambda line : line.area == 'PROTOCOLOS DE BIOSEGURIDAD')
-          )
-          record.crm_diagnostic_line_business_model_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
-                  lambda line : line.area == 'MODELO DE NEGOCIO')
-          )
-          record.crm_diagnostic_line_production_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
-                  lambda line : line.area == 'PRODUCCIÓN')
-          )
-          record.crm_diagnostic_line_innovation_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
-                  lambda line : line.area == 'INNOVACIÓN')
-          )
-          record.crm_diagnostic_line_formalization_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
-                  lambda line : line.area == 'FORMALIZACION')
-          )
-          record.crm_diagnostic_line_organization_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
-                  lambda line : line.area == 'ORGANIZACIÓN')
-          )
-          record.crm_diagnostic_line_marketing_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
-                  lambda line : line.area == 'MERCADEO Y COMERCIALIZACION')
-          )
-          record.crm_diagnostic_line_finance_ids = self.remove_duplicate_suggest_lines(
-              record.crm_diagnostic_line_ids.filtered(
-                  lambda line : line.area == 'FINANZAS')
-          )
+        self.create_suggest_lines_per_model(
+            record.crm_diagnostic_line_ids.filtered(
+                  lambda line : line.area == 'INNOVACION'), 'crm.diagnostic.line.innovation'
+        )
+        self.create_suggest_lines_per_model(
+            record.crm_diagnostic_line_ids.filtered(
+                  lambda line : line.area == 'MODELO DE NEGOCIO'), 'crm.diagnostic.line.business'
+        )
+        self.create_suggest_lines_per_model(
+            record.crm_diagnostic_line_ids.filtered(
+                  lambda line : line.area == 'FORMALIZACION'), 'crm.diagnostic.line.formalization'
+        )
+        self.create_suggest_lines_per_model(
+            record.crm_diagnostic_line_ids.filtered(
+                  lambda line : line.area == 'MERCADEO Y COMERCIALIZACION'), 'crm.diagnostic.line.marketing'
+        )
+        self.create_suggest_lines_per_model(
+            record.crm_diagnostic_line_ids.filtered(
+                  lambda line : line.area == 'FINANZAS'), 'crm.diagnostic.line.finance'
+        )
 
     @api.model
-    def remove_duplicate_suggest_lines(self, line_ids):
-        # lines without suggestion
-        wo_suggestion_lines = line_ids.filtered(lambda x: x.sugerencia in ('', None, False)).ids
-        # lines with suggestion
-        suggestion_lines = line_ids.filtered(lambda l: l.sugerencia not in ('', None, False))
-        suggestions = suggestion_lines.mapped('sugerencia')
-        final_suggestions = list(dict.fromkeys(suggestions))
-        lines = []
-        for suggest in final_suggestions:
-            lines.append(suggestion_lines.filtered(lambda s: s.sugerencia == suggest).ids[0])
-        wo_suggestion_lines.extend(lines)
-        if wo_suggestion_lines:
-            return wo_suggestion_lines
-        else:
-            return self.env['crm.diagnostic.line']
+    def create_suggest_lines_per_model(self, line_ids, model):
+        for line in line_ids:
+            if 'sugerencia' in line:
+                sugerencia = line.sugerencia
+                area = line.area
+                if sugerencia != '':
+                    values = {'area' : area, 'sugerencia' : sugerencia, 'diagnostic_id' : self.id}
+                    self.env[model].create(values)
 
     def make_chart_barh(self, data):
         buf = io.BytesIO()
-        # objects = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Producción', 'Innovación', 'Formalizacion', 'Organización',
-        #              'Mercadeo \n y \n Comercializacion ', 'Finanzas']
-        objects = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Formalizacion',
+        objects = ['Innovación, \n Organización y \n Operación', 'Modelo \n de Negocio', 'Formalizacion',
                      'Mercadeo \n y \n Comercializacion ', 'Finanzas']
         y_pos = np.arange(len(objects))
         performance = data
@@ -184,11 +161,11 @@ class CrmDiagnostic(models.Model):
     def make_chart_radar(self, data):
         buf = io.BytesIO()
         
-        values = [5, 65, 15, 30, 40]
+        values = [30, 25, 25, 35, 40]
         data += data[:1]
         N = len(values)
         values += values[:1]
-        angles = ['Protocolo de \n Bioseguridad', 'Modelo \n de Negocio', 'Formalizacion',
+        angles = ['Innovación, \n Organización y \n Operación', 'Modelo \n de Negocio', 'Formalizacion',
                      'Mercadeo \n y \n Comercializacion ', 'Finanzas']
         plt.figure(figsize =(10, 6))
         plt.subplot(polar = True)
@@ -209,17 +186,17 @@ class CrmDiagnostic(models.Model):
     @api.depends('crm_diagnostic_line_ids')
     def _get_chart(self):
         for diagnostic in self:
-            bioseguridad = float(diagnostic.calificacion)
+            innovacion = float(diagnostic.calificacion1)
             modelonegocio = float(diagnostic.calificacion2)
-            formalizacon = float(diagnostic.calificacion3)
+            formalizacion = float(diagnostic.calificacion3)
             mercadeo = float(diagnostic.calificacion4)
             finanzas = float(diagnostic.calificacion5)
 
-            data_chart = [bioseguridad, modelonegocio, formalizacon, mercadeo, finanzas] 
+            data_chart = [innovacion, modelonegocio, formalizacion, mercadeo, finanzas] 
 
 
             data = self.make_chart_radar(data_chart)
-            data2 = self.make_chart_barh([bioseguridad/0.05, modelonegocio/0.65, formalizacon/0.15, mercadeo/0.30, finanzas/0.40])
+            data2 = self.make_chart_barh([(innovacion * 100) / 30, (modelonegocio * 100) /25, (formalizacion * 100) / 25, (mercadeo * 100) / 35, (finanzas * 100) / 45])
             diagnostic.char_img = base64.b64encode(data)
             diagnostic.char_img_bar = base64.b64encode(data2)
 

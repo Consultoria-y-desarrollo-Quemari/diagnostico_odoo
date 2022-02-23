@@ -24,7 +24,7 @@ class CrmAttentionPlan(models.Model):
     diagnostico = fields.Selection(
         selection=[
             ('competitividad', 'Nivel de competitividad'),
-            ('incipiente', 'Incipiento'),
+            ('incipiente', 'Incipiente'),
             ('aceptable', 'Aceptable'),
             ('confiable', 'Confiable'),
             ('competente', 'Competente'),

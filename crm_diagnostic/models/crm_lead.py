@@ -12,10 +12,10 @@ _logger = logging.getLogger(__name__)
 
 
 RANGES = {
-        'incipiente': range(0, 47),
-        'confiable': range(48, 93),
-        'competente': range(94, 132),
-        'excelencia': range(133, 155)
+        'incipiente': range(0, 48),
+        'confiable': range(48, 94),
+        'competente': range(94, 133),
+        'excelencia': range(133, 156)
     }
 
 CRM_DIAGNOSTIC_SELECTION_FIELDS = {
@@ -481,11 +481,11 @@ class CrmLead(models.Model):
                             dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
                 dic_vals['calificacion1'] = puntaje1
 
-                if puntaje1 in range(0,9):
+                if puntaje1 in range(0,10):
                     valoracion = 'Incipiente'
-                elif puntaje1 in range(10,18):
+                elif puntaje1 in range(10,19):
                     valoracion = 'Confiable'
-                elif puntaje1 in range(19,26):
+                elif puntaje1 in range(19,27):
                     valoracion = 'Competente'
                 elif puntaje1 > 26:
                     valoracion = 'Excelencia'
@@ -508,11 +508,11 @@ class CrmLead(models.Model):
                             dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
                 dic_vals['calificacion2'] = puntaje2
 
-                if puntaje2 in range(0,8):
+                if puntaje2 in range(0,9):
                     valoracion = 'Incipiente'
-                elif puntaje2 in range(9,15):
+                elif puntaje2 in range(9,16):
                     valoracion = 'Confiable'
-                elif puntaje2 in range(16,21):
+                elif puntaje2 in range(16,22):
                     valoracion = 'Competente'
                 elif puntaje2 > 21:
                     valoracion = 'Excelencia'
@@ -535,11 +535,11 @@ class CrmLead(models.Model):
                             dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
                 dic_vals['calificacion3'] = puntaje3
 
-                if puntaje3 in range(0,8):
+                if puntaje3 in range(0,9):
                     valoracion = 'Incipiente'
-                elif puntaje3 in range(9,15):
+                elif puntaje3 in range(9,16):
                     valoracion = 'Confiable'
-                elif puntaje3 in range(16,22):
+                elif puntaje3 in range(16,23):
                     valoracion = 'Competente'
                 elif puntaje3 > 22:
                     valoracion = 'Excelencia'
@@ -562,11 +562,11 @@ class CrmLead(models.Model):
                             dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
                 dic_vals['calificacion4'] = puntaje4
 
-                if puntaje4 in range(0,11):
+                if puntaje4 in range(0,12):
                     valoracion = 'Incipiente'
-                elif puntaje4 in range(10,21):
+                elif puntaje4 in range(10,22):
                     valoracion = 'Confiable'
-                elif puntaje4 in range(19,30):
+                elif puntaje4 in range(19,31):
                     valoracion = 'Competente'
                 elif puntaje4 > 30:
                     valoracion = 'Excelencia'
@@ -590,11 +590,11 @@ class CrmLead(models.Model):
                             dic_vals['crm_diagnostic_line_ids'].append((0, 0, dic))
                 dic_vals['calificacion5'] = puntaje5
                 
-                if puntaje5 in range(0,12):
+                if puntaje5 in range(0,13):
                     valoracion = 'Incipiente'
-                elif puntaje5 in range(13,24):
+                elif puntaje5 in range(13,25):
                     valoracion = 'Confiable'
-                elif puntaje5 in range(25,34):
+                elif puntaje5 in range(25,35):
                     valoracion = 'Competente'
                 elif puntaje5 > 34:
                     valoracion = 'Excelencia'

@@ -169,6 +169,29 @@
                                 <div class="col-12" style="background-color: #a9d08e; text-align: center; border-top: 1px solid;">Mentorias</div>
                             </div>
                             <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Innovación, Organización y Operación</div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">
+                                <div class="col-12">
+                                    <table class="table borderless" style="page-break-inside: avoid;">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"><span>Sugerencia</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <t t-foreach="o.crm_diagnostic_line_innovation_model_ids" t-as="line_model">
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <span t-field="line_model.sugerencia"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="page-break-inside: avoid;">
                                 <div class="col-12" style="background-color: #8ca8d9; text-align: center; border-top: 1px solid;">Modelo de negocio</div>
                             </div>
                             <div class="row" style="page-break-inside: avoid; border-bottom: 1px solid;">

@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Python:Odoo13",
+            "type":"python",
+            "request":"launch",
+            "stopOnEntry": false,
+            "python":"${command:python.interpreterPath}",
+            "console":"integratedTerminal",
+            "program":"/opt/odoo13/odoo/odoo-bin",
+            "args": [
+               "--config=/opt/odoo13/odoo/odoo.conf",
+            ],
+            "cwd":"${workspaceRoot}",
+            "env": {},
+            "envFile":"/opt/odoo13/odoo/.env",
+            "debugOptions": [
+                "RedirectOutput"
+            ]
+        }
+    ]
+}

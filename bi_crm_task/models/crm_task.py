@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 
+from email.policy import default
 from odoo.tools.translate import _
 from datetime import datetime, timedelta, date
 from dateutil.relativedelta import relativedelta
@@ -23,6 +24,17 @@ class crm_lead(models.Model):
         self.task_number = task_obj.search_count([('lead_id', 'in', [a.id for a in self])])
 
     task_number = fields.Integer(compute='task_count', string='Tasks')
+    #DevGavii Custom
+    hide = fields.Boolean()
+    ver_boton = fields.Boolean()
+
+    @api.onchange('stage_id')
+    def invisible_task_create(self):
+        print(self.stage_id.stage_state, "stage_id#############")
+        if self.stage_id.stage_state == 'cuarto_encuentro':
+            self.ver_boton = True
+        else:
+            self.ver_boton = False
     
 class crm_task_wizard(models.TransientModel):
     _name = 'crm.task.wizard'

@@ -38,6 +38,8 @@
                                 <field name="actividades"/>
                                 <field name="soluciones"/>
                                 <field name="reponsable"/>
+                                <!--field name="estado_actividad"/>
+                                <field name="adjunto"/-->
                             </tree>
                         </field>
                         <div class="oe_title text-center">

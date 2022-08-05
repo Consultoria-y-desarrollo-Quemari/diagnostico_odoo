@@ -23,7 +23,6 @@
                 <field name="first_module_ready" invisible="1"/>
                 <field name="second_module_read" invisible="1"/>
                 <field name="third_module_ready" invisible="1"/>
-                <field name="four_module_read" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='company_id']" position="after">
                 <field name="mentors" options="{}" attrs="{'readonly': [('current_user_admin', '=', False)]}"/>
@@ -74,9 +73,6 @@
             </xpath>
             <xpath expr="//page[@name='modulo3']" position="attributes">
                 <attribute name="attrs">{'invisible': [('root_current_user', '=', False),('second_module_read', '=', False)]}</attribute>
-            </xpath>
-            <xpath expr="//page[@name='modulo4']" position="attributes">
-                <attribute name="attrs">{'invisible': [('root_current_user', '=', False),('four_module_read', '=', False)]}</attribute>
             </xpath>
         </field>
     </record>

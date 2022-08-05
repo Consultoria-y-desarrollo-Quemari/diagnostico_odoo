@@ -193,70 +193,6 @@ class CrmAttentionPlan(models.Model):
 
         return res
 
-       
-    def write(self, values, flag = False):
-        lines = []
-        lines_new = []
-        unlink_lines = []
-        priodidades = []
-        actividades = []
-        adjuntos = []
-        contador = 0
-        lead = self.env['crm.lead'].browse(self.lead_id.id)
-        print(self.plan_line_ids)
-        for l in lead.plan_line_ids:
-            print(l.estado_actividad)
-            if l.estado_actividad:
-                print(l.estado_actividad)
-                actividades.append(l.estado_actividad)
-                adjuntos.append(l.adjunto)
-                unlink_lines.append(l.id)
-            else:
-                actividades.append("pendiente_programar")
-                unlink_lines.append(l.id)
-        for item in self.plan_line_ids:
-            print([item.prioridad, item.actividades, item.soluciones, item.reponsable, ])
-            priodidades.append([item.prioridad, item.actividades, item.soluciones, item.reponsable, ])
-        
-        print(actividades)
-        for prioridad in priodidades:
-            if len(unlink_lines) == 0:
-                lines_new.append((0, 0, {
-                    'prioridad': prioridad[0],
-                    'actividades': prioridad[1],
-                    'soluciones': prioridad[2],
-                    'reponsable': prioridad[3],
-                    'estado_actividad': "pendiente_programar"
-                }))
-            else:
-                lines.append(
-                    (0, 0, {
-                        'prioridad': prioridad[0],
-                        'actividades': prioridad[1],
-                        'soluciones': prioridad[2],
-                        'reponsable': prioridad[3],
-                        'estado_actividad': actividades[contador],
-                        'adjunto' : adjuntos[contador]
-                    }))
-            contador += 1
-        print(lines)
-        for i in lead.plan_line_ids:
-                i.unlink()
-        if len(lines) == 0:
-            lead.plan_line_ids = lines_new
-        else:
-            
-            lead.plan_line_ids = lines
-        #self.update_lead_plan_line(lead, lines)
-        return super(CrmAttentionPlan, self).write(values), self.update_lead_plan_line(lead, lines)
-
-    def update_lead_plan_line(self, lead, lines):
-        for i in lead.plan_line_ids:
-                i.unlink()
-        print("teejecutas????????????????")
-        lead.plan_line_ids = lines
-        return 
-
 
 
 class CrmAttentionPlanLines(models.Model):
@@ -264,9 +200,6 @@ class CrmAttentionPlanLines(models.Model):
 
     crm_attention_id = fields.Many2one(
         'crm.attention.plan'
-    )
-    crm_attention_id_1 = fields.Many2one(
-        'crm.lead'
     )
     prioridad = fields.Char(
         string='Prioridad'
@@ -280,18 +213,4 @@ class CrmAttentionPlanLines(models.Model):
     reponsable = fields.Char(
         string='Responsable'
     )
-    
-    estado_actividad = fields.Selection(
-        [
-            ('programada', 'Programada'),
-            ('pendiente_programar', 'Pendiente a programar'),
-            ('cancelada', 'Cancelada'),
-            ('completada', 'Completada'),
-            ('sin_actividad_relacionada', 'Sin actividad relacionada')
-        ],
-        default = "pendiente_programar"
-    )
-    adjunto = fields.Binary()
-
-
 

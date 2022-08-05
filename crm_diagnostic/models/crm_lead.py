@@ -388,9 +388,6 @@ class CrmLead(models.Model):
     third_module_ready = fields.Boolean(
         compute='compute_third_module'
     )
-    four_module_read = fields.Boolean(
-        compute='compute_four_module'
-    )
     current_user = fields.Many2one(
         'res.users',
         compute='get_current_user'
@@ -413,7 +410,6 @@ class CrmLead(models.Model):
     facilitator_role = fields.Char(compute="get_facilitator_role")
 
     show_action_set_rainbowman = fields.Boolean(compute="compute_show_action_set_rainbowman")
-    
 
     def confirm_social_plan(self):
         stage_after = self.env['crm.stage'].search([('stage_after_confirm_social_plan', '=', True)])
@@ -424,10 +420,7 @@ class CrmLead(models.Model):
 
     # returning an action to go to crm.diagnostic form view related to lead
     def action_crm_diagnostic_view(self):
-        print(not self.is_cordinator() or not self.is_orientador()) and (not self.first_module_ready or not self.second_module_read or not self.third_module_ready, "esto es lo que quieres ver andres?")
         for record in self:
-            print(not record.is_cordinator() or not record.is_orientador()) and (not record.first_module_ready or not record.second_module_read or record.third_module_ready, "esto es lo que quieres ver andres?")
-
             # we avoid to execute the diagnostic whether question modules haven't executed yet
             if (not record.is_cordinator() or not record.is_orientador()) and (not record.first_module_ready or not record.second_module_read or not record.third_module_ready):
                 raise ValidationError('Para realizar el diagnostico, debe responder las preguntas de los 3 modulos.')
@@ -725,36 +718,6 @@ class CrmLead(models.Model):
                 lead_ids -= lead
                 self.env.cr.commit()
 
-    #fecha para cambio de permisos
-    
-    def valide_fecha(self):
-        fecha = self.env['res.company'].browse([1])
-        fecha_hoy = datetime.today().date()
-        print(fecha.fechalimite, fecha_hoy)
-        if fecha.fechalimite < fecha_hoy:
-            print("entas111")
-            rol = self.env['res.users.role'].search([('role_type' , '=', "facilitador")])
-            lista_permisos =[]
-            lista_permisos1 =[]
-            for roles in rol:
-                for grupo in roles.implied_ids:
-                    if grupo.name == "Usuario: Solo mostrar documentos propios":
-                        print("perm")
-                        lista_permisos.append((5,grupo.id))
-                    else:
-                        permiso_de_inactivacion = self.env['res.groups'].search([('name', '=', 'Usuario: Inactivar CRM')])
-                        lista_permisos1.append((4, permiso_de_inactivacion.id))
-                        lista_permisos1.append((4,grupo.id))
-            
-            
-            
-        print(lista_permisos)
-        rol.write({"implied_ids" : lista_permisos})
-        rol.write({"implied_ids" : lista_permisos1})
-
-
-
-
     # send email notification to coordinador and facilitador
     @api.model
     def send_mail_notification(self, lead_id):
@@ -899,9 +862,6 @@ class CrmLead(models.Model):
     # return the field list to validate the module2
     def fields_module2(self):
         return ['x_cont1', 'first_module_ready']
-    
-    def fields_module3(self):
-        return ['third_module_ready']
 
     # methos that return list of fields by section
     def fields_module3_generalities(self):
@@ -1052,19 +1012,6 @@ class CrmLead(models.Model):
             else:
                 lead.third_module_ready = False
 
-    @api.depends("stage_id")
-    def compute_four_module(self):
-        for lead in self:
-            if (lead.is_facilitator() or lead.is_admin()) and lead.third_module_ready:
-                if lead.stage_id.stage_state == "cuarto_encuentro":
-                    lead.four_module_read = True
-                else:
-                    lead.four_module_read = False
-            elif lead.is_cordinator() or lead.is_orientador() or lead.is_mentor() or lead.is_admin():
-                lead.four_module_read = True
-            else:
-                lead.four_module_read = False
-
     # validating it all fields of module3 were filled
     def all_fields_module3_are_ok(self):
         result = []
@@ -1163,7 +1110,6 @@ class CrmLead(models.Model):
     def fields_view_get(
             self, view_id=None, view_type='form', toolbar=False,
             submenu=False):
-        print("ejecutas"*100)
         res = super(CrmLead, self).fields_view_get(
             view_id=view_id, view_type=view_type, toolbar=toolbar,
             submenu=submenu)
@@ -1183,12 +1129,9 @@ class CrmLead(models.Model):
 
                 #res['arch'] = etree.tostring(doc)
             if self.is_facilitator():
-                print(doc, "Facilitadorñññññññññññññññññññññññññññññññññññññññññññññññññññññññññññññ")
                 for node in doc.xpath("//header/field[@name='stage_id']"):
-                    print(node.attrib)
                     if 'options' in node.attrib:
                         node.attrib.pop('options')
-                        print(node.attrib)
 
                 #res['arch'] = etree.tostring(doc)
 
@@ -1263,10 +1206,7 @@ class CrmLead(models.Model):
                     raise ValidationError('No puede realizar el plan de atención sin antes haber realizado el diagnostico.')
                 attention_plan_vals = record.getting_values_to_crm_attention_plan()
                 crm_attention_id = self.env['crm.attention.plan'].create(attention_plan_vals)
-                #record.plan_line_ids = attention_plan_vals['plan_line_ids']
                 crm_attention_id.diagnostico = record.diagnostico
-            print(attention_plan_vals)
-            record.plan_line_ids = attention_plan_vals['plan_line_ids']
             return record.action_to_return_to_crm_attention_plan(crm_attention_id)
 
     # return a dic values for crm.diagnostic

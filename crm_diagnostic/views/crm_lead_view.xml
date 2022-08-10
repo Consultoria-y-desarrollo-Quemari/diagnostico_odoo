@@ -14,6 +14,9 @@
                     <span class="o_stat_text">Plan de atención</span>
                 </button>
             </xpath>
+            <xpath expr="//button[@name='298']" position="replace" >
+                <button name="%(motivo_cierre_action)d" type="action" class="oe_highlight" string="Motivo de cierre" context="{'default_lead':id}"/>
+            </xpath>
             <xpath expr="//field[@name='team_id']" position="after">
                 <field name="current_user" invisible="1"/>
                 <field name="root_current_user" invisible="1"/>
@@ -27,6 +30,7 @@
             </xpath>
             <xpath expr="//field[@name='company_id']" position="after">
                 <field name="mentors" options="{}" attrs="{'readonly': [('current_user_admin', '=', False)]}"/>
+                <field name="motivos_cierre"/>
             </xpath>
             <xpath expr="//field[@name='user_id']" position="after">
                 <field name="coordinador"/>
@@ -80,5 +84,10 @@
             </xpath>
         </field>
     </record>
+
+    
+
+
+
 
 </odoo>

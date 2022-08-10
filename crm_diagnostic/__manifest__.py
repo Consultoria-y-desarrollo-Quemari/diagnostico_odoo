@@ -38,7 +38,8 @@ CRM Diagnostic
         'report/crm_diagnostic_report.xml',
         'report/crm_attention_plan_template.xml',
         'report/crm_attention_plan_report.xml',
-        'views/res_company.xml'
+        'views/res_company.xml',
+        'views/motivo_cierre.xml',
     ],
     'installable': True,
     'auto_install': False,

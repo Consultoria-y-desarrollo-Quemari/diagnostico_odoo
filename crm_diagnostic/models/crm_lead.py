@@ -408,12 +408,33 @@ class CrmLead(models.Model):
         compute="current_user_is_admin"
     )
 
-    social_plan = fields.Boolean(default = False)
+    social_plan = fields.Boolean(
+        default = False
+    )
 
-    facilitator_role = fields.Char(compute="get_facilitator_role")
+    facilitator_role = fields.Char(
+        compute="get_facilitator_role"
+    )
 
-    show_action_set_rainbowman = fields.Boolean(compute="compute_show_action_set_rainbowman")
-    
+    show_action_set_rainbowman = fields.Boolean(
+        compute="compute_show_action_set_rainbowman"
+    )
+
+    motivos_cierre = fields.Selection(
+            [
+                ('neica', 'No está interesado en continuar el acompañamiento'),
+                ('ncpft', "No continua con el acompañamiento por falta de tiempo o disposición"),
+                ('ncps', 'No continua con el acompañamiento por temas de salud o de fuerza mayor'),
+                ('na', 'No Autoriza y/o quiere dar sus datos y del micronegocio'),
+                ('nce', 'Numero de contacto equivocado'),
+                ('nspc', 'No se pudo contactar'),
+                ('cmca', 'Cierre del micronegocio / cambio de administración'),
+                ('epatet', 'El propietario está actualmente trabajando o empezara a trabajar'),
+                ('dfpa', 'Desconocimiento frente al proceso de acompañamiento'),
+                ('dre', 'Duplicado/Registrado por error'),
+                ('nprafr', 'No puede realizar actividades por falta de recursos')
+            ]
+        )
 
     def confirm_social_plan(self):
         stage_after = self.env['crm.stage'].search([('stage_after_confirm_social_plan', '=', True)])
@@ -745,9 +766,7 @@ class CrmLead(models.Model):
                         permiso_de_inactivacion = self.env['res.groups'].search([('name', '=', 'Usuario: Inactivar CRM')])
                         lista_permisos1.append((4, permiso_de_inactivacion.id))
                         lista_permisos1.append((4,grupo.id))
-            
-            
-            
+   
         print(lista_permisos)
         rol.write({"implied_ids" : lista_permisos})
         rol.write({"implied_ids" : lista_permisos1})
@@ -1306,3 +1325,60 @@ class CrmLead(models.Model):
             'view_id': form_view.id,
             'target': 'current',
         }
+
+    def motivo_cierre_wizard(self):
+        
+        view = self.env.ref('crm_diagnostc.motivo_cierre.wizard.view')
+        wiz = self.env['crm.lead.motivoscirre.wizard'].create({"motivos_cierre" : 'neica'})
+        return {
+            'name': _('Motovo del cierre'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'crm.lead.motivoscirre.wizard',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'res_id': wiz.id,
+            'context': self.env.context,
+        }
+
+    class MotivosCierre(models.TransientModel):
+        _name = 'crm.lead.motivoscirre.wizard'
+        _description = "Ventana desplegable del motivo de cierre"
+
+        motivos_cierre = fields.Selection(
+            [
+                ('neica', 'No está interesado en continuar el acompañamiento'),
+                ('ncpft', "No continua con el acompañamiento por falta de tiempo o disposición"),
+                ('ncps', 'No continua con el acompañamiento por temas de salud o de fuerza mayor'),
+                ('na', 'No Autoriza y/o quiere dar sus datos y del micronegocio'),
+                ('nce', 'Numero de contacto equivocado'),
+                ('nspc', 'No se pudo contactar'),
+                ('cmca', 'Cierre del micronegocio / cambio de administración'),
+                ('epatet', 'El propietario está actualmente trabajando o empezara a trabajar'),
+                ('dfpa', 'Desconocimiento frente al proceso de acompañamiento'),
+                ('dre', 'Duplicado/Registrado por error'),
+                ('nprafr', 'No puede realizar actividades por falta de recursos')
+            ]
+        )
+        start_date = fields.Date()
+        end_date = fields.Date()
+        puntaje = fields.Selection(
+            [
+                ('p_good', 'Muy Bueno'),
+                ('good', 'Bueno'),
+                ('bad', 'Malo'),
+                ('p_bad', 'Muy Malo')
+            ]
+        )
+        lead = fields.Integer()
+
+        def action_done_cierre(self):
+            lead = self.env['crm.lead'].browse(self.lead)
+            lead.motivos_cierre = self.motivos_cierre
+            lead.lost_start_date = self.start_date
+            lead.lost_end_date = self.end_date
+            lead.score = self.puntaje
+            lead.active = 0
+            return True

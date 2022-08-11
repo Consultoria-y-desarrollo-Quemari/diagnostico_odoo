@@ -1362,8 +1362,19 @@ class CrmLead(models.Model):
                 ('nprafr', 'No puede realizar actividades por falta de recursos')
             ]
         )
-        start_date = fields.Date()
-        end_date = fields.Date()
+
+        lead = fields.Integer()
+
+        def _default_crm_lead_date(self):
+            lead_id = self.env['crm.lead'].search([('id','=',self._context.get('default_lead'))])
+            print(self._context, "holaaaaaaaaaaaaaaaaaaa")
+            if lead_id:
+                return lead_id.date_open
+            else:
+                return datetime.now().date()
+
+        start_date = fields.Date(string="StartDate" ,default=_default_crm_lead_date)
+        end_date = fields.Date(string="EndDate",default=fields.Datetime.now)
         puntaje = fields.Selection(
             [
                 ('p_good', 'Muy Bueno'),
@@ -1372,7 +1383,7 @@ class CrmLead(models.Model):
                 ('p_bad', 'Muy Malo')
             ]
         )
-        lead = fields.Integer()
+        
 
         def action_done_cierre(self):
             lead = self.env['crm.lead'].browse(self.lead)
@@ -1382,3 +1393,5 @@ class CrmLead(models.Model):
             lead.score = self.puntaje
             lead.active = 0
             return True
+
+        

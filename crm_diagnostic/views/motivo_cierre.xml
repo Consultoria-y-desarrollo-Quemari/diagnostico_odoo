@@ -10,7 +10,7 @@
             <field name="arch" type="xml">
                 <form string="Motivo de cierre">
                     <group>
-                        <field name="motivos_cierre" string="Motivo de cierre"/>
+                        <field name="motivos_cierre" string="Motivo de cierre" attrs="{'required':True}"/>
                         <field name="start_date"/>
                         <field name="end_date"/>
                         <field name="puntaje"/>

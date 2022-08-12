@@ -412,6 +412,35 @@ class CrmLead(models.Model):
         default = False
     )
 
+    def show_button_social_plan(self):
+        print("Hola"*200)
+        flag = False
+        loop = 0
+        contador = 0
+        stage_after = self.env['crm.stage'].search([('stage_after_confirm_social_plan', '=', True)])
+        if self.stage_id.stage_state == "cuarto_encuentro":
+            flag = True
+        for ea in self.plan_line_ids:
+            loop += 1
+            if ea.estado_actividad == "sin_actividad_relacionada":
+                contador += 1
+            elif ea.estado_actividad == "cancelada":
+                contador += 1
+        print(flag, loop, contador)
+        if flag:
+            if contador == loop:
+                self.social_plan_1 = False
+            else:
+                self.social_plan_1 = True
+        else:
+            self.social_plan_1 = False
+            
+        
+        
+    social_plan_1 = fields.Boolean(
+        compute="show_button_social_plan"
+    )
+
     facilitator_role = fields.Char(
         compute="get_facilitator_role"
     )
@@ -435,7 +464,7 @@ class CrmLead(models.Model):
                 ('nprafr', 'No puede realizar actividades por falta de recursos')
             ]
         )
-
+    
     def confirm_social_plan(self):
         stage_after = self.env['crm.stage'].search([('stage_after_confirm_social_plan', '=', True)])
         for lead in self:
@@ -767,9 +796,9 @@ class CrmLead(models.Model):
                         lista_permisos1.append((4, permiso_de_inactivacion.id))
                         lista_permisos1.append((4,grupo.id))
    
-        print(lista_permisos)
-        rol.write({"implied_ids" : lista_permisos})
-        rol.write({"implied_ids" : lista_permisos1})
+            print(lista_permisos)
+            rol.write({"implied_ids" : lista_permisos})
+            rol.write({"implied_ids" : lista_permisos1})
 
 
 
@@ -1284,8 +1313,8 @@ class CrmLead(models.Model):
                 crm_attention_id = self.env['crm.attention.plan'].create(attention_plan_vals)
                 #record.plan_line_ids = attention_plan_vals['plan_line_ids']
                 crm_attention_id.diagnostico = record.diagnostico
-            print(attention_plan_vals)
-            record.plan_line_ids = attention_plan_vals['plan_line_ids']
+            #print(attention_plan_vals)
+            #record.plan_line_ids = attention_plan_vals['plan_line_ids']
             return record.action_to_return_to_crm_attention_plan(crm_attention_id)
 
     # return a dic values for crm.diagnostic

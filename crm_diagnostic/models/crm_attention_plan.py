@@ -194,18 +194,20 @@ class CrmAttentionPlan(models.Model):
         return res
 
        
-    def write(self, values, flag = False):
+    """def write(self, values, flag = False):
         lines = []
+        lista_ids = []
         lines_new = []
         unlink_lines = []
         priodidades = []
         actividades = []
         adjuntos = []
         contador = 0
+        self.env.cr.commit()
         lead = self.env['crm.lead'].browse(self.lead_id.id)
         print(self.plan_line_ids)
         for l in lead.plan_line_ids:
-            print(l.estado_actividad)
+            print(l.id, "id"*60)
             if l.estado_actividad:
                 print(l.estado_actividad)
                 actividades.append(l.estado_actividad)
@@ -215,6 +217,8 @@ class CrmAttentionPlan(models.Model):
                 actividades.append("pendiente_programar")
                 unlink_lines.append(l.id)
         for item in self.plan_line_ids:
+            lista_ids.append(item.id)
+            print(item.id, "id"*60)
             print([item.prioridad, item.actividades, item.soluciones, item.reponsable, ])
             priodidades.append([item.prioridad, item.actividades, item.soluciones, item.reponsable, ])
         
@@ -241,21 +245,33 @@ class CrmAttentionPlan(models.Model):
             contador += 1
         print(lines)
         for i in lead.plan_line_ids:
-                i.unlink()
+            i.unlink()
         if len(lines) == 0:
             lead.plan_line_ids = lines_new
         else:
             
             lead.plan_line_ids = lines
-        #self.update_lead_plan_line(lead, lines)
-        return super(CrmAttentionPlan, self).write(values), self.update_lead_plan_line(lead, lines)
+        self.update_lead_plan_line(lead, lines)
+        return super(CrmAttentionPlan, self).write(values)"""
+    
+    def write(self, values, flag = False):
+        lista_ids = []
+        lead = self.env['crm.lead'].browse(self.lead_id.id)
+        for item in self.plan_line_ids:
+            lista_ids.append((4, item.id, 0))
+        lead.write(
+            {'plan_line_ids':lista_ids}
+        )
+        return super(CrmAttentionPlan, self).write(values)
+    
 
     def update_lead_plan_line(self, lead, lines):
         for i in lead.plan_line_ids:
-                i.unlink()
+            i.unlink()
         print("teejecutas????????????????")
         lead.plan_line_ids = lines
         return 
+
 
 
 

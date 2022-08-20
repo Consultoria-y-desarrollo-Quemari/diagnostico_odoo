@@ -12,3 +12,4 @@ access_crm_diagnostic_line_innovation,access_crm_diagnostic_line_innovation,mode
 access_crm_attention_plan_line,access_crm_attention_plan_line,model_crm_attention_plan_line,,1,1,1,1
 acceses_type_activity,acceses_type_activity,model_crm_lead_type_activity,,1,1,1,1
 _access_account_analytic_line,access_account_analytic_line,model_account_analytic_line,,1,1,1,1
+access_crm_attention_plan_bitacora,access_crm_attention_plan_bitacora,model_crm_attention_plan_bitacora,,1,1,1,1

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <data>
+            <record id="48_horas" model="crm.lead.type_activity">
+                <field name="name">48 horas</field>
+            </record>
+
+            <record id="1_semana" model="crm.lead.type_activity">
+                <field name="name">1 semana</field>
+            </record>
+
+            <record id="2_semanas" model="crm.lead.type_activity">
+                <field name="name">2 semanas</field>
+            </record>
+
+            <record id="1_mes" model="crm.lead.type_activity">
+                <field name="name">1 mes</field>
+            </record>
+
+            <record id="a_fututro" model="crm.lead.type_activity">
+                <field name="name">A fututro</field>
+            </record>
+
+            <record id="habitosa_desarrollar" model="crm.lead.type_activity">
+                <field name="name">Habitosa a desarrollar</field>
+            </record>
+
+            <record id="moocs" model="crm.lead.type_activity">
+                <field name="name">Moocs</field>
+            </record>
+
+            <record id="talleres_capacitaciones" model="crm.lead.type_activity">
+                <field name="name">Talleres o capacitaciones</field>
+            </record>
+
+            <record id="servicios_ecosistema" model="crm.lead.type_activity">
+                <field name="name">Servicios del ecosistema</field>
+            </record>
+
+            <record id="actividad_extra" model="crm.lead.type_activity">
+                <field name="name">Actividad extra</field>
+            </record>
+        </data>
+    </odoo>

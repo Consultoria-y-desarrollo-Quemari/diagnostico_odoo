@@ -2,6 +2,7 @@
 from odoo import models, fields, api
 from lxml import etree
 import json
+import datetime
 
 
 class CrmAttentionPlan(models.Model):
@@ -274,7 +275,6 @@ class CrmAttentionPlan(models.Model):
 
 
 
-
 class CrmAttentionPlanLines(models.Model):
     _name = 'crm.attention.plan.line'
 
@@ -309,5 +309,73 @@ class CrmAttentionPlanLines(models.Model):
     )
     adjunto = fields.Binary()
 
+    
+    kanban_state_attention_plan = fields.Selection(
+        [
+            ('normal', 'Grey'), 
+            ('blocked', 'Next activity late'), 
+            ('done', 'Next activity is planned')
+        ],
+        default = "normal",
+        string="Cumplimiento"
+    )
+    fecha_kanban = fields.Datetime()
+    entidad_ofertadores = fields.Char(string="Entidad ofertadores")
+
+    def _kanban_state_attention_plan(self):
+        print("este es el kan"*60)
+        return "grey"
+
+    @api.onchange('estado_actividad')
+    def onchange_estado_actividad(self):
+        print("atencion plan20000"*100)
+        if not self.fecha_kanban:
+            if self.estado_actividad == "programada":
+                self.sudo().write(
+                    {'kanban_state_attention_plan':'done'}
+                )
+                self.fecha_kanban = datetime.datetime.today()
+
+class CrmAttentionPlanLinesBitacora(models.Model):
+    _name = 'crm.attention.plan.bitacora'
+
+    def selction_user(self):
+        user = self.env['res.users'].sudo().search([('id', '=', self.env.uid)])
+        return user
+
+    crm_bitacora_id = fields.Many2one(
+        'crm.lead'
+    )
+    fecha = fields.Date()
+    facilitador_ids = fields.Many2many('res.users', default=selction_user)
+    facilitador_ids1 = fields.Many2one('res.users', default=selction_user, string="Facilitador")
+    actividad = fields.Selection(
+        [
+            ('visita', 'Visita')
+        ]
+    )
+    tipo_actividad = fields.Selection(
+        [
+            ('48_horas', '48 horas'),
+            ('1_semana', '1 semana'),
+            ('2_semanas', '2 semanas'),
+            ('1_mes', '1 mes'),
+            ('futuro', 'A futuro'),
+            ('habitosa_desarrollar', 'Habitosa a desarrollar'),
+            ('moocs', 'Moocs'),
+            ('talleres_capacitaciones', 'Talleres o capacitaciones'),
+            ('servicios_ecosistema', 'Servicios del ecosistema'),
+             ('actividad_extra', 'Actividad extra'),
+        ]
+    )
+    actividad1 = fields.Char(string="Actividad")
+    tipo_actividad1 = fields.Char(string="Tipo de Actividad")
+    registro_avance = fields.Char()
+    observaciones = fields.Char()
+    adjunto = fields.Binary()
+    tipo_actividad_ids = fields.Many2one('crm.lead.type_activity', default=selction_user, string="Tipo de Actividad")
 
 
+                
+
+    

@@ -411,9 +411,69 @@ class CrmLead(models.Model):
     social_plan = fields.Boolean(
         default = False
     )
+    plan_line_ids = fields.One2many(
+        'crm.attention.plan.line',
+        'crm_attention_id_1'
+    )
+    bitacora_ids = fields.One2many(
+        'crm.attention.plan.bitacora',
+        'crm_bitacora_id'
+    )
+    analytic_account_active = fields.Boolean("Analytic Account")
+    total_hours_spent = fields.Float("Total Hours", compute='_compute_total_hours_spent', store=True, help="Computed as: Time Spent + Sub-tasks Hours.")
+    subtask_planned_hours = fields.Float("Subtasks", compute='_compute_subtask_planned_hours', help="Computed using sum of hours planned of all subtasks created from main task. Usually these hours are less or equal to the Planned Hours (of main task).")
+    child_ids = fields.One2many('crm.lead', 'parent_id', string="Sub-tasks", context={'active_test': False})
+    effective_hours = fields.Float("Hours Spent", compute='_compute_effective_hours', compute_sudo=True, store=True, help="Computed using the sum of the task work done.")
+    planned_hours = fields.Float("Planned Hours", help='It is the time planned to achieve the task. If this document has sub-tasks, it means the time needed to achieve this tasks and its childs.',tracking=True)
+    progress = fields.Float("Progress", compute='_compute_progress_hours', store=True, group_operator="avg", help="Display progress of current task.")
+    timesheet_ids = fields.One2many('account.analytic.line', 'parentcrm_id', 'Timesheets')
+    subtask_effective_hours = fields.Float("Sub-tasks Hours Spent", compute='_compute_subtask_effective_hours', store=True, help="Sum of actually spent hours on the subtask(s)")
+    remaining_hours = fields.Float("Remaining Hours", compute='_compute_remaining_hours', store=True, readonly=True, help="Total remaining time, can be re-estimated periodically by the assignee of the task.")
+    parent_id = fields.Many2one(
+        'crm.lead'
+    )
+
+    @api.depends('child_ids.planned_hours')
+    def _compute_subtask_planned_hours(self):
+        for task in self:
+            task.subtask_planned_hours = sum(task.child_ids.mapped('planned_hours'))
+
+    @api.depends('effective_hours', 'subtask_effective_hours', 'planned_hours')
+    def _compute_remaining_hours(self):
+        for task in self:
+            task.remaining_hours = task.planned_hours - task.effective_hours - task.subtask_effective_hours
+
+
+    @api.depends('effective_hours', 'subtask_effective_hours')
+    def _compute_total_hours_spent(self):
+        for task in self:
+            task.total_hours_spent = task.effective_hours + task.subtask_effective_hours
+
+    @api.depends('child_ids.effective_hours', 'child_ids.subtask_effective_hours')
+    def _compute_subtask_effective_hours(self):
+        for task in self:
+            task.subtask_effective_hours = sum(child_task.effective_hours + child_task.subtask_effective_hours for child_task in task.child_ids)
+
+
+    @api.depends('timesheet_ids.unit_amount')
+    def _compute_effective_hours(self):
+        for task in self:
+            task.effective_hours = round(sum(task.timesheet_ids.mapped('unit_amount')), 2)
+
+    @api.depends('effective_hours', 'subtask_effective_hours', 'planned_hours')
+    def _compute_progress_hours(self):
+        for task in self:
+            if (task.planned_hours > 0.0):
+                task_total_hours = task.effective_hours + task.subtask_effective_hours
+                if task_total_hours > task.planned_hours:
+                    task.progress = 100
+                else:
+                    task.progress = round(100.0 * task_total_hours / task.planned_hours, 2)
+            else:
+                task.progress = 0.0
 
     def show_button_social_plan(self):
-        print("Hola"*200)
+        #print("Hola"*200)
         flag = False
         loop = 0
         contador = 0
@@ -425,6 +485,8 @@ class CrmLead(models.Model):
             if ea.estado_actividad == "sin_actividad_relacionada":
                 contador += 1
             elif ea.estado_actividad == "cancelada":
+                contador += 1
+            elif ea.estado_actividad == "pendiente_programar":
                 contador += 1
         print(flag, loop, contador)
         if flag:
@@ -905,11 +967,26 @@ class CrmLead(models.Model):
 
     @api.depends()
     def compute_show_action_set_rainbowman(self):
+        loop = 0
+        contador = 0
         for lead in self:
             if lead.stage_id.allow_mark_as_won:
-                lead.show_action_set_rainbowman = True
+                for ea in lead.plan_line_ids:
+                    loop += 1
+                    if ea.estado_actividad == "completada":
+                        contador += 1
+                    elif ea.estado_actividad == "cancelada":
+                        contador += 1
+                    elif ea.estado_actividad == "sin_actividad_relacionada":
+                        contador += 1
+                if contador == loop:
+                    lead.show_action_set_rainbowman = True
+                else:
+                    lead.show_action_set_rainbowman = False
             else:
                 lead.show_action_set_rainbowman = False
+        
+                
 
 
 
@@ -1102,6 +1179,7 @@ class CrmLead(models.Model):
 
     @api.depends("stage_id")
     def compute_four_module(self):
+        print("funciona"*200)
         for lead in self:
             if (lead.is_facilitator() or lead.is_admin()) and lead.third_module_ready:
                 if lead.stage_id.stage_state == "cuarto_encuentro":
@@ -1420,7 +1498,12 @@ class CrmLead(models.Model):
             lead.lost_start_date = self.start_date
             lead.lost_end_date = self.end_date
             lead.score = self.puntaje
-            lead.active = 0
+            lead.active = False
             return True
 
-        
+    class accountanalitic(models.Model):
+    
+        _inherit = 'account.analytic.line'
+
+        parentcrm_id = fields.Many2one(
+        'crm.lead')

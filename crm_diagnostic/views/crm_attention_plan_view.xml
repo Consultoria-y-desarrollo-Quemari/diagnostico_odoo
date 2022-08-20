@@ -36,10 +36,10 @@
                             <tree editable="bottom" create="0" delete="0">
                                 <field name="prioridad"/>
                                 <field name="actividades"/>
+                                <field name="entidad_ofertadores"/>
                                 <field name="soluciones"/>
                                 <field name="reponsable"/>
-                                <!--field name="estado_actividad"/>
-                                <field name="adjunto"/-->
+                                <!--field name="adjunto"/-->
                             </tree>
                         </field>
                         <div class="oe_title text-center">

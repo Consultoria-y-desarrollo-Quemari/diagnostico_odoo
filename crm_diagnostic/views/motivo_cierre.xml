@@ -24,13 +24,6 @@
             </field>
         </record>
 
-        <record id="motivo_cierre_action" model="ir.actions.act_window">
-            <field name="name">Motivo del cierre</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">crm.lead.motivoscirre.wizard</field>
-            <field name="view_mode">form</field>
-
-            <field name="target">new</field>
-        </record>
+        
     </data>
 </odoo>    

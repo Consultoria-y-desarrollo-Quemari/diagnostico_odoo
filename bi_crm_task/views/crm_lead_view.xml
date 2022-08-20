@@ -66,7 +66,7 @@
                     </button>
                   </div>
 				<button name="%(crm.action_crm_lead2opportunity_partner)d" position="after">
-					<button name="%(action_view_crm_task_form)d" string="Create Task" type="action"/> <!--attrs="{'invisible': [('ver_boton', '=', False)]}"/-->
+					<button name="%(action_view_crm_task_form)d" string="Create Task" type="action"/>
 				</button>
 			</field>
             

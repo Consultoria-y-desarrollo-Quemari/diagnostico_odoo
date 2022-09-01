@@ -413,7 +413,8 @@ class CrmLead(models.Model):
     )
     plan_line_ids = fields.One2many(
         'crm.attention.plan.line',
-        'crm_attention_id_1'
+        'crm_attention_id_1',
+        store=True
     )
     bitacora_ids = fields.One2many(
         'crm.attention.plan.bitacora',

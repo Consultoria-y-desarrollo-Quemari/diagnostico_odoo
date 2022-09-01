@@ -10,6 +10,6 @@ access_crm_diagnostic_line_orientation,access_crm_diagnostic_line_orientation,mo
 access_crm_diagnostic_line_business,access_crm_diagnostic_line_business,model_crm_diagnostic_line_business,,1,1,1,1
 access_crm_diagnostic_line_innovation,access_crm_diagnostic_line_innovation,model_crm_diagnostic_line_innovation,,1,1,1,1
 
-acceses_type_activity,acceses_type_activity,model_crm_lead_type_activity,,1,1,1,1
+
 _access_account_analytic_line,access_account_analytic_line,model_account_analytic_line,,1,1,1,1
 access_crm_attention_plan_bitacora,access_crm_attention_plan_bitacora,model_crm_attention_plan_bitacora,,1,1,1,1

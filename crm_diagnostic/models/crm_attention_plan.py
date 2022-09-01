@@ -373,9 +373,4 @@ class CrmAttentionPlanLinesBitacora(models.Model):
     registro_avance = fields.Char()
     observaciones = fields.Char()
     adjunto = fields.Binary()
-    tipo_actividad_ids = fields.Many2one('crm.lead.type_activity', default=selction_user, string="Tipo de Actividad")
-
-
-                
-
-    
+    tipo_actividad_ids = fields.Many2one('crm.lead.type_activity', string="Tipo de Actividad") 

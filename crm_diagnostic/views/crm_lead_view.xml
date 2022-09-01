@@ -24,7 +24,8 @@
                     <span class="o_stat_text">Plan de atención</span>
                 </button>
             </xpath>
-            <xpath expr="//button[@name='298']" position="replace">
+            <!--298-->
+            <xpath expr="//button[@name='161']" position="replace">
                 <button name="%(motivo_cierre_action)d" type="action" class="oe_highlight" string="Inactivar Caso" context="{'default_lead':id}" />
             </xpath>
             <xpath expr="//field[@name='team_id']" position="after">

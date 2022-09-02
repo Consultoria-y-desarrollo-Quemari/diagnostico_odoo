@@ -69,9 +69,9 @@
                             <tree editable="bottom" create="0" delete="0">
                                 <field name="prioridad" readonly="1" />
                                 <field name="actividades" readonly="1" />
+                                <field name="entidad_ofertadores" readonly="1"/>
                                 <field name="soluciones" readonly="1" />
                                 <field name="reponsable" readonly="1" />
-                                <field name="entidad_ofertadores" readonly="1"/>
                                 <field name="estado_actividad" attrs="{'required':True}" options="{'no_create': True, 'no_create_edit':True}" />
                                 <field name="kanban_state_attention_plan" widget="kanban_state_selection" attrs="{'required':True}" />
                                 <field name="adjunto" attrs="{'readonly':[('estado_actividad','!=','completada')]}" />
@@ -96,7 +96,7 @@
                         </field>
                     
                 </page>
-                 <page string="Timesheets" id="timesheets_tab" >
+                 <page string="Mentorias" id="timesheets_tab" >
                         <group>
                             <group>
                                 <field name="planned_hours" widget="float_time"/>
@@ -120,6 +120,7 @@
                             <field name="user_id" invisible="1"/>
                             <field name="employee_id" required="1"/>
                             <field name="name"/>
+                            <field name="stage_state"/>
                             <field name="unit_amount" widget="timesheet_uom"/>
                             <field name="project_id" invisible="1"/>
                             <field name="company_id" invisible="1"/>

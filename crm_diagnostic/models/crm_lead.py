@@ -481,6 +481,9 @@ class CrmLead(models.Model):
         stage_after = self.env['crm.stage'].search([('stage_after_confirm_social_plan', '=', True)])
         if self.stage_id.stage_state == "cuarto_encuentro":
             flag = True
+        else:
+            self.social_plan_1 = False
+            return
         for ea in self.plan_line_ids:
             loop += 1
             if ea.estado_actividad == "sin_actividad_relacionada":

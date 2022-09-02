@@ -443,6 +443,8 @@ class CrmLead(models.Model):
                 lead.modulo_seguimeinto = True
             elif lead.stage_id.stage_state == "cuarto_encuentro":
                 lead.modulo_seguimeinto = True
+            else:
+                lead.modulo_seguimeinto = False
 
     @api.depends('child_ids.planned_hours')
     def _compute_subtask_planned_hours(self):

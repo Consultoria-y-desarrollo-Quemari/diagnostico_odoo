@@ -116,7 +116,7 @@
                             </div>
                         </group>
                     <field name="timesheet_ids" mode="tree,kanban" attrs="{'readonly':[('current_user_mentor','=',True)]}">
-                        <tree editable="bottom" string="Timesheet Activities" default_order="date">
+                        <tree editable="bottom" string="Timesheet Activities" default_order="date" attrs="{'readonly':[('current_user_mentor','=',True)]}">
                             <field name="date"/>
                             <field name="user_id" invisible="1"/>
                             <field name="employee_id" required="1"/>

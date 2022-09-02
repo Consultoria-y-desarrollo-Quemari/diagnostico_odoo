@@ -38,6 +38,7 @@
                 <field name="second_module_read" invisible="1" />
                 <field name="third_module_ready" invisible="1" />
                 <field name="four_module_read" invisible="1" />
+                <field name="mentorias" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='company_id']" position="after">
                 <field name="mentors" options="{}" attrs="{'readonly': [('current_user_admin', '=', False)]}" />
@@ -96,7 +97,7 @@
                         </field>
                     
                 </page>
-                 <page string="Mentorias" id="timesheets_tab" >
+                 <page string="MENTORIAS" id="timesheets_tab" attrs="{'invisible' : ('mentorias', '=', False)}">
                         <group>
                             <group>
                                 <field name="planned_hours" widget="float_time"/>

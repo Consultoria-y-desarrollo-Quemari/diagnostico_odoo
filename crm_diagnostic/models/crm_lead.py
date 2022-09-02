@@ -515,6 +515,10 @@ class CrmLead(models.Model):
         compute="compute_show_action_set_rainbowman"
     )
 
+    mentorias = fields.Boolean(
+        compute="ver_modulo_mentorias"
+    )
+
     motivos_cierre = fields.Selection(
             [
                 ('neica', 'No está interesado en continuar el acompañamiento'),
@@ -530,6 +534,12 @@ class CrmLead(models.Model):
                 ('nprafr', 'No puede realizar actividades por falta de recursos')
             ]
         )
+
+    def ver_modulo_mentorias(self):
+        if self.coordinador:
+            return True
+        else:
+            return False
     
     def confirm_social_plan(self):
         stage_after = self.env['crm.stage'].search([('stage_after_confirm_social_plan', '=', True)])

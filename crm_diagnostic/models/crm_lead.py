@@ -536,6 +536,7 @@ class CrmLead(models.Model):
         )
 
     def ver_modulo_mentorias(self):
+        _logger.info("es el campo de invisibilidad eeeeeeeeeeeeeee ")
         if self.coordinador:
             self.mentorias = True
         else:

@@ -38,7 +38,7 @@
                 <field name="second_module_read" invisible="1" />
                 <field name="third_module_ready" invisible="1" />
                 <field name="four_module_read" invisible="1" />
-                <field name="mentorias" invisible="1"/>
+                <field name="mentorias"/>
             </xpath>
             <xpath expr="//field[@name='company_id']" position="after">
                 <field name="mentors" options="{}" attrs="{'readonly': [('current_user_admin', '=', False)]}" />

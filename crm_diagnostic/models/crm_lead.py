@@ -537,9 +537,9 @@ class CrmLead(models.Model):
 
     def ver_modulo_mentorias(self):
         if self.coordinador:
-            return True
+            self.mentorias = True
         else:
-            return False
+            self.mentorias = False
     
     def confirm_social_plan(self):
         stage_after = self.env['crm.stage'].search([('stage_after_confirm_social_plan', '=', True)])

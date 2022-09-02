@@ -1006,7 +1006,7 @@ class CrmLead(models.Model):
                     if ea.estado_actividad == "completada":
                         contador += 1
                         contador_completadas += 1
-                        if ea.djunto:
+                        if ea.adjunto:
                             contador_adjuntos += 1
                     elif ea.estado_actividad == "cancelada":
                         contador += 1

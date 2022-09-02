@@ -993,6 +993,8 @@ class CrmLead(models.Model):
     def compute_show_action_set_rainbowman(self):
         loop = 0
         contador = 0
+        contador_completadas = 0
+        contador_adjuntos = 0
         bitacora = False
         for lead in self:
             if lead.stage_id.allow_mark_as_won:
@@ -1003,13 +1005,22 @@ class CrmLead(models.Model):
                     loop += 1
                     if ea.estado_actividad == "completada":
                         contador += 1
+                        contador_completadas += 1
+                        if ea.djunto:
+                            contador_adjuntos += 1
                     elif ea.estado_actividad == "cancelada":
                         contador += 1
                     elif ea.estado_actividad == "sin_actividad_relacionada":
                         contador += 1
                 if contador == loop:
-                    if bitacora:
-                        lead.show_action_set_rainbowman = True
+                    if bitacora: 
+                        if contador_completadas != 0:
+                            if contador_completadas == contador_adjuntos:
+                                lead.show_action_set_rainbowman = True
+                            else:
+                                lead.show_action_set_rainbowman = False
+                        else:
+                            lead.show_action_set_rainbowman = True
                     else: 
                         lead.show_action_set_rainbowman = False
                 else:

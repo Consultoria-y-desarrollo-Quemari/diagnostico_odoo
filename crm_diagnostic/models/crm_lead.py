@@ -433,6 +433,16 @@ class CrmLead(models.Model):
     parent_id = fields.Many2one(
         'crm.lead'
     )
+    modulo_seguimeinto = fields.Boolean(
+        compute = "ver_modulo_seguiemiento"
+    )
+
+    def ver_modulo_seguiemiento(self):
+        for lead in self:
+            if lead.stage_id.stage_state == "quinto_encuentro":
+                lead.modulo_seguimeinto = True
+            elif lead.stage_id.stage_state == "cuarto_encuentro":
+                lead.modulo_seguimeinto = True
 
     @api.depends('child_ids.planned_hours')
     def _compute_subtask_planned_hours(self):

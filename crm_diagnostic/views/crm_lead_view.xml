@@ -59,7 +59,7 @@
                 <button type="object" name="confirm_social_plan" string="Confirmar socializacion del plan de atención" attrs="{'invisible':[('social_plan_1','=',False)]}" />
             </xpath>
             <xpath expr="//page[@name='modulo3']" position="after">
-                <page string="MODULO DE SEGUIMIENTO" name="modulo4" attrs="{'invisible': [('root_current_user', '=', False),('four_module_read', '=', False)]}">
+                <page string="MODULO DE SEGUIMIENTO" name="modulo4" attrs="{'invisible': [('root_current_user', '=', False),('modulo_seguimeinto', '=', False)]}">
                     
                         <div class="oe_title text-center">
                             <h3>

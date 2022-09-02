@@ -5,4 +5,4 @@ class TypeActivity(models.Model):
     _description = "Opciones para el tipo de actividad"
 
     tipo_actividad = fields.Char()
-    name = fields.Char(readonly=True)
+    name = fields.Char()

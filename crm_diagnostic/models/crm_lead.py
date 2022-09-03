@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from typing_extensions import Required
 from odoo import fields, models, api, SUPERUSER_ID, _
 from odoo.exceptions import ValidationError
 from dateutil.relativedelta import relativedelta
@@ -1549,3 +1550,9 @@ class CrmLead(models.Model):
 
         parentcrm_id = fields.Many2one(
         'crm.lead')
+
+        account_id = fields.Many2one(
+            'account.analytic.account',
+            string='account_id',
+            required = False
+            )

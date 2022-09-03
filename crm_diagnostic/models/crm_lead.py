@@ -1558,3 +1558,4 @@ class CrmLead(models.Model):
             )
 
         adjunto = fields.Binary()
+        name  = fields.Char(string="Descripción")

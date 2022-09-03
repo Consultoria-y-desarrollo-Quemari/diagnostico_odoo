@@ -1556,3 +1556,5 @@ class CrmLead(models.Model):
             string='account_id',
             required = False
             )
+
+        adjunto = fields.Binary()

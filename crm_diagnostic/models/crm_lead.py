@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from typing_extensions import Required
 from odoo import fields, models, api, SUPERUSER_ID, _
 from odoo.exceptions import ValidationError
 from dateutil.relativedelta import relativedelta

@@ -168,6 +168,7 @@
                                     <field name="employee_id" required="1"/>
                                     <field name="name"/>
                                     <field name="unit_amount" string="Duration" widget="float_time"/>
+                                    <field name="adjunto"/>
                                     <field name="project_id" invisible="1"/>
                                     <field name="company_id" invisible="1"/>
                                 </group>

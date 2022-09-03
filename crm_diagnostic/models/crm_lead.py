@@ -1551,3 +1551,8 @@ class CrmLead(models.Model):
         'crm.lead')
 
         
+        account_id = fields.Many2one(
+            'account.analytic.account',
+            string='account_id',
+            required = False
+            )

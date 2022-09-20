@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017 Eficent Business and IT Consulting Services S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template id="tracing_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div style="width:20%; margin-bottom:50px" >
+                            <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 70px;" alt="Logo"/>
+                        </div>
+                        <h4 align="center" style="color:#114379">Bitácora de seguimiento del micronegocio</h4><br/>
+                        <div>
+                            <table class="table table-sm" >
+                                <tr >
+                                    <td class="table-active">
+                                        <strong>Propietario</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.partner_id.name"/>
+                                    </td>
+                                    <td class="table-active">
+                                        <strong>Facilitador</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.user_id.name"/>
+                                    </td>
+                                    <td class="table-active">
+                                        <strong>Diagnostico</strong>
+                                    </td>
+                                    <td>
+                                        <span>N/A</span>
+                                    </td>
+                                    <td class="table-active">
+                                        <strong>Mentor</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.mentors.name"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div><br/>
+                            <h5 align="center" style="color:#114379">ATENCIÓN ESPECIAL</h5><br/>
+                            <table class="table table-sm table-striped"  name="crm_line_special_attention">
+                                <thead >
+                                    <tr class="table-active">
+                                        <th name="th_priridad" class="text-left"><span>Prioridad</span></th>
+                                        <th name="th_actividades" class="text-left"><span>Actividades</span></th>
+                                        <th name="th_entidad" t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>Entidad que lo ofrece</span></th>
+                                        <th name="th_soluciones" t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>Soluciones</span></th>
+                                        <th name="th_resposable" class="text-left"><span groups="account.group_show_line_subtotals_tax_excluded">Responsable</span></th>
+                                        <th name="th_estado" class="text-center"><span>Estado actividad</span></th>
+                                        <!--th name="th_adjunto1" class="text-left"><span>Adjunto</span></th-->
+                                    </tr>
+                                </thead>
+                                <tbody align="center" class="invoice_tbody">
+                                    <t t-foreach="o.plan_line_ids" t-as="line">
+                                        <tr>
+                                            <td class="text-left"><span t-field="line.prioridad"/></td>
+                                            <td class="text-left"><span t-field="line.actividades"/></td>
+                                            <td><span t-field="line.entidad_ofertadores"/></td>
+                                            <td class="text-left"><span t-field="line.soluciones"/></td>
+                                            <td class="text-left"><span t-field="line.reponsable"/></td>
+                                            <td><span t-field="line.estado_actividad"/></td>
+                                            <!--td><span t-field="line.adjunto"/></td-->
+                                        </tr>                                        
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div><br/>
+                        <div>
+                            <h5 align="center" style="color:#114379">BITACORA DE SEGUIMIENTO</h5><br/>
+                            <table class="table table-sm table-striped" name="crm_line_special_attention">
+                                <thead>
+                                    <tr class="table-active">
+                                        <th name="th_fecha" class="text-left"><span>Fecha</span></th>
+                                        <th name="th_facilitador" class="text-left"><span>Facilitador</span></th>
+                                        <th name="th_actividad" t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>Actividad</span></th>
+                                        <th name="th_tipo_actividad" t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>Tipo de Actividad</span></th>
+                                        <th name="th_avance" class="text-left"><span groups="account.group_show_line_subtotals_tax_excluded">Registro de Avance</span></th>
+                                        <th name="th_obs" class="text-left"><span>Observaciones</span></th>
+                                        <!--th name="th_adjunto_2" class="text-left"><span>Adjunto</span></th-->
+                                    </tr>
+                                </thead>
+                                <tbody class="invoice_tbody">
+                                    <t t-foreach="o.bitacora_ids" t-as="line">
+                                        <tr >
+                                            <td><span t-field="line.fecha"/></td>
+                                            <td><span t-field="line.facilitador_ids1"/></td>
+                                            <td class="text-left"><span t-field="line.actividad1"/></td>
+                                            <td><span t-field="line.tipo_actividad_ids"/></td>
+                                            <td><span t-field="line.registro_avance"/></td>
+                                            <td><span t-field="line.observaciones"/></td>
+                                            <!--td><span t-field="line.adjunto"/></td-->
+                                        </tr>                                        
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+<report
+        id="report_crm_lead_action"
+        model="crm.lead"
+        name="crm_diagnostic.tracing_report"
+        string="Trancing Report"
+        report_type="qweb-pdf"
+        paperformat="paperformat_crm_diagnostic"/>
+    />
+
+</odoo>

@@ -946,6 +946,8 @@ class CrmLead(models.Model):
     # set the current user
     @api.depends('current_user')
     def get_current_user(self):
+        _logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+        _logger.info(self.diagnostico)
         for lead in self:
             lead.current_user = self.env.user.id
 

@@ -30,7 +30,7 @@
                                         <strong>Diagnostico</strong>
                                     </td>
                                     <td>
-                                        <span>N/A</span>
+                                        <span t-field="o.diagnostico"/>
                                     </td>
                                     <td class="table-active">
                                         <strong>Mentor</strong>

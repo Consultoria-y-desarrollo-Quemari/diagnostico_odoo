@@ -2,6 +2,10 @@
 <odoo>
     <data>
 
+    <record id="crm.lead.crm_lead_action_pipeline" model="ir.actions.act_window">
+        <field name="name">Pipeline_gavii</field>
+    </record>
+
     <record model="ir.actions.act_window" id="crm_lead_action_pipeline">
             <field name="name">Pipeline</field>
             <field name="res_model">crm.lead</field>

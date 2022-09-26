@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from asyncio.log import logger
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from lxml import etree
@@ -6,6 +7,7 @@ from lxml import etree
 # from datetime import date
 import json
 import logging
+_logger = logging.getLogger(__name__)
 
 
 class AccountAnalyticLine(models.Model):
@@ -46,8 +48,22 @@ class AccountAnalyticLine(models.Model):
         role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'orientador')])
         for role in role_id:
             if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                self.domain_k_orientador()
                 return True
         return False
+
+    def domain_k_orientador(self):
+        dominio = [('user_id', 'in', [1,2,3,4,5,66])]
+        _logger.info(dominio)
+        return { 
+                'name': 'crm_case_kanban_view_leads', 
+                'type': 'ir.actions.act_window', 
+                'view_mode': 'kanban', 
+                'view_type': 'kanban',
+                'res_model': 'crm.lead', 
+                'view_id': self.env.ref('crm_case_kanban_view_leads').id, 
+                'domain': dominio, 
+                }
 
     def is_admin(self):
         role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'admin')])

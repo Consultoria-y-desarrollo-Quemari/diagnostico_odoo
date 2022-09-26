@@ -437,6 +437,9 @@ class CrmLead(models.Model):
         compute = "ver_modulo_seguiemiento"
     )
 
+    def generate_domain(self):
+        return "[('type','=','opportunity')]"
+
     def ver_modulo_seguiemiento(self):
         for lead in self:
             if lead.stage_id.stage_state == "quinto_encuentro":

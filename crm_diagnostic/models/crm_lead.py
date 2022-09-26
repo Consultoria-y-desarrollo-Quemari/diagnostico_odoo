@@ -438,6 +438,7 @@ class CrmLead(models.Model):
     )
 
     def generate_domain(self):
+        _logger.info("ñ"*200)
         return "[('type','=','opportunity')]"
 
     def ver_modulo_seguiemiento(self):

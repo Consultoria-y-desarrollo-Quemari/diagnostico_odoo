@@ -9,7 +9,7 @@
         <field name="res_model">crm.lead</field>
             <field name="view_mode">kanban,tree,graph,pivot,form,calendar,activity</field>
             <field name="domain">
-                [('team_id.user_id', '=', uid.id)]
+                [('team_id.user_id', '=', uid)]
             </field>
             <field name="context">{
                     'default_type': 'opportunity',

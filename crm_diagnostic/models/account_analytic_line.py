@@ -55,6 +55,8 @@ class AccountAnalyticLine(models.Model):
     def domain_k_orientador(self):
         dominio = [('user_id', 'in', [1,2,3,4,5,66])]
         _logger.info(dominio)
+        _logger.info("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")
+
         return { 
                 'name': 'crm_case_kanban_view_leads', 
                 'type': 'ir.actions.act_window', 

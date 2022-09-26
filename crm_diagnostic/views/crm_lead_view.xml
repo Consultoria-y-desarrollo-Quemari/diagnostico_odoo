@@ -5,7 +5,7 @@
     
 
     <record id="crm.crm_lead_action_pipeline_orientador" model="ir.actions.act_window">
-        <field name="name">Oportunidades del orientador</field>
+        <field name="name">Oportunidades del orientador_2</field>
 
         <field name="res_model">crm.lead</field>
             <field name="view_mode">kanban,tree,graph,pivot,form,calendar,activity</field>

@@ -18,6 +18,13 @@
             <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
     </record>
 
+    <menuitem
+            id="crm_menu_root_1"
+            name="CRM"
+            web_icon="crm,static/description/icon.png"
+            groups="sales_team.group_sale_salesman"
+            sequence="7"/>
+
     
     <record id="motivo_cierre_action" model="ir.actions.act_window">
             <field name="name">Motivo del cierre</field>

@@ -587,7 +587,7 @@ class CrmLead(models.Model):
                 'fecha': fields.Date.today(),
                 'nombre_negocio': lead.x_nombre_negocio,
                 'nombre_propietario': lead.x_nombre,
-                'numero_identificacion': lead.x_identification,
+                'numero_identificacion': lead.x_identification_char,
                 'crm_diagnostic_line_ids': []
             }
             dic_sel_fields = lead.getting_selection_fields_to_dignostic_form(lead)
@@ -1063,7 +1063,7 @@ class CrmLead(models.Model):
     def fields_module1(self):
         return [
             'x_datos1', 'attach_file', "x_nombre_negocio", "x_nombre", "doctype",
-            "x_identification", "x_sexo", "x_edad1", "state_id", "xcity", "x_dir_res",
+            "x_identification_char", "x_sexo", "x_edad1", "state_id", "xcity", "x_dir_res",
             "x_comuna", "x_vereda", "x_ubicacion_negocio", "mobile", "x_estrato", 
             "x_pobl_esp1", "x_tipo_vivienda", "x_no_personas_viven_propietario", "x_etnia", "x_sisben",
             "x_afiliado1", "x_escolaridad", "x_ubic", "x_com_cuenta1", "x_tien_dur", "x_herramientas", "x_depend"

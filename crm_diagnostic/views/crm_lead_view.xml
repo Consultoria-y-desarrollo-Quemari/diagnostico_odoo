@@ -21,12 +21,21 @@
     </record>
 
     <menuitem
+            id="crm_menu_root"
+            name="CRM"
+            web_icon="crm,static/description/icon.png"
+            groups="base.group_system"
+            sequence="6"/>
+
+    <menuitem
             id="crm_menu_root_1"
             name="CRM"
             action="crm_lead_action_pipeline_orientador"
             web_icon="crm,static/description/icon.png"
             groups="group_user_hide_orientador"
             sequence="7"/>
+
+            
 
     
     <record id="motivo_cierre_action" model="ir.actions.act_window">

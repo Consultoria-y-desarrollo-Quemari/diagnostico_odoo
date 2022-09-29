@@ -910,6 +910,7 @@ class CrmLead(models.Model):
             [('start_datetime', '>', date_to_search),
             ('opportunity_id', '=', False)])
         _logger.info(events)
+        _logger.info("events"*60)
         for event in events:
             if event.start_datetime.weekday() not in week_days:
                 events -= event

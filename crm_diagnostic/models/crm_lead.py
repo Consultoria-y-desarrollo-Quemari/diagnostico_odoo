@@ -850,7 +850,7 @@ class CrmLead(models.Model):
     def relate_events_to_leads(self):
         lead_ids = self.search(
             [('mentors', '=', False),
-            ('diagnostico', 'in', ('incipiente', 'confiable', 'competente'))])
+            ('diagnostico', 'in', ('incipiente', 'confiable'))])
         if not lead_ids:
             return
         event_ids = event_ids = self.available_events().sorted(reverse=True)

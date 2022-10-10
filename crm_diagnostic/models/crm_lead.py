@@ -874,11 +874,12 @@ class CrmLead(models.Model):
         if fecha.fechalimite < fecha_hoy:
             print("entas111")
             rol = self.env['res.users.role'].search([('role_type' , '=', "facilitador")])
-            #lista_permisos =[]
-            #lista_permisos1 =[]
-            #for roles in rol:
-            #    for grupo in roles.implied_ids:
-            #       if grupo.name == "Usuario: Solo mostrar documentos propios":
+            lista_permisos =[]
+            lista_permisos1 =[]
+            for roles in rol:
+                for grupo in roles.implied_ids:
+                    if grupo.name == "Usuario: Solo mostrar documentos propios" or grupo.name == "User: Own Documents Only":
+:                       raise ValidationError("entre")    
             #           print("perm")
             #            lista_permisos.append((5,grupo.id))
             #        else:

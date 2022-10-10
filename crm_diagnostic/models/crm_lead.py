@@ -874,21 +874,21 @@ class CrmLead(models.Model):
         if fecha.fechalimite < fecha_hoy:
             print("entas111")
             rol = self.env['res.users.role'].search([('role_type' , '=', "facilitador")])
-            lista_permisos =[]
-            lista_permisos1 =[]
-            for roles in rol:
-                for grupo in roles.implied_ids:
-                    if grupo.name == "Usuario: Solo mostrar documentos propios":
-                        print("perm")
-                        lista_permisos.append((5,grupo.id))
-                    else:
-                        permiso_de_inactivacion = self.env['res.groups'].search([('name', '=', 'Usuario: Inactivar CRM')])
-                        lista_permisos1.append((4, permiso_de_inactivacion.id))
-                        lista_permisos1.append((4,grupo.id))
+            #lista_permisos =[]
+            #lista_permisos1 =[]
+            #for roles in rol:
+            #    for grupo in roles.implied_ids:
+            #       if grupo.name == "Usuario: Solo mostrar documentos propios":
+            #           print("perm")
+            #            lista_permisos.append((5,grupo.id))
+            #        else:
+            #            permiso_de_inactivacion = self.env['res.groups'].search([('name', '=', 'Usuario: Inactivar CRM')])
+            #            lista_permisos1.append((4, permiso_de_inactivacion.id))
+            #            lista_permisos1.append((4,grupo.id))
    
-            print(lista_permisos)
-            rol.write({"implied_ids" : lista_permisos})
-            rol.write({"implied_ids" : lista_permisos1})
+            #print(lista_permisos)
+            #rol.write({"implied_ids" : lista_permisos})
+            #rol.write({"implied_ids" : lista_permisos1})
 
 
 

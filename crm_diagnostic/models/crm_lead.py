@@ -879,7 +879,7 @@ class CrmLead(models.Model):
             for roles in rol:
                 for grupo in roles.implied_ids:
                     if grupo.name == "Usuario: Solo mostrar documentos propios" or grupo.name == "User: Own Documents Only":
-:                       raise ValidationError("entre")    
+                        raise ValidationError("entre")    
             #           print("perm")
             #            lista_permisos.append((5,grupo.id))
             #        else:

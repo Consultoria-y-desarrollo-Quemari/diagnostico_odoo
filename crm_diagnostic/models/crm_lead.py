@@ -867,7 +867,11 @@ class CrmLead(models.Model):
     def relate_events_to_leads(self):
         lead_ids = self.search(
             [('mentors', '=', False),
-            ('diagnostico', 'in', ('incipiente', 'confiable'))])
+            ('diagnostico', 'in', ('incipiente', 'confiable'))]
+        )
+        rol = self.env['res.users.role'].search(
+            [('role_type' , '=', "facilitador")]
+        )
         if not lead_ids:
             return
         event_ids = event_ids = self.available_events().sorted(reverse=True)
@@ -875,12 +879,17 @@ class CrmLead(models.Model):
             return
         for lead in lead_ids:
             if event_ids and lead_ids:
-                event_ids[0].opportunity_id = lead.id
-                lead.mentors = event_ids[0].partner_ids[0]
-                self.send_mail_notification(lead)
-                event_ids -= event_ids[0]
-                lead_ids -= lead
-                self.env.cr.commit()
+
+                if event_ids[0].partner_ids[0].user_id in rol.line_ids:
+                    event_ids -= event_ids[0]
+                    lead_ids -= lead
+                else:
+                    event_ids[0].opportunity_id = lead.id
+                    lead.mentors = event_ids[0].partner_ids[0]
+                    self.send_mail_notification(lead)
+                    event_ids -= event_ids[0]
+                    lead_ids -= lead
+                    self.env.cr.commit()
 
     #fecha para cambio de permisos
     

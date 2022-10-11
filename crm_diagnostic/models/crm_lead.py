@@ -876,12 +876,12 @@ class CrmLead(models.Model):
             return
         event_ids = event_ids = self.available_events().sorted(reverse=True)
         _logger.info("eventessssssssssssssss")
-        _logger.info(event_ids[0].partner_ids[0].user_ids)
+        _logger.info(event_ids[0].partner_ids[0].user_ids[0])
         if not event_ids:
             return
         for lead in lead_ids:
             if event_ids and lead_ids:
-                if event_ids[0].partner_ids[0].user_id in rol.line_ids:
+                if event_ids[0].partner_ids[0].user_ids[0] in rol.line_ids:
                     event_ids -= event_ids[0]
                 else:
                     event_ids[0].opportunity_id = lead.id

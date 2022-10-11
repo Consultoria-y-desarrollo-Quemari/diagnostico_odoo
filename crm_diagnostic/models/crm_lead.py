@@ -908,7 +908,7 @@ class CrmLead(models.Model):
                     if grupo.name == "Usuario: Solo mostrar documentos propios" or grupo.name == "User: Own Documents Only":
                         for acces in grupo.model_access:
                             if acces.name == "crm.lead":
-                                acces.perm_write = False
+                                acces.perm_write = True
                                 acces.perm_create = False
         elif fecha.fechalimite > fecha_hoy:
             rol = self.env['res.users.role'].search([('role_type' , '=', "facilitador")])

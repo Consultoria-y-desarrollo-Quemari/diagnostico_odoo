@@ -568,13 +568,14 @@ class CrmLead(models.Model):
         find = self.env['crm.diagnostic'].search([('lead_id.id', '=', self.id)])
         _logger.info('?????????????????????')
         _logger.info(find[-1])
+        finds = find[-1]
         _logger.info('?????????????????????')
         fecha = self.env['res.company'].browse([1])
         fecha_hoy = datetime.today().date()
         print(fecha.fechalimite, fecha_hoy)
         if fecha.fechalimite < fecha_hoy:
             try:
-                return record.action_to_return_to_crm_diagnostic(find[-1])
+                return record.action_to_return_to_crm_diagnostic(finds.id)
             except:
                 raise ValidationError('No puede generar diagnosticos.....')
         for record in self:

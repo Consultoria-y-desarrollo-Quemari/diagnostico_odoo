@@ -576,7 +576,10 @@ class CrmLead(models.Model):
             if (not record.is_cordinator() or not record.is_orientador()) and (not record.first_module_ready or not record.second_module_read or not record.third_module_ready):
                 raise ValidationError('Para realizar el diagnostico, debe responder las preguntas de los 3 modulos.')
             crm_diagnostic_vals = record.getting_values_to_crm_diagnostic()
-            crm_diagnostic_id = self.env['crm.diagnostic'].create(crm_diagnostic_vals)
+            try:
+                crm_diagnostic_id = self.env['crm.diagnostic'].create(crm_diagnostic_vals)
+            except:
+                raise ValidationError('esta es la salida?.')
             crm_diagnostic_id._get_lines_for_areas()
             _logger.info("&"*500)
             _logger.info(crm_diagnostic_id.read())

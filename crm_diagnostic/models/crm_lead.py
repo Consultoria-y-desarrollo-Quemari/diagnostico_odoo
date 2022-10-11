@@ -879,10 +879,8 @@ class CrmLead(models.Model):
             return
         for lead in lead_ids:
             if event_ids and lead_ids:
-
                 if event_ids[0].partner_ids[0].user_id in rol.line_ids:
                     event_ids -= event_ids[0]
-                    lead_ids -= lead
                 else:
                     event_ids[0].opportunity_id = lead.id
                     lead.mentors = event_ids[0].partner_ids[0]

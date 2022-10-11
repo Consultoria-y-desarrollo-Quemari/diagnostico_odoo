@@ -924,6 +924,24 @@ class CrmLead(models.Model):
                             if acces.name == "crm.lead":
                                 acces.perm_write = True
                                 acces.perm_create = True
+        if fecha.fechalimite4 < fecha_hoy:
+            rol = self.env['res.users.role'].search([('role_type' , '=', "facilitador")])
+            for roles in rol:
+                for grupo in roles.implied_ids:
+                    if grupo.name == "Usuario: Solo mostrar documentos propios (copia)" or grupo.name == "User: Own Documents Only (copy)":
+                        for acces in grupo.model_access:
+                            if acces.name == "crm.lead":
+                                acces.perm_write = True
+                                acces.perm_create = False
+        elif fecha.fechalimite4 > fecha_hoy:
+            rol = self.env['res.users.role'].search([('role_type' , '=', "facilitador")])
+            for roles in rol:
+                for grupo in roles.implied_ids:
+                    if grupo.name == "Usuario: Solo mostrar documentos propios (copia)" or grupo.name == "User: Own Documents Only (copy)":
+                        for acces in grupo.model_access:
+                            if acces.name == "crm.lead":
+                                acces.perm_write = True
+                                acces.perm_create = True
                                   
             #           print("perm")
             #            lista_permisos.append((5,grupo.id))

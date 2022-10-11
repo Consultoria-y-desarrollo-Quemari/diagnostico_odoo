@@ -567,22 +567,23 @@ class CrmLead(models.Model):
         print(not self.is_cordinator() or not self.is_orientador()) and (not self.first_module_ready or not self.second_module_read or not self.third_module_ready, "esto es lo que quieres ver andres?")
         find = self.env['crm.diagnostic'].search([('lead_id.id', '=', self.id)])
         _logger.info('?????????????????????')
-        try:
-            _logger.info(find[-1])
-            for record in find[-1]:
-                finds = record
-                break
-        except:
-            _logger.info(find)
-        _logger.info('?????????????????????')
-        fecha = self.env['res.company'].browse([1])
-        fecha_hoy = datetime.today().date()
-        print(fecha.fechalimite, fecha_hoy)
-        if fecha.fechalimite < fecha_hoy:
+        if self.current_user_facilitator:
             try:
-                return self.action_to_return_to_crm_diagnostic(finds)
+                _logger.info(find[-1])
+                for record in find[-1]:
+                    finds = record
+                    break
             except:
-                raise ValidationError('No puede generar diagnosticos.....')
+                _logger.info(find)
+            _logger.info('?????????????????????')
+            fecha = self.env['res.company'].browse([1])
+            fecha_hoy = datetime.today().date()
+            print(fecha.fechalimite, fecha_hoy)
+            if fecha.fechalimite < fecha_hoy:
+                try:
+                    return self.action_to_return_to_crm_diagnostic(finds)
+                except:
+                    raise ValidationError('No puede generar diagnosticos.....')
         for record in self:
             print(not record.is_cordinator() or not record.is_orientador()) and (not record.first_module_ready or not record.second_module_read or record.third_module_ready, "esto es lo que quieres ver andres?")
 

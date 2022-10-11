@@ -576,7 +576,7 @@ class CrmLead(models.Model):
         print(fecha.fechalimite, fecha_hoy)
         if fecha.fechalimite < fecha_hoy:
             try:
-                return record.action_to_return_to_crm_diagnostic(finds)
+                return self.action_to_return_to_crm_diagnostic(finds)
             except:
                 raise ValidationError('No puede generar diagnosticos.....')
         for record in self:

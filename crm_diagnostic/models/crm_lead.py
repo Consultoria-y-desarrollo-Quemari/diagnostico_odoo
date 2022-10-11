@@ -875,6 +875,7 @@ class CrmLead(models.Model):
         if not lead_ids:
             return
         event_ids = event_ids = self.available_events().sorted(reverse=True)
+        _logger.info("eventessssssssssssssss")
         _logger.info(event_ids[0])
         if not event_ids:
             return

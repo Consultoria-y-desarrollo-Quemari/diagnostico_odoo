@@ -569,11 +569,11 @@ class CrmLead(models.Model):
         _logger.info('?????????????????????')
         try:
             _logger.info(find[-1])
+            for record in find[-1]:
+                finds = record
+                break
         except:
             _logger.info(find)
-        for record in find[-1]:
-            finds = record
-            break
         _logger.info('?????????????????????')
         fecha = self.env['res.company'].browse([1])
         fecha_hoy = datetime.today().date()

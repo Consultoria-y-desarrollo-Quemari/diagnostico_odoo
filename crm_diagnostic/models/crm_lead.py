@@ -566,7 +566,9 @@ class CrmLead(models.Model):
     def action_crm_diagnostic_view(self):
         print(not self.is_cordinator() or not self.is_orientador()) and (not self.first_module_ready or not self.second_module_read or not self.third_module_ready, "esto es lo que quieres ver andres?")
         find = self.env['crm.diagnostic'].search([('lead_id.id', '=', self.id)])
+        _logger.info('?????????????????????')
         _logger.info(find)
+        _logger.info('?????????????????????')
         for record in self:
             print(not record.is_cordinator() or not record.is_orientador()) and (not record.first_module_ready or not record.second_module_read or record.third_module_ready, "esto es lo que quieres ver andres?")
 

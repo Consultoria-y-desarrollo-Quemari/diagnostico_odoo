@@ -573,7 +573,7 @@ class CrmLead(models.Model):
         fecha_hoy = datetime.today().date()
         print(fecha.fechalimite, fecha_hoy)
         if fecha.fechalimite < fecha_hoy:
-
+            print()
         for record in self:
             print(not record.is_cordinator() or not record.is_orientador()) and (not record.first_module_ready or not record.second_module_read or record.third_module_ready, "esto es lo que quieres ver andres?")
 

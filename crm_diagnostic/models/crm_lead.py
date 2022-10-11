@@ -567,8 +567,13 @@ class CrmLead(models.Model):
         print(not self.is_cordinator() or not self.is_orientador()) and (not self.first_module_ready or not self.second_module_read or not self.third_module_ready, "esto es lo que quieres ver andres?")
         find = self.env['crm.diagnostic'].search([('lead_id.id', '=', self.id)])
         _logger.info('?????????????????????')
-        _logger.info(find)
+        _logger.info(find[-1])
         _logger.info('?????????????????????')
+        fecha = self.env['res.company'].browse([1])
+        fecha_hoy = datetime.today().date()
+        print(fecha.fechalimite, fecha_hoy)
+        if fecha.fechalimite < fecha_hoy:
+
         for record in self:
             print(not record.is_cordinator() or not record.is_orientador()) and (not record.first_module_ready or not record.second_module_read or record.third_module_ready, "esto es lo que quieres ver andres?")
 

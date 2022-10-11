@@ -567,9 +567,13 @@ class CrmLead(models.Model):
         print(not self.is_cordinator() or not self.is_orientador()) and (not self.first_module_ready or not self.second_module_read or not self.third_module_ready, "esto es lo que quieres ver andres?")
         find = self.env['crm.diagnostic'].search([('lead_id.id', '=', self.id)])
         _logger.info('?????????????????????')
-        _logger.info(find[-1])
+        try:
+            _logger.info(find[-1])
+        except:
+            _logger.info(find)
         for record in find[-1]:
             finds = record
+            break
         _logger.info('?????????????????????')
         fecha = self.env['res.company'].browse([1])
         fecha_hoy = datetime.today().date()

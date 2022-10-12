@@ -31,7 +31,9 @@ class crm_lead(models.Model):
     @api.onchange('stage_id')
     def invisible_task_create(self):
         print(self.stage_id.stage_state, "stage_id#############")
-        if self.stage_id.stage_state == 'cuarto_encuentro':
+        if self.current_user_facilitator:
+            self.ver_boton = False
+        elif self.stage_id.stage_state == 'cuarto_encuentro':
             self.ver_boton = True
         else:
             self.ver_boton = False

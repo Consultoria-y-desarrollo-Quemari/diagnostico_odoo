@@ -90,7 +90,7 @@
             </xpath>
             <xpath expr="//button[@name='action_set_won_rainbowman']" position="after">
                 <field name="social_plan" invisible="1" />
-                <field name="social_plan_1"  />
+                <field name="social_plan_1" invisible="1" />
                 <field name="task_number" invisible="1" />
                 <field name="show_action_set_rainbowman" invisible="1" />
                 <button type="object" name="confirm_social_plan" string="Confirmar socializacion del plan de atención" attrs="{'invisible':[('social_plan_1','=',False)]}" />

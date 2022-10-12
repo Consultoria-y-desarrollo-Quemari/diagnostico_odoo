@@ -26,7 +26,7 @@ class crm_lead(models.Model):
     task_number = fields.Integer(compute='task_count', string='Tasks')
     #DevGavii Custom
     hide = fields.Boolean()
-    ver_boton = fields.Boolean()
+    ver_boton = fields.Boolean(compute="invisible_task_create")
 
     @api.onchange('stage_id')
     def invisible_task_create(self):

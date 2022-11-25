@@ -307,7 +307,7 @@ class CrmAttentionPlanLines(models.Model):
         ],
         default = "pendiente_programar"
     )
-    adjunto = fields.Binary(attachment=False)
+    adjunto = fields.Binary()
     kanban_state_attention_plan = fields.Selection(
         [
             ('normal', 'Grey'), 

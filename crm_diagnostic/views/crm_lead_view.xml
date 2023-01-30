@@ -82,7 +82,7 @@
                 <field name="motivos_cierre" />
             </xpath>
             <xpath expr="//field[@name='user_id']" position="after">
-                <field name="coordinador" />
+                <field name="coordinador" attrs="{'readonly': [('current_user_facilitator', '=', True)]}"/>
                 <field name="social_plan" string="¿Socializacion del plan de atención?" />
             </xpath>
             <xpath expr="//button[@name='action_set_won_rainbowman']" position="attributes">

@@ -308,6 +308,7 @@ class CrmAttentionPlanLines(models.Model):
         default = "pendiente_programar"
     )
     adjunto = fields.Binary(attachment=False)
+    file_name = fields.Char("Adjunto")
     kanban_state_attention_plan = fields.Selection(
         [
             ('normal', 'Grey'), 
@@ -319,6 +320,8 @@ class CrmAttentionPlanLines(models.Model):
     )
     fecha_kanban = fields.Datetime()
     entidad_ofertadores = fields.Char(string="Entidad ofertadores")
+
+
 
     def _kanban_state_attention_plan(self):
         print("este es el kan"*60)

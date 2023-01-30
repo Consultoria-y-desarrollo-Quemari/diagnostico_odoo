@@ -1628,5 +1628,5 @@ class CrmLead(models.Model):
             required = False
             )
 
-        adjunto = fields.Binary()
+        adjunto = fields.Binary(attachment=False)
         name  = fields.Char(string="Descripción")

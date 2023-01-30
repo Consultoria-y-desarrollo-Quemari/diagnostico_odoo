@@ -5,6 +5,9 @@ from lxml import etree
 import json
 import datetime
 import mimetypes
+import logging
+
+_logger = logging.getLogger(__name__)
 from odoo.tools.mimetypes import guess_mimetype
 
 
@@ -328,7 +331,9 @@ class CrmAttentionPlanLines(models.Model):
     def onchange_field(self):
         mimetype = None
         if mimetype is None and self.file_name:
-            mimetype = mimetypes.guess_type(res.file_name)[0]
+            mimetype = mimetypes.guess_type(self.adjunto)[0]
+            _logger.info(mimetype)
+            _logger.info("mimetype"*100)
             if not mimetype == 'pdf':
                 raise UserError('Allowed Format Pdf')
     

@@ -331,6 +331,7 @@ class CrmAttentionPlanLines(models.Model):
     def onchange_field(self):
         if self.adjunto:
             if ".pdf" not in self.file_name:
+                self.adjunto = False 
                 raise UserError('solo deberián poder cargar archivos de imagen, PDF, Excel y power point')
     def _kanban_state_attention_plan(self):
         print("este es el kan"*60)

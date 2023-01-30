@@ -129,7 +129,7 @@
                                 <field name="actividad1" attrs="{'required':True}" />
                                 <field name="tipo_actividad_ids" attrs="{'required':True}" widget='selection'/>
                                 <field name="registro_avance" attrs="{'required':True}" />
-                                <field name="observaciones" attrs="{'required':True}" />
+                                <field name="observaciones" />
                                 <field name="adjunto" />
                             </tree>
                         </field>

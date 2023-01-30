@@ -1,8 +1,11 @@
 # -*- encoding: utf-8 -*-
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 from lxml import etree
 import json
 import datetime
+import mimetypes
+from odoo.tools.mimetypes import guess_mimetype
 
 
 class CrmAttentionPlan(models.Model):
@@ -308,7 +311,7 @@ class CrmAttentionPlanLines(models.Model):
         default = "pendiente_programar"
     )
     adjunto = fields.Binary(attachment=False)
-    file_name = fields.Char("Adjunto")
+    file_name = fields.Char("Nombre del archivo")
     kanban_state_attention_plan = fields.Selection(
         [
             ('normal', 'Grey'), 
@@ -321,8 +324,14 @@ class CrmAttentionPlanLines(models.Model):
     fecha_kanban = fields.Datetime()
     entidad_ofertadores = fields.Char(string="Entidad ofertadores")
 
-
-
+    @api.onchange('adjunto')
+    def onchange_field(self):
+        mimetype = None
+        if mimetype is None and self.file_name:
+            mimetype = mimetypes.guess_type(res.file_name)[0]
+            if not mimetype == 'pdf':
+                raise UserError('Allowed Format Pdf')
+    
     def _kanban_state_attention_plan(self):
         print("este es el kan"*60)
         return "grey"

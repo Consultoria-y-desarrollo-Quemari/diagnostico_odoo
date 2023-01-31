@@ -1135,7 +1135,7 @@ class CrmLead(models.Model):
             "x_identification_char", "x_sexo", "x_edad1", "state_id", "xcity", "x_dir_res",
             "x_comuna", "x_vereda", "x_ubicacion_negocio", "mobile", "x_estrato", 
             "x_pobl_esp1", "x_tipo_vivienda", "x_no_personas_viven_propietario", "x_etnia", "x_sisben",
-            "x_afiliado1", "x_escolaridad", "x_ubic", "x_com_cuenta1", "x_tien_dur", "x_herramientas", "x_depend"
+             "x_escolaridad", "x_ubic", "x_com_cuenta1", "x_tien_dur", "x_herramientas", "x_depend"
             ]
 
     # return the field list to validate the module2

@@ -333,6 +333,7 @@ class CrmAttentionPlanLines(models.Model):
             mimetype = None
             if mimetype is None:
                 mimetype = mimetypes.guess_type(self.file_name)[0]
+                _logger.info("mimetype"*100)
                 _logger.info(mimetype)
             """if ".pdf" not in self.file_name:
                 self.update({'file_name': False})

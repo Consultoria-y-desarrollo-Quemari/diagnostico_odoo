@@ -331,13 +331,18 @@ class CrmAttentionPlanLines(models.Model):
     def onchange_field(self):
         if self.adjunto:
             if ".pdf" not in self.file_name:
-                self.file_name = False
-                self.adjunto = False
-                _logger.info("entras"*200)
-                return {
-                    'domain': {},
-                    'warning': {'title': "", 'message': "What is this?"},
-                }
+                if ".xlsx" not in self.file_name:
+                    if ".pptx" not in self.file_name:
+                        if ".png" not in self.file_name:
+                            if ".jpg" not in self.file_name:
+                                self.file_name = False
+                                self.adjunto = False
+                                return {
+                                    'domain': {},
+                                    'warning': {'title': "Formato incorrecto", 
+                                                'message': "Solo puede cargar archivos de imagen(.png ó .jpg), PDF(.pdf), Excel (.xlsx) y power point (.pptx)"
+                                            }
+                                }
 
     def _kanban_state_attention_plan(self):
         print("este es el kan"*60)

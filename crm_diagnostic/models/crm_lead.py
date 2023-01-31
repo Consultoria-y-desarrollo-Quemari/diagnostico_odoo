@@ -436,6 +436,8 @@ class CrmLead(models.Model):
     modulo_seguimeinto = fields.Boolean(
         compute = "ver_modulo_seguiemiento"
     )
+    asignar_gestor_social = fields.Boolean()
+
 
     def generate_domain(self):
         _logger.info("ñ"*200)

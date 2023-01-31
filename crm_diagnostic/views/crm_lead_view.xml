@@ -80,6 +80,7 @@
             <xpath expr="//field[@name='company_id']" position="after">
                 <field name="mentors" options="{}" attrs="{'readonly': [('current_user_admin', '=', False)]}" />
                 <field name="motivos_cierre" />
+                <field name="asignar_gestor_social"/>
             </xpath>
             <xpath expr="//field[@name='user_id']" position="after">
                 <field name="coordinador" attrs="{'readonly': [('current_user_facilitator', '=', True)]}"/>

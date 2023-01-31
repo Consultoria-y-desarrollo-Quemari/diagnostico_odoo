@@ -330,9 +330,8 @@ class CrmAttentionPlanLines(models.Model):
     @api.onchange('adjunto')
     def onchange_field(self):
         if self.adjunto:
-            if ".pdf" not in self.file_name:
-                self.update({'file_name': False})
-                return {
+            
+            return {
             'name': 'test',
             'view_type': 'form',
             'view_mode': 'form',

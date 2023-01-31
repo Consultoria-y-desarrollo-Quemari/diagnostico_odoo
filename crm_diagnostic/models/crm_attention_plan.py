@@ -330,7 +330,7 @@ class CrmAttentionPlanLines(models.Model):
     @api.onchange('adjunto')
     def onchange_field(self):
         if self.adjunto:
-            
+            _logger.info("entras"*200)
             return {
             'name': 'test',
             'view_type': 'form',

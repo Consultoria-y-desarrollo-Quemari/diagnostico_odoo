@@ -335,7 +335,7 @@ class CrmAttentionPlanLines(models.Model):
             'name': 'test',
             'view_type': 'form',
             'view_mode': 'form',
-            'view_id': 'my_config_view_form',
+            'view_id': 'view_test_report_wizard',
             'res_model': 'error.adjunto',
             'domain': [],
             #'context': context,

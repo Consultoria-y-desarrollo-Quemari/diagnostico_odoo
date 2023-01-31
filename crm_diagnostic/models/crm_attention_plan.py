@@ -331,7 +331,7 @@ class CrmAttentionPlanLines(models.Model):
     def onchange_field(self):
         if self.adjunto:
             mimetype = None
-            if mimetype is None and self.file_name:
+            if mimetype is None:
                 mimetype = mimetypes.guess_type(self.file_name)[0]
                 _logger.info(mimetype)
             """if ".pdf" not in self.file_name:

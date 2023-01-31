@@ -332,16 +332,9 @@ class CrmAttentionPlanLines(models.Model):
         if self.adjunto:
             _logger.info("entras"*200)
             return {
-            'name': 'test',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'view_id': 'view_test_report_wizard',
-            'res_model': 'res.user.wizard',
-            'domain': [],
-            #'context': context,
-            'type': 'ir.actions.act_window',
-            'target': 'new',
-        }
+        'domain': {},
+        'warning': {'title': "Warning", 'message': "What is this?"},
+    }
 
     def _kanban_state_attention_plan(self):
         print("este es el kan"*60)

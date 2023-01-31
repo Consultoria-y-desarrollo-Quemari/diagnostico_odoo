@@ -14,6 +14,7 @@ class ResUsersRole(models.Model):
                    ('administrativo', 'Administrativo'),
                    ('mentor', 'Mentor'),
                    ('admin', 'ADMIN'),
+                   ('gestor_social', "Gestor social")
                    ],
         default='facilitador',
         required=True,

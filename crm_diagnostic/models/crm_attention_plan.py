@@ -330,14 +330,19 @@ class CrmAttentionPlanLines(models.Model):
     @api.onchange('adjunto')
     def onchange_field(self):
         if self.adjunto:
-            mimetype = None
-            if mimetype is None:
-                mimetype = mimetypes.guess_type(self.adjunto)
-                _logger.info("mimetype"*100)
-                _logger.info(mimetype)
-            """if ".pdf" not in self.file_name:
+            if ".pdf" not in self.file_name:
                 self.update({'file_name': False})
-                raise UserError('solo deberián poder cargar archivos de imagen, PDF, Excel y power point')"""
+                return {
+            'name': 'test',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'view_id': 'my_config_view_form',
+            'res_model': 'error.adjunto',
+            'domain': [],
+            #'context': context,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
 
     def _kanban_state_attention_plan(self):
         print("este es el kan"*60)
@@ -391,3 +396,8 @@ class CrmAttentionPlanLinesBitacora(models.Model):
     observaciones = fields.Char()
     adjunto = fields.Binary(attachment=False)
     tipo_actividad_ids = fields.Many2one('crm.lead.type_activity', string="Tipo de Actividad") 
+
+class TestReport(models.TransientModel):
+    _name = 'error.adjunto'
+
+    name = fields.Char()

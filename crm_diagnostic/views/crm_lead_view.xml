@@ -263,5 +263,25 @@
         </field>
     </record>
 
+    <record id="view_test_report_wizard" model="ir.ui.view">
+    <field name="name">Test Report</field>
+    <field name="model">error.adjunto</field>
+    <field name="arch" type="xml">
+        <form string="Choose The Details">
+            <group>
+                <group>
+                    <field name="name" />
+                   
+                </group>
+            </group>
+            <footer>
+                <button name="test_report" string="Print" type="object" class="oe_highlight" />
+                or
+                <button string="Cancel" class="oe_link" special="cancel"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
    </data>
 </odoo>

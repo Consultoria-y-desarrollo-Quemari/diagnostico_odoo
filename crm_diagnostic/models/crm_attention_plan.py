@@ -330,9 +330,13 @@ class CrmAttentionPlanLines(models.Model):
     @api.onchange('adjunto')
     def onchange_field(self):
         if self.adjunto:
-            if ".pdf" not in self.file_name:
+            mimetype = None
+            if mimetype is None and self.file_name:
+                mimetype = mimetypes.guess_type(self.file_name)[0]
+                _logger.info(mimetype)
+            """if ".pdf" not in self.file_name:
                 self.update({'file_name': False})
-                raise UserError('solo deberián poder cargar archivos de imagen, PDF, Excel y power point')
+                raise UserError('solo deberián poder cargar archivos de imagen, PDF, Excel y power point')"""
 
     def _kanban_state_attention_plan(self):
         print("este es el kan"*60)

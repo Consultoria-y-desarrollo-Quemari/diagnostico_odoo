@@ -396,6 +396,24 @@ class CrmAttentionPlanLinesBitacora(models.Model):
     observaciones = fields.Char()
     adjunto = fields.Binary(attachment=False)
     tipo_actividad_ids = fields.Many2one('crm.lead.type_activity', string="Tipo de Actividad") 
+    file_name = fields.Char("Nombre del archivo")
+
+    @api.onchange('adjunto')
+    def onchange_field(self):
+        if self.adjunto:
+            if ".pdf" not in self.file_name:
+                if ".xlsx" not in self.file_name:
+                    if ".pptx" not in self.file_name:
+                        if ".png" not in self.file_name:
+                            if ".jpg" not in self.file_name:
+                                self.file_name = False
+                                self.adjunto = False
+                                return {
+                                    'domain': {},
+                                    'warning': {'title': "Formato incorrecto", 
+                                                'message': "Solo puede cargar archivos de imagen(.png ó .jpg), PDF(.pdf), Excel (.xlsx) y power point (.pptx)"
+                                            }
+                                }
 
 class TestReport(models.TransientModel):
     _name = 'error.adjunto'

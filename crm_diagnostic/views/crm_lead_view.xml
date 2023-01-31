@@ -115,7 +115,7 @@
                                 <field name="kanban_state_attention_plan" widget="kanban_state_selection" attrs="{'required':True}" />
                                 
                                 <field name="adjunto" attrs="{'readonly':[('estado_actividad','!=','completada')]}" filename="file_name"/>
-                                <field name="file_name" />
+                                <field name="file_name" readonly="1"/>
                                 <field name="fecha_kanban" invisible="1" />
                             </tree>
                         </field>
@@ -132,7 +132,8 @@
                                 <field name="tipo_actividad_ids" attrs="{'required':True}" widget='selection'/>
                                 <field name="registro_avance" attrs="{'required':True}" />
                                 <field name="observaciones" />
-                                <field name="adjunto" />
+                                <field name="adjunto" filename="file_name"/>
+                                <field name="file_name" readonly="1"/>
                             </tree>
                         </field>
                     

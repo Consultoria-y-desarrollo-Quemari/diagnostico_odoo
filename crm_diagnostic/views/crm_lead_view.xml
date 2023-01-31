@@ -5,6 +5,10 @@
     <record model="res.groups" id="group_user_hide_orientador" >
         <field name="name">group_user_hide_orientador</field>
     </record>
+
+    <record model="res.groups" id="group_user_hide_gestor_social" >
+        <field name="name">group_user_hide_gestor_social</field>
+    </record>
     
 
     <record id="crm_lead_action_pipeline_orientador" model="ir.actions.act_window">
@@ -20,6 +24,21 @@
             <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
     </record>
 
+    <record id="crm_lead_action_pipeline_gestor_social" model="ir.actions.act_window">
+        <field name="name">Oportunidades del gestor social</field>
+        <field name="res_model">crm.lead</field>
+            <field name="view_mode">kanban,tree,graph,pivot,form,calendar,activity</field>
+            <field name="domain">
+                ['|', ('user_id', '=', uid) ,('asignar_gestor_social', '=', True)]
+            </field>
+            <field name="context">{
+                    'default_type': 'opportunity'
+            }</field>
+            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+    </record>
+
+    
+
     <menuitem
             id="crm_menu_root"
             name="CRM"
@@ -33,6 +52,14 @@
             action="crm_lead_action_pipeline_orientador"
             web_icon="crm,static/description/icon.png"
             groups="group_user_hide_orientador"
+            sequence="7"/>
+
+    <menuitem
+            id="crm_menu_root_2"
+            name="CRM"
+            action="crm_lead_action_pipeline_gestor_social"
+            web_icon="crm,static/description/icon.png"
+            groups="group_user_hide_gestor_social"
             sequence="7"/>
 
             

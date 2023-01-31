@@ -438,6 +438,10 @@ class CrmLead(models.Model):
     )
     asignar_gestor_social = fields.Boolean()
 
+    current_user_gestor_social = fields.Boolean(
+        compute='current_user_is_gestor_social'
+    )
+
 
     def generate_domain(self):
         _logger.info("ñ"*200)
@@ -1035,6 +1039,14 @@ class CrmLead(models.Model):
             else:
                 lead.current_user_facilitator = False
     
+    @api.depends('current_user')
+    def current_user_is_gestor_social(self):
+        for lead in self:
+            if lead.is_gestor_social():
+                lead.current_user_gestor_social = True
+            else:
+                lead.current_user_gestor_social = False
+    
     # check if the curren user is mentor
     @api.depends('current_user')
     def current_user_is_mentor(self):
@@ -1205,6 +1217,13 @@ class CrmLead(models.Model):
     # validating if the current user has the facilitador profile
     def is_facilitator(self):
         role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'facilitador')])
+        for role in role_id:
+            if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
+                return True
+        return False
+    
+    def is_gestor_social(self):
+        role_id = self.env['res.users.role'].sudo().search([('role_type', '=', 'gestor_social')])
         for role in role_id:
             if any(user.id == self.env.user.id for user in role.line_ids.mapped('user_id')):
                 return True

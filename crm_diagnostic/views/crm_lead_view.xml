@@ -67,6 +67,7 @@
             <xpath expr="//field[@name='team_id']" position="after">
                 <field name="current_user" invisible="1" />
                 <field name="root_current_user" invisible="1" />
+                <field name="current_user_gestor_social" invisible="1" />
                 <field name="current_user_facilitator" invisible="1" />
                 <field name="current_user_mentor" invisible="1" />
                 <field name="current_user_admin" invisible="1" />

@@ -330,11 +330,14 @@ class CrmAttentionPlanLines(models.Model):
     @api.onchange('adjunto')
     def onchange_field(self):
         if self.adjunto:
-            _logger.info("entras"*200)
-            return {
-        'domain': {},
-        'warning': {'title': "Warning", 'message': "What is this?"},
-    }
+            if ".pdf" not in self.file_name:
+                self.file_name = False
+                self.adjunto = False
+                _logger.info("entras"*200)
+                return {
+                    'domain': {},
+                    'warning': {'title': "", 'message': "What is this?"},
+                }
 
     def _kanban_state_attention_plan(self):
         print("este es el kan"*60)

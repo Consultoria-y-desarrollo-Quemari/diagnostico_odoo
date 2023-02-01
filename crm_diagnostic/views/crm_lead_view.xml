@@ -254,6 +254,10 @@
                         </group>
                     </group>
                 </page>
+
+                <page string="ACOMPAÑAMIENTO PSICOSOCIAL" id="psicosocial">
+
+                </page>
             </xpath>
 
         </field>

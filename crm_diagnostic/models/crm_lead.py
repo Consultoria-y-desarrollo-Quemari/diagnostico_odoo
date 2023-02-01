@@ -436,7 +436,7 @@ class CrmLead(models.Model):
     modulo_seguimeinto = fields.Boolean(
         compute = "ver_modulo_seguiemiento"
     )
-    asignar_gestor_social = fields.Boolean()
+    asignar_gestor_social = fields.Boolean(string="Micronegocio de valor agregado")
 
     current_user_gestor_social = fields.Boolean(
         compute='current_user_is_gestor_social'

@@ -457,6 +457,8 @@ class CrmLead(models.Model):
     effective_hours_a = fields.Float("Hours Spent", compute='_compute_effective_hours_a', compute_sudo=True, store=True, help="Computed using the sum of the task work done.")
     timesheet_a_ids = fields.One2many('account.analytic.line', 'parentcrm_a_id', 'Timesheets')
     subtask_effective_hours_a = fields.Float("Sub-tasks Hours Spent", compute='_compute_subtask_effective_hours_a', store=True, help="Sum of actually spent hours on the subtask(s)")
+    total_hours_spent_a = fields.Float("Total Hours", compute='_compute_total_hours_spent_a', store=True, help="Computed as: Time Spent + Sub-tasks Hours.")
+    remaining_hours_a = fields.Float("Remaining Hours", compute='_compute_remaining_hours_a', store=True, readonly=True, help="Total remaining time, can be re-estimated periodically by the assignee of the task.")
 
     def generate_domain(self):
         _logger.info("ñ"*200)
@@ -486,11 +488,21 @@ class CrmLead(models.Model):
         for task in self:
             task.remaining_hours = task.planned_hours - task.effective_hours - task.subtask_effective_hours
 
+    @api.depends('effective_hours_a', 'subtask_effective_hours_a', 'planned_hours_a')
+    def _compute_remaining_hours_a(self):
+        for task in self:
+            task.remaining_hours_a = task.planned_hours_a - task.effective_hours_a - task.subtask_effective_hours_a
+
 
     @api.depends('effective_hours', 'subtask_effective_hours')
     def _compute_total_hours_spent(self):
         for task in self:
             task.total_hours_spent = task.effective_hours + task.subtask_effective_hours
+
+    @api.depends('effective_hours_a', 'subtask_effective_hours_a')
+    def _compute_total_hours_spent_a(self):
+        for task in self:
+            task.total_hours_spent_a = task.effective_hours_a + task.subtask_effective_hours_a
 
     @api.depends('child_ids.effective_hours', 'child_ids.subtask_effective_hours')
     def _compute_subtask_effective_hours(self):

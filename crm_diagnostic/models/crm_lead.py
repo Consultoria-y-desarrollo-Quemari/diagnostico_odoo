@@ -552,14 +552,14 @@ class CrmLead(models.Model):
     @api.depends('effective_hours_a', 'subtask_effective_hours_a', 'planned_hours_a')
     def _compute_progress_hours_a(self):
         for task in self:
-            if (task.planned_hours > 0.0):
+            if (task.planned_hours_a > 0.0):
                 task_total_hours = task.effective_hours_a + task.subtask_effective_hours_a
-                if task_total_hours > task.planned_hours:
-                    task.progress = 100
+                if task_total_hours > task.planned_hours_a:
+                    task.progress_a = 100
                 else:
-                    task.progress = round(100.0 * task_total_hours / task.planned_hours, 2)
+                    task.progress_a = round(100.0 * task_total_hours / task.planned_hours_a, 2)
             else:
-                task.progress = 0.0
+                task.progress_a = 0.0
 
     def show_button_social_plan(self):
         #print("Hola"*200)

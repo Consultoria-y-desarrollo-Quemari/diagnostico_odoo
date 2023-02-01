@@ -451,7 +451,7 @@ class CrmLead(models.Model):
 
     planned_hours_a = fields.Float("Planned Hours", help='It is the time planned to achieve the task. If this document has sub-tasks, it means the time needed to achieve this tasks and its childs.',tracking=True)
     subtask_planned_hours_a = fields.Float("Subtasks", compute='_compute_subtask_planned_hours_a', help="Computed using sum of hours planned of all subtasks created from main task. Usually these hours are less or equal to the Planned Hours (of main task).")
-    child_a_ids = fields.One2many('crm.lead', 'parent_id', string="Sub-tasks", context={'active_test': False})
+    child_a_ids = fields.One2many('crm.lead', 'parent_a_id', string="Sub-tasks", context={'active_test': False})
     planned_hours_a = fields.Float("Planned Hours", help='It is the time planned to achieve the task. If this document has sub-tasks, it means the time needed to achieve this tasks and its childs.',tracking=True)
     progress_a = fields.Float("Progress", compute='_compute_progress_hours_a', store=True, group_operator="avg", help="Display progress of current task.")
     effective_hours_a = fields.Float("Hours Spent", compute='_compute_effective_hours_a', compute_sudo=True, store=True, help="Computed using the sum of the task work done.")
@@ -459,6 +459,9 @@ class CrmLead(models.Model):
     subtask_effective_hours_a = fields.Float("Sub-tasks Hours Spent", compute='_compute_subtask_effective_hours_a', store=True, help="Sum of actually spent hours on the subtask(s)")
     total_hours_spent_a = fields.Float("Total Hours", compute='_compute_total_hours_spent_a', store=True, help="Computed as: Time Spent + Sub-tasks Hours.")
     remaining_hours_a = fields.Float("Remaining Hours", compute='_compute_remaining_hours_a', store=True, readonly=True, help="Total remaining time, can be re-estimated periodically by the assignee of the task.")
+    parent_a_id = fields.Many2one(
+        'crm.lead'
+    )
 
     def generate_domain(self):
         _logger.info("ñ"*200)
@@ -480,6 +483,7 @@ class CrmLead(models.Model):
 
     @api.depends('child_a_ids.planned_hours_a')
     def _compute_subtask_planned_hours_a(self):
+        _logger.info("planed"*100)
         for task in self:
             task.subtask_planned_hours_a = sum(task.child_a_ids.mapped('planned_hours_a'))
 

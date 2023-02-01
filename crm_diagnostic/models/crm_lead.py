@@ -453,7 +453,10 @@ class CrmLead(models.Model):
     subtask_planned_hours_a = fields.Float("Subtasks", compute='_compute_subtask_planned_hours_a', help="Computed using sum of hours planned of all subtasks created from main task. Usually these hours are less or equal to the Planned Hours (of main task).")
     child_a_ids = fields.One2many('crm.lead', 'parent_id', string="Sub-tasks", context={'active_test': False})
     planned_hours_a = fields.Float("Planned Hours", help='It is the time planned to achieve the task. If this document has sub-tasks, it means the time needed to achieve this tasks and its childs.',tracking=True)
-    progress_a = fields.Float("Progress", compute='_compute_progress_hours', store=True, group_operator="avg", help="Display progress of current task.")
+    progress_a = fields.Float("Progress", compute='_compute_progress_hours_a', store=True, group_operator="avg", help="Display progress of current task.")
+    effective_hours_a = fields.Float("Hours Spent", compute='_compute_effective_hours_a', compute_sudo=True, store=True, help="Computed using the sum of the task work done.")
+    timesheet_a_ids = fields.One2many('account.analytic.line', 'parentcrm_id', 'Timesheets')
+    subtask_effective_hours_a = fields.Float("Sub-tasks Hours Spent", compute='_compute_subtask_effective_hours_a', store=True, help="Sum of actually spent hours on the subtask(s)")
 
     def generate_domain(self):
         _logger.info("ñ"*200)
@@ -494,6 +497,11 @@ class CrmLead(models.Model):
         for task in self:
             task.subtask_effective_hours = sum(child_task.effective_hours + child_task.subtask_effective_hours for child_task in task.child_ids)
 
+    @api.depends('child_a_ids.effective_hours_a', 'child_a_ids.subtask_effective_hours_a')
+    def _compute_subtask_effective_hours_a(self):
+        for task in self:
+            task.subtask_effective_hours_a = sum(child_task.effective_hours_a + child_task.subtask_effective_hours_a for child_task in task.child_a_ids)
+
 
     @api.depends('timesheet_ids.unit_amount')
     def _compute_effective_hours(self):
@@ -504,11 +512,32 @@ class CrmLead(models.Model):
                     hours += time.unit_amount
             task.effective_hours = round(hours, 2)
 
+    @api.depends('timesheet_a_ids.unit_amount')
+    def _compute_effective_hours_a(self):
+        hours = 0.0
+        for task in self:
+            for time in task.timesheet_a_ids:
+                if time.stage_state == "finalizado":
+                    hours += time.unit_amount
+            task.effective_hours = round(hours, 2)
+
     @api.depends('effective_hours', 'subtask_effective_hours', 'planned_hours')
     def _compute_progress_hours(self):
         for task in self:
             if (task.planned_hours > 0.0):
                 task_total_hours = task.effective_hours + task.subtask_effective_hours
+                if task_total_hours > task.planned_hours:
+                    task.progress = 100
+                else:
+                    task.progress = round(100.0 * task_total_hours / task.planned_hours, 2)
+            else:
+                task.progress = 0.0
+
+    @api.depends('effective_hours_a', 'subtask_effective_hours_a', 'planned_hours_a')
+    def _compute_progress_hours_a(self):
+        for task in self:
+            if (task.planned_hours > 0.0):
+                task_total_hours = task.effective_hours_a + task.subtask_effective_hours_a
                 if task_total_hours > task.planned_hours:
                     task.progress = 100
                 else:

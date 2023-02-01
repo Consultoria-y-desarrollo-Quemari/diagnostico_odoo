@@ -258,6 +258,20 @@
                                 <field name="progress_a" widget="progressbar"/>
                             </group>
                         </group>
+                        <field name="timesheet_a_ids" mode="tree,kanban">
+                            <tree editable="bottom" string="Timesheet Activities" default_order="date">
+                                <field name="date"/>
+                                <field name="user_id" invisible="1"/>
+                                <field name="employee_id" required="1"/>
+                                <field name="name"/>
+                                <field name="stage_state"/>
+                                <field name="unit_amount" widget="timesheet_uom"/>
+                                <field name="adjunto"/>
+                                <field name="project_id" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                            </tree>
+ 
+                        </field>
                     </page>
                 </xpath>
             </field>

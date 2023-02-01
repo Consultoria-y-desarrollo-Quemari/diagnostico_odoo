@@ -442,6 +442,12 @@ class CrmLead(models.Model):
         compute='current_user_is_gestor_social'
     )
 
+    gestor_social = fields.Many2one(
+        'res.users',
+        string='Gestor social'
+    )
+
+
 
     def generate_domain(self):
         _logger.info("ñ"*200)

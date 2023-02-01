@@ -447,7 +447,13 @@ class CrmLead(models.Model):
         string='Gestor social'
     )
 
+    #############################################acompañamiento####################################################################
 
+    planned_hours_a = fields.Float("Planned Hours", help='It is the time planned to achieve the task. If this document has sub-tasks, it means the time needed to achieve this tasks and its childs.',tracking=True)
+    subtask_planned_hours_a = fields.Float("Subtasks", compute='_compute_subtask_planned_hours_a', help="Computed using sum of hours planned of all subtasks created from main task. Usually these hours are less or equal to the Planned Hours (of main task).")
+    child_a_ids = fields.One2many('crm.lead', 'parent_id', string="Sub-tasks", context={'active_test': False})
+    planned_hours_a = fields.Float("Planned Hours", help='It is the time planned to achieve the task. If this document has sub-tasks, it means the time needed to achieve this tasks and its childs.',tracking=True)
+    progress_a = fields.Float("Progress", compute='_compute_progress_hours', store=True, group_operator="avg", help="Display progress of current task.")
 
     def generate_domain(self):
         _logger.info("ñ"*200)
@@ -466,6 +472,11 @@ class CrmLead(models.Model):
     def _compute_subtask_planned_hours(self):
         for task in self:
             task.subtask_planned_hours = sum(task.child_ids.mapped('planned_hours'))
+
+    @api.depends('child_a_ids.planned_hours_a')
+    def _compute_subtask_planned_hours_a(self):
+        for task in self:
+            task.subtask_planned_hours_a = sum(task.child_a_ids.mapped('planned_hours_a'))
 
     @api.depends('effective_hours', 'subtask_effective_hours', 'planned_hours')
     def _compute_remaining_hours(self):

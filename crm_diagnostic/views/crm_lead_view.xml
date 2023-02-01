@@ -255,7 +255,7 @@
                                 </div>
                             </group>
                             <group>
-                                <field name="progress" widget="progressbar"/>
+                                <field name="progress_a" widget="progressbar"/>
                             </group>
                         </group>
                     </page>

@@ -455,7 +455,7 @@ class CrmLead(models.Model):
     planned_hours_a = fields.Float("Planned Hours", help='It is the time planned to achieve the task. If this document has sub-tasks, it means the time needed to achieve this tasks and its childs.',tracking=True)
     progress_a = fields.Float("Progress", compute='_compute_progress_hours_a', store=True, group_operator="avg", help="Display progress of current task.")
     effective_hours_a = fields.Float("Hours Spent", compute='_compute_effective_hours_a', compute_sudo=True, store=True, help="Computed using the sum of the task work done.")
-    timesheet_a_ids = fields.One2many('account.analytic.line', 'parentcrm_id', 'Timesheets')
+    timesheet_a_ids = fields.One2many('account.analytic.line', 'parentcrm_a_id', 'Timesheets')
     subtask_effective_hours_a = fields.Float("Sub-tasks Hours Spent", compute='_compute_subtask_effective_hours_a', store=True, help="Sum of actually spent hours on the subtask(s)")
 
     def generate_domain(self):
@@ -1690,6 +1690,9 @@ class CrmLead(models.Model):
         _inherit = 'account.analytic.line'
 
         parentcrm_id = fields.Many2one(
+        'crm.lead')
+
+        parentcrm_a_id = fields.Many2one(
         'crm.lead')
 
         

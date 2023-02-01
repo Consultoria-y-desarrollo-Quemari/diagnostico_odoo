@@ -535,7 +535,7 @@ class CrmLead(models.Model):
             for time in task.timesheet_a_ids:
                 if time.stage_state == "finalizado":
                     hours += time.unit_amount
-            task.effective_hours = round(hours, 2)
+            task.effective_hours_a = round(hours, 2)
 
     @api.depends('effective_hours', 'subtask_effective_hours', 'planned_hours')
     def _compute_progress_hours(self):

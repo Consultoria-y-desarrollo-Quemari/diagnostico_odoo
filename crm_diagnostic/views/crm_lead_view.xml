@@ -309,7 +309,7 @@
             <field name="inherit_id" ref="crm_uni_forms.crm_case_form_view_oppor_inherit_product" />
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='modulo2']" position="attributes">
-                    <attribute name="attrs">{'invisible': [('root_current_user', '=', False),('first_module_ready', '=', False)]}</attribute>
+                    <attribute name="attrs">{'invisible': True}</attribute>
                 </xpath>
                 <xpath expr="//page[@name='modulo3']" position="attributes">
                     <attribute name="attrs">{'invisible': [('root_current_user', '=', False),('second_module_read', '=', False)]}</attribute>

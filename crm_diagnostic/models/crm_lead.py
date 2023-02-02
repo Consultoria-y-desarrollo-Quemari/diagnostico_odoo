@@ -551,6 +551,7 @@ class CrmLead(models.Model):
 
     @api.depends('effective_hours_a', 'subtask_effective_hours_a', 'planned_hours_a')
     def _compute_progress_hours_a(self):
+        
         for task in self:
             if (task.planned_hours_a > 0.0):
                 task_total_hours = task.effective_hours_a + task.subtask_effective_hours_a

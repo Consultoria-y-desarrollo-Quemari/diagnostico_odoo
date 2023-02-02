@@ -83,7 +83,7 @@
                     <field name="current_user_facilitator" invisible="1" />
                     <field name="current_user_mentor" invisible="1" />
                     <field name="current_user_admin" invisible="1" />
-                    <field name="first_module_ready" invisible="1" />
+                    <field name="first_module_ready"  />
                     <field name="second_module_read" invisible="1" />
                     <field name="third_module_ready" invisible="1" />
                     <field name="four_module_read" invisible="1" />

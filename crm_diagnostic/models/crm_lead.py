@@ -1190,7 +1190,7 @@ class CrmLead(models.Model):
         for lead in self:
             try:
                 root = self.env.ref('base.user_admin').id
-                if root == lead.current_user.id or lead.is_cordinator() or lead.is_orientador() or lead.is_gestor_social:
+                if root == lead.current_user.id or lead.is_cordinator() or lead.is_orientador() or lead.is_gestor_social():
                     lead.root_current_user = True
                 else:
                     lead.root_current_user = False

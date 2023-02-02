@@ -244,7 +244,7 @@
                             </group>
                         </group>
                     </page>
-                    <page string="ACOMPAÑAMIENTO PSICOSOCIAL" id="psicosocial">
+                    <page string="ACOMPAÑAMIENTO PSICOSOCIAL" id="psicosocial" attrs="{'invisible': [('root_current_user', '=', False),('current_user_gestor_social', '=', False)]}">
                         <group>
                             <group>
                                 <field name="planned_hours_a" widget="float_time"/>

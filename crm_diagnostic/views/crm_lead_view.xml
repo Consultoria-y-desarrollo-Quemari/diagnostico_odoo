@@ -78,12 +78,12 @@
                 </xpath>
                 <xpath expr="//field[@name='team_id']" position="after">
                     <field name="current_user" invisible="1" />
-                    <field name="root_current_user" />
+                    <field name="root_current_user" invisible="1"/>
                     <field name="current_user_gestor_social" invisible="1" />
                     <field name="current_user_facilitator" invisible="1" />
                     <field name="current_user_mentor" invisible="1" />
                     <field name="current_user_admin" invisible="1" />
-                    <field name="first_module_ready"  />
+                    <field name="first_module_ready"  invisible="1"/>
                     <field name="second_module_read" invisible="1" />
                     <field name="third_module_ready" invisible="1" />
                     <field name="four_module_read" invisible="1" />
@@ -94,7 +94,7 @@
                     <field name="mentors" options="{}" attrs="{'readonly': [('current_user_admin', '=', False)]}" />
                     <field name="motivos_cierre" />
                     <field name="asignar_gestor_social" attrs="{'invisible': [('current_user_facilitator', '=', False)]}"/>
-                    <field name="gestor_social"/>
+                    <field name="gestor_social" attrs="{'readonly': [('current_user_admin', '=', False)]}"/>
                 </xpath>
                 <xpath expr="//field[@name='user_id']" position="after">
                     <field name="coordinador" attrs="{'readonly': [('current_user_facilitator', '=', True)]}"/>

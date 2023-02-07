@@ -12,7 +12,7 @@
             <field name="res_model">crm.lead</field>
             <field name="view_mode">kanban,tree,graph,pivot,form,calendar,activity</field>
             <field name="domain">
-                ['|', ('user_id', '=', uid) ,('team_id.member_ids', 'ilike', uid)]
+                ['|', ('user_id', '=', uid) ,('team_id.member_ids', 'in', uid)]
             </field>
             <field name="context">{
                     'default_type': 'opportunity'

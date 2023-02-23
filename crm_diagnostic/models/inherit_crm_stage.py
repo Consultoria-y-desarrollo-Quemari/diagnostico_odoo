@@ -14,7 +14,8 @@ class CrmStage(models.Model):
                    ('espera_de_plan', 'En espera de plan de atención'),
                    ('cuarto_encuentro', 'Cuarto encuentro: Ejecución Plan de atención'),
                    ('pre_finalizacion', 'Pre finalización'),
-                   ('quinto_encuentro', 'Quinto')],
+                   ('quinto_encuentro', 'Quinto'),
+                   ('finalizar', 'finalizar')],
         help='Esta campo sirve para el estado al que pertence la etapa'
     )
 

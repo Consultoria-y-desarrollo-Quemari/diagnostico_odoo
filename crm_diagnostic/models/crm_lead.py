@@ -478,6 +478,8 @@ class CrmLead(models.Model):
 
     def finalizar_caso(self):
         _logger.info("este es el bon de finalizacion")
+        self.get_stage('quinto_encuentro')
+
 
     @api.depends('child_ids.planned_hours')
     def _compute_subtask_planned_hours(self):

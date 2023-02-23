@@ -478,7 +478,7 @@ class CrmLead(models.Model):
 
     def finalizar_caso(self):
         _logger.info("este es el bon de finalizacion")
-        five_stage = self.get_stage('quinto_encuentro')
+        five_stage = self.get_stage('finalizar')
         _logger.info(five_stage)
         self.stage_id = five_stage
 

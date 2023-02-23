@@ -478,7 +478,8 @@ class CrmLead(models.Model):
 
     def finalizar_caso(self):
         _logger.info("este es el bon de finalizacion")
-        self.get_stage('quinto_encuentro')
+        five_stage = self.get_stage('quinto_encuentro')
+        self.with_user(SUPERUSER_ID).stage_id = five_stage
 
 
     @api.depends('child_ids.planned_hours')

@@ -476,6 +476,9 @@ class CrmLead(models.Model):
             else:
                 lead.modulo_seguimeinto = False
 
+    def finalizar_caso(self):
+        _logger.info("este es el bon de finalizacion")
+
     @api.depends('child_ids.planned_hours')
     def _compute_subtask_planned_hours(self):
         for task in self:

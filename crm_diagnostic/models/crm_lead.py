@@ -404,6 +404,11 @@ class CrmLead(models.Model):
     current_user_mentor = fields.Boolean(
         compute="current_user_is_mentor"
     )
+
+    current_user_orientador = fields.Boolean(
+        compute="current_user_is_orientador"
+    )
+
     current_user_admin = fields.Boolean(
         compute="current_user_is_admin"
     )
@@ -1125,6 +1130,14 @@ class CrmLead(models.Model):
                 lead.current_user_mentor = True
             else:
                 lead.current_user_mentor = False
+
+    @api.depends('current_user')
+    def current_user_is_orientador(self):
+        for lead in self:
+            if lead.is_orientador():
+                lead.current_user_orientador = True
+            else:
+                lead.current_user_orientador = False
 
     @api.depends('current_user')
     def current_user_is_admin(self):

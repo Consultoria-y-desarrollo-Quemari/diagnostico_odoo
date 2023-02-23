@@ -101,7 +101,7 @@
                     <field name="social_plan" string="¿Socializacion del plan de atención?" />
                 </xpath>
                 <xpath expr="//button[@name='action_set_won_rainbowman']" position="attributes">
-                    <attribute name="attrs">{'invisible': ['|','|', '|', ('active','=',False), ('probability', '=', 100), ('type', '=', 'lead'), ('show_action_set_rainbowman', '=', False)]}</attribute>
+                    <attribute name="attrs">{'invisible': ['|','|', '|', '|',('active','=',False), ('probability', '=', 100), ('type', '=', 'lead'), ('show_action_set_rainbowman', '=', False),('stage_id.stage_state', '=', 'quinto_encuentro')]}</attribute>
                 </xpath>
                 <xpath expr="//button[@name='action_set_won_rainbowman']" position="after">
                     <field name="social_plan" invisible="1" />

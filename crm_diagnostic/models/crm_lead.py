@@ -489,7 +489,7 @@ class CrmLead(models.Model):
 
     @api.onchange('stage_id')
     def finalizar_caso_state_onchange_(self):
-        _logger.info(self.stage_id)
+        _logger.info(self.stage_id.name)
         _logger.info("logger"*100)
         
 

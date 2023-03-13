@@ -487,6 +487,11 @@ class CrmLead(models.Model):
         _logger.info(five_stage)
         self.stage_id = five_stage
 
+    @api.onchange('stage_id')
+    def finalizar_caso_state_onchange_(self):
+        _logger.info(self.stage_id)
+        _logger.info("logger"*100)
+        
 
     @api.depends('child_ids.planned_hours')
     def _compute_subtask_planned_hours(self):

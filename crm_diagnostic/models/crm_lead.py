@@ -452,7 +452,7 @@ class CrmLead(models.Model):
         string='Gestor social'
     )
 
-    state_bool = fields.Boolean(default=True)
+    state_bool = fields.Boolean( default = True )
 
     #############################################acompañamiento####################################################################
 

@@ -452,6 +452,8 @@ class CrmLead(models.Model):
         string='Gestor social'
     )
 
+    state_bool = fields.Boolean()
+
     #############################################acompañamiento####################################################################
 
     planned_hours_a = fields.Float("Planned Hours", help='It is the time planned to achieve the task. If this document has sub-tasks, it means the time needed to achieve this tasks and its childs.',tracking=True)
@@ -489,6 +491,11 @@ class CrmLead(models.Model):
 
     @api.onchange('stage_id')
     def finalizar_caso_state_onchange_(self):
+        if self.stage_id.name not in ('Seguimiento', 'Pre Finalización'):
+            self.state_bool = True
+        else:
+            self.state_bool = False
+
         _logger.info(self.stage_id.name)
         _logger.info("logger"*100)
         

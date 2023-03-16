@@ -442,7 +442,7 @@ class CrmLead(models.Model):
         compute = "ver_modulo_seguiemiento"
     )
 
-    activate_asignar_gestor_social = fields.Boolean(default=False)
+    activate_asignar_gestor_social = fields.Boolean(compute="_asignar_gestor_social")
     asignar_gestor_social = fields.Boolean(string="Micronegocio de valor agregado")
 
     current_user_gestor_social = fields.Boolean(
@@ -476,8 +476,7 @@ class CrmLead(models.Model):
         _logger.info("ñ"*200)
         return "[('type','=','opportunity')]"
 
-    @api.onchange('stage_id','asignar_gestor_social','default_team_id')
-    def onchange_asignar_gestor_social(self):
+    def _asignar_gestor_social(self):
         _logger.info(self._context)
         _logger.info("*-* "*100)
         if self.current_user_facilitator:

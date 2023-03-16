@@ -476,7 +476,7 @@ class CrmLead(models.Model):
         _logger.info("ñ"*200)
         return "[('type','=','opportunity')]"
 
-    @api.onchange('stage_id','asignar_gestor_social')
+    @api.onchange('stage_id','asignar_gestor_social','self._context')
     def onchange_asignar_gestor_social(self):
         _logger.info(self._context)
         _logger.info("*-* "*100)

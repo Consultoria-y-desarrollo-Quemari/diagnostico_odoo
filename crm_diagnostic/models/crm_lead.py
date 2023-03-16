@@ -478,6 +478,8 @@ class CrmLead(models.Model):
 
     @api.onchange('stage_id','asignar_gestor_social')
     def onchange_asignar_gestor_social(self):
+        _logger.info(self.context)
+        _logger.info("*-* "*100)
         if self.current_user_facilitator:
             diagnostic = self.env['crm.diagnostic'].search([('nombre_negocio', '=', self.x_nombre_negocio),
                                                             ('nombre_propietario', '=', self.x_nombre),

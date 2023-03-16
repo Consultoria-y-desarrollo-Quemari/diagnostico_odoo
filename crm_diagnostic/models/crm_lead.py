@@ -513,13 +513,13 @@ class CrmLead(models.Model):
         if self.stage_id.name not in ('Cuarto encuentro: Ejecución Plan de atención','Seguimiento', 'Pre Finalización'):
             self.state_bool = True
         else:
-            if self.stage_id.name in ('Seguimiento', 'Pre Finalización'):
-                self.state_bool = False
-            elif self.stage_id.name == 'Cuarto encuentro: Ejecución Plan de atención':
+            if self.stage_id.name == 'Cuarto encuentro: Ejecución Plan de atención':
                 if self.timesheet_ids:
                     self.state_bool = False
                 else:
                     self.state_bool = True
+            else:
+                self.state_bool = False
 
         _logger.info(self.stage_id.name)
         _logger.info("logger"*100)

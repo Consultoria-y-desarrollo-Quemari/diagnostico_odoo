@@ -454,7 +454,7 @@ class CrmLead(models.Model):
         string='Gestor social'
     )
 
-    state_bool = fields.Boolean( default = True )
+    state_bool = fields.Boolean( compute="_finalizar_caso_state_")
 
     #############################################acompañamiento####################################################################
 
@@ -507,8 +507,7 @@ class CrmLead(models.Model):
         _logger.info(five_stage)
         self.stage_id = five_stage
 
-    @api.onchange('stage_id')
-    def finalizar_caso_state_onchange_(self):
+    def _finalizar_caso_state_(self):
         if self.stage_id.name not in ('Seguimiento', 'Pre Finalización'):
             self.state_bool = True
         else:

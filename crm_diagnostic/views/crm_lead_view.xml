@@ -94,7 +94,8 @@
                 <xpath expr="//field[@name='company_id']" position="after">
                     <field name="mentors" options="{}" attrs="{'readonly': [('current_user_admin', '=', False)]}" />
                     <field name="motivos_cierre" />
-                    <field name="asignar_gestor_social" attrs="{'readonly': ['|','|',('current_user_facilitator','=',False),('current_user_orientador','=',False),('current_user_admin','=',False),('root_current_user','=',False)]}"/>
+                    <field name="activate_asignar_gestor_social" invisible="1"/>
+                    <field name="asignar_gestor_social" attrs="{'readonly': [('activate_asignar_gestor_social','=',False)]}"/>
                     <field name="gestor_social" attrs="{'readonly': [('current_user_admin', '=', False)]}"/>
                 </xpath>
                 <xpath expr="//field[@name='user_id']" position="after">

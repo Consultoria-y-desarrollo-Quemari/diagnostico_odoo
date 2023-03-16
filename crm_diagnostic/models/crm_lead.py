@@ -441,6 +441,8 @@ class CrmLead(models.Model):
     modulo_seguimeinto = fields.Boolean(
         compute = "ver_modulo_seguiemiento"
     )
+
+    activate_asignar_gestor_social = fields.Boolean(default=False)
     asignar_gestor_social = fields.Boolean(string="Micronegocio de valor agregado")
 
     current_user_gestor_social = fields.Boolean(
@@ -480,9 +482,11 @@ class CrmLead(models.Model):
             diagnostic = self.env['crm.diagnostic'].search([('nombre_negocio', '=', self.x_nombre_negocio),
                                                             ('nombre_propietario', '=', self.x_nombre),
                                                             ('numero_identificacion', '=', self.x_identification_char)])
-            _logger.info(diagnostic)
-            _logger.info("-"*100)
-        #self.asignar_gestor_social = 
+            if diagnostic:
+                self.activate_asignar_gestor_social = True
+        else:
+            self.activate_asignar_gestor_social = False
+            
     
 
     def ver_modulo_seguiemiento(self):

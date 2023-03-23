@@ -496,7 +496,7 @@ class CrmLead(models.Model):
 
     def ver_modulo_seguiemiento(self):
         for lead in self:
-            if lead.stage_id.stage_state in ("cuarto_encuentro", "quinto_encuentro","pre_finalizacion") :
+            if lead.stage_id.stage_state in ("cuarto_encuentro", "quinto_encuentro","pre_finalizacion","finalizar") :
                 lead.modulo_seguimeinto = True
             else:
                 lead.modulo_seguimeinto = False

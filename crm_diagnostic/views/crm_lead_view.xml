@@ -112,7 +112,7 @@
                     <field name="state_bool" invisible="1"/>
                     <field name="show_action_set_rainbowman" invisible="1" />
                     <button type="object" name="confirm_social_plan" string="Confirmar socializacion del plan de atención" attrs="{'invisible':[('social_plan_1','=',False)]}" />
-                    <button type="object" name="finalizar_caso" string="Marcar como ganado" attrs="{'invisible': ['|',('current_user_mentor', '=', False),('current_user_orientador', '=', False),('state_bool','=',True)]}"/>
+                    <button type="object" name="finalizar_caso" string="Marcar como ganado" attrs="{'invisible': ['|','|',('current_user_facilitator', '=', True,('current_user_mentor', '=', False),('current_user_orientador', '=', False),('state_bool','=',True)]}"/>
                 </xpath>
                 <xpath expr="//page[@name='modulo3']" position="after">
                     <page string="MODULO DE SEGUIMIENTO" name="modulo4" attrs="{'invisible': [('root_current_user', '=', False),('modulo_seguimeinto', '=', False)]}">

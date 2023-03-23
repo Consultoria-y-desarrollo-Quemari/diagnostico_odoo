@@ -510,11 +510,14 @@ class CrmLead(models.Model):
         self.stage_id = five_stage
 
     def _finalizar_caso_state_(self):
-        rol = self.env['res.users.role'].search(
-            [('role_type' , '=', "facilitador")])
-        _logger.info(rol)
+        facilitator_role = '' 
+        for lead in self:
+            facilitator_roles = lead.user_id.role_ids
+            if facilitator_roles:
+                facilitator_role = facilitator_roles[0].name
+        _logger.info(facilitator_role)
         _logger.info("logger"*100)
-        if rol:
+        if facilitator_role != '':
             self.state_bool = True
         else:
             if self.stage_id.name not in ('Cuarto encuentro: Ejecución Plan de atención','Seguimiento', 'Pre Finalización'):

@@ -488,9 +488,9 @@ class CrmLead(models.Model):
             else:
                 self.activate_asignar_gestor_social = True
         elif self.current_user_orientador or self.current_user_admin or self.root_current_user:
-            self.activate_asignar_gestor_social = False
-        else:
             self.activate_asignar_gestor_social = True
+        else:
+            self.activate_asignar_gestor_social = False
             
     
 

@@ -512,6 +512,8 @@ class CrmLead(models.Model):
     def _finalizar_caso_state_(self):
         rol = self.env['res.users.role'].search(
             [('role_type' , '=', "facilitador")])
+        _logger.info(rol)
+        _logger.info("logger"*100)
         if rol:
             self.state_bool = True
         else:
@@ -526,8 +528,7 @@ class CrmLead(models.Model):
                 else:
                     self.state_bool = False
 
-        _logger.info(self.stage_id.name)
-        _logger.info("logger"*100)
+        
         
 
     @api.depends('child_ids.planned_hours')

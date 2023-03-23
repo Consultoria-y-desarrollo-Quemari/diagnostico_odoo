@@ -515,7 +515,11 @@ class CrmLead(models.Model):
                 self.state_bool = True
             else:
                 if self.stage_id.name == 'Cuarto encuentro: Ejecución Plan de atención':
-                    if self.timesheet_ids:
+                    for data in self.timesheet_ids:
+                        _logger.info(data)
+                        _logger.info("SOME DATA ---"*100)
+                        some_data = data
+                    if some_data:
                         self.state_bool = True
                     else:
                         self.state_bool = False

@@ -508,6 +508,7 @@ class CrmLead(models.Model):
         self.stage_id = five_stage
 
     def _finalizar_caso_state_(self):
+        some_data = '' 
         if self.current_user_facilitator:
             self.state_bool = True
         else:
@@ -516,10 +517,8 @@ class CrmLead(models.Model):
             else:
                 if self.stage_id.name == 'Cuarto encuentro: Ejecución Plan de atención':
                     for data in self.timesheet_ids:
-                        _logger.info(data)
-                        _logger.info("SOME DATA ---"*100)
                         some_data = data
-                    if some_data:
+                    if some_data != '':
                         self.state_bool = True
                     else:
                         self.state_bool = False

@@ -484,13 +484,13 @@ class CrmLead(models.Model):
                                                             ('nombre_propietario', '=', self.x_nombre),
                                                             ('numero_identificacion', '=', self.x_identification_char)])
             if diagnostic:
-                self.activate_asignar_gestor_social = True
-            else:
                 self.activate_asignar_gestor_social = False
+            else:
+                self.activate_asignar_gestor_social = True
         elif self.current_user_orientador or self.current_user_admin or self.root_current_user:
-            self.activate_asignar_gestor_social = True
-        else:
             self.activate_asignar_gestor_social = False
+        else:
+            self.activate_asignar_gestor_social = True
             
     
 

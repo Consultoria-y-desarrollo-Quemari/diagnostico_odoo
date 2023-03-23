@@ -510,26 +510,16 @@ class CrmLead(models.Model):
         self.stage_id = five_stage
 
     def _finalizar_caso_state_(self):
-        facilitator_role = '' 
-        for lead in self:
-            facilitator_roles = lead.user_id.role_ids
-            if facilitator_roles:
-                facilitator_role = facilitator_roles[0].name
-        _logger.info(facilitator_role)
-        _logger.info("logger"*100)
-        if facilitator_role == 'Facilitador':
+        if self.stage_id.name not in ('Cuarto encuentro: Ejecución Plan de atención','Seguimiento', 'Pre Finalización'):
             self.state_bool = True
         else:
-            if self.stage_id.name not in ('Cuarto encuentro: Ejecución Plan de atención','Seguimiento', 'Pre Finalización'):
-                self.state_bool = True
-            else:
-                if self.stage_id.name == 'Cuarto encuentro: Ejecución Plan de atención':
-                    if self.timesheet_ids:
-                        self.state_bool = False
-                    else:
-                        self.state_bool = True
-                else:
+            if self.stage_id.name == 'Cuarto encuentro: Ejecución Plan de atención':
+                if self.timesheet_ids:
                     self.state_bool = False
+                else:
+                    self.state_bool = True
+            else:
+                self.state_bool = False
 
         
         

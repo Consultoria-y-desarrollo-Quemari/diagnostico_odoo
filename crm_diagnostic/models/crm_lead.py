@@ -518,9 +518,9 @@ class CrmLead(models.Model):
             else:
                 if self.stage_id.name == 'Cuarto encuentro: Ejecución Plan de atención':
                     if self.timesheet_ids:
-                        self.state_bool = False
-                    else:
                         self.state_bool = True
+                    else:
+                        self.state_bool = False
                 else:
                     self.state_bool = False
 
@@ -1595,6 +1595,13 @@ class CrmLead(models.Model):
                                 node.attrib['modifiers'] = json.dumps(modifiers)
 
             #            res['arch'] = etree.tostring(doc)
+            if self.is_mentor():
+                if self.stage_id.name == 'Finalización':
+                    for node in doc.xpath("//header/button[@name='action_set_won_rainbowman']"):
+                        if 'modifiers' in node.attrib:
+                            modifiers = json.loads(node.attrib['modifiers'])
+                            modifiers['invisible'] = True
+                            node.attrib['modifiers'] = json.dumps(modifiers)
 
             if not self.is_mentor():
                 if not self.is_admin():

@@ -519,9 +519,9 @@ class CrmLead(models.Model):
                     for data in self.timesheet_ids:
                         some_data = data
                     if some_data != '':
-                        self.state_bool = True
-                    else:
                         self.state_bool = False
+                    else:
+                        self.state_bool = True
                 else:
                     self.state_bool = False
 

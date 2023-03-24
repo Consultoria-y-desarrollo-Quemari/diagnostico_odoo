@@ -515,15 +515,12 @@ class CrmLead(models.Model):
             if self.stage_id.name not in ('Cuarto encuentro: Ejecución Plan de atención','Seguimiento', 'Pre Finalización'):
                 self.state_bool = True
             else:
-                if self.stage_id.name == 'Cuarto encuentro: Ejecución Plan de atención':
-                    for data in self.timesheet_ids:
-                        some_data = data
-                    if some_data != '':
-                        self.state_bool = False
-                    else:
-                        self.state_bool = True
-                else:
+                for data in self.timesheet_ids:
+                    some_data = data
+                if some_data != '':
                     self.state_bool = False
+                else:
+                    self.state_bool = True
 
         
         
@@ -1209,7 +1206,11 @@ class CrmLead(models.Model):
         contador_adjuntos = 0
         bitacora = False
         for lead in self:
+            _logger.info(lead.stage_id.stage_state)
+            _logger.info("ESTADO -- "*100)
             if lead.stage_id.stage_state == "finalizar":
+                lead.show_action_set_rainbowman = False
+            elif lead.stage_id.stage_state == "Seguimiento":
                 lead.show_action_set_rainbowman = False
             else:
                 if lead.stage_id.allow_mark_as_won:

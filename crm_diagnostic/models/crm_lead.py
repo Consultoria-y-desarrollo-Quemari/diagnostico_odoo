@@ -1206,12 +1206,11 @@ class CrmLead(models.Model):
         contador_adjuntos = 0
         bitacora = False
         for lead in self:
-            _logger.info(lead.stage_id.stage_state)
-            _logger.info("ESTADO -- "*100)
             if lead.stage_id.stage_state == "finalizar":
                 lead.show_action_set_rainbowman = False
-            elif lead.stage_id.stage_state == "Seguimiento":
-                lead.show_action_set_rainbowman = False
+            elif lead.is_mentor():
+                if lead.stage_id.stage_state == "quinto_encuentro":
+                    lead.show_action_set_rainbowman = False
             else:
                 if lead.stage_id.allow_mark_as_won:
                     for bi in lead.bitacora_ids:

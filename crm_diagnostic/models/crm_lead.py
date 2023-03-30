@@ -1212,6 +1212,7 @@ class CrmLead(models.Model):
             if lead.current_user_mentor:
                 if lead.stage_id.stage_state == "quinto_encuentro":
                     lead.show_action_set_rainbowman = False
+                    _logger.info("SI PASO")
 
             if lead.stage_id.stage_state == "finalizar":
                  lead.show_action_set_rainbowman = False

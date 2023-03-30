@@ -1209,9 +1209,9 @@ class CrmLead(models.Model):
             _logger.info(lead.current_user_mentor)
             _logger.info(lead.stage_id.stage_state)
             _logger.info(" \°-°/"*150)
-            if lead.stage_id.stage_state == "finalizar":
-                lead.show_action_set_rainbowman = False
-            elif lead.current_user_mentor:
+            # if lead.stage_id.stage_state == "finalizar":
+            #     lead.show_action_set_rainbowman = False
+            if lead.current_user_mentor:
                 if lead.stage_id.stage_state == "quinto_encuentro":
                     lead.show_action_set_rainbowman = False
             else:

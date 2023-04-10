@@ -1206,6 +1206,9 @@ class CrmLead(models.Model):
         contador_adjuntos = 0
         bitacora = False
 
+        if self.current_user_mentor == True:
+            self.show_action_set_rainbowman = False
+
         if self.stage_id.stage_state  == "finalizar":
             self.show_action_set_rainbowman = False
         

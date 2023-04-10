@@ -1206,44 +1206,45 @@ class CrmLead(models.Model):
         contador_adjuntos = 0
         bitacora = False
 
-        if self.stage_id.stage_state == "quinto_encuentro":    
-            if self.current_user_mentor:
-                self.show_action_set_rainbowman = False
-
-        elif self.stage_id.stage_state == "finalizar":
+        if self.stage_id.stage_state == "finalizar":
             self.show_action_set_rainbowman = False
+        
+        else:
+            if self.stage_id.stage_state:    
+                if self.current_user_mentor:
+                    self.show_action_set_rainbowman = False
 
-        for lead in self:
-            if lead.stage_id.allow_mark_as_won:
-                for bi in lead.bitacora_ids:
-                    if bi.fecha:
-                        bitacora = True
-                for ea in lead.plan_line_ids:
-                    loop += 1
-                    if ea.estado_actividad == "completada":
-                        contador += 1
-                        contador_completadas += 1
-                        if ea.adjunto:
-                            contador_adjuntos += 1
-                    elif ea.estado_actividad == "cancelada":
-                        contador += 1
-                    elif ea.estado_actividad == "sin_actividad_relacionada":
-                        contador += 1
-                if contador == loop:
-                    if bitacora: 
-                        if contador_completadas != 0:
-                            if contador_completadas == contador_adjuntos:
-                                lead.show_action_set_rainbowman = True
+            for lead in self:
+                if lead.stage_id.allow_mark_as_won:
+                    for bi in lead.bitacora_ids:
+                        if bi.fecha:
+                            bitacora = True
+                    for ea in lead.plan_line_ids:
+                        loop += 1
+                        if ea.estado_actividad == "completada":
+                            contador += 1
+                            contador_completadas += 1
+                            if ea.adjunto:
+                                contador_adjuntos += 1
+                        elif ea.estado_actividad == "cancelada":
+                            contador += 1
+                        elif ea.estado_actividad == "sin_actividad_relacionada":
+                            contador += 1
+                    if contador == loop:
+                        if bitacora: 
+                            if contador_completadas != 0:
+                                if contador_completadas == contador_adjuntos:
+                                    lead.show_action_set_rainbowman = True
+                                else:
+                                    lead.show_action_set_rainbowman = False
                             else:
-                                lead.show_action_set_rainbowman = False
-                        else:
-                            lead.show_action_set_rainbowman = True
-                    else: 
+                                lead.show_action_set_rainbowman = True
+                        else: 
+                            lead.show_action_set_rainbowman = False
+                    else:
                         lead.show_action_set_rainbowman = False
                 else:
                     lead.show_action_set_rainbowman = False
-            else:
-                lead.show_action_set_rainbowman = False
             
                 
 

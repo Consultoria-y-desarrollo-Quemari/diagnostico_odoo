@@ -1210,7 +1210,8 @@ class CrmLead(models.Model):
             self.show_action_set_rainbowman = False
         
         else:
-            if self.stage_id.stage_state:    
+            _logger.info(self.stage_id.stage_state)
+            if self.stage_id.stage_state == "quinto_encuentro":    
                 if self.current_user_mentor:
                     self.show_action_set_rainbowman = False
 

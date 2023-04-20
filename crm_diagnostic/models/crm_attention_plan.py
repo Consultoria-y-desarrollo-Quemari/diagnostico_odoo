@@ -313,7 +313,7 @@ class CrmAttentionPlanLines(models.Model):
         ],
         default = "pendiente_programar"
     )
-    adjunto = fields.Binary(attachment=False)
+    adjunto = fields.Binary(attachment=False,max_size=5242880)
     file_name = fields.Char("Nombre del archivo")
     kanban_state_attention_plan = fields.Selection(
         [
@@ -394,7 +394,7 @@ class CrmAttentionPlanLinesBitacora(models.Model):
     tipo_actividad1 = fields.Char(string="Tipo de Actividad")
     registro_avance = fields.Char()
     observaciones = fields.Char()
-    adjunto = fields.Binary(attachment=False)
+    adjunto = fields.Binary(attachment=False,max_size=5242880)
     tipo_actividad_ids = fields.Many2one('crm.lead.type_activity', string="Tipo de Actividad") 
     file_name = fields.Char("Nombre del archivo")
 

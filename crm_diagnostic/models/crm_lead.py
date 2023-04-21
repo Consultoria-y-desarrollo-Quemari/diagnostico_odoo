@@ -1803,7 +1803,6 @@ class CrmLead(models.Model):
                     file_size = len(record.adjunto)
                     if file_size > 5242880:
                         record.adjunto = False
-                        record.file_name = False
+                        record.name = False
                         raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
-                    file_ext = record.file_name.split('.')[-1].lower()
                     

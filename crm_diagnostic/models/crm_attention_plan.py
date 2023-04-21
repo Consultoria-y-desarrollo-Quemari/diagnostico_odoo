@@ -331,22 +331,23 @@ class CrmAttentionPlanLines(models.Model):
 
     @api.onchange('adjunto')
     def onchange_field(self):
-        if self.adjunto:
-            _logger.info(len(self.file_name))
-            _logger.info("*-* "*150)
-            file_size = len(self.file_name)
-            if file_size > 5242880:
-                raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
-            file_ext = self.adjunto.split('.')[-1].lower()
-            if file_ext not in ['png', 'jpg', 'pdf', 'xlsx', 'pptx']:
-                self.file_name = False
-                self.adjunto = False
-                return {
-                    'domain': {},
-                    'warning': {'title': "Formato incorrecto", 
-                                'message': "Solo puede cargar archivos de imagen(.png ó .jpg), PDF(.pdf), Excel (.xlsx) y power point (.pptx)"
-                            }
-                }
+        for record in self:
+            if record.adjunto:
+                _logger.info(len(record.file_name))
+                _logger.info("*-* "*150)
+                file_size = len(record.file_name)
+                if file_size > 5242880:
+                    raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
+                file_ext = record.adjunto.split('.')[-1].lower()
+                if file_ext not in ['png', 'jpg', 'pdf', 'xlsx', 'pptx']:
+                    record.file_name = False
+                    record.adjunto = False
+                    return {
+                        'domain': {},
+                        'warning': {'title': "Formato incorrecto", 
+                                    'message': "Solo puede cargar archivos de imagen(.png ó .jpg), PDF(.pdf), Excel (.xlsx) y power point (.pptx)"
+                                }
+                    }
             
 
     def _kanban_state_attention_plan(self):
@@ -407,22 +408,23 @@ class CrmAttentionPlanLinesBitacora(models.Model):
 
     @api.onchange('adjunto')
     def onchange_field(self):
-        if self.adjunto:
-            _logger.info(len(self.file_name))
-            _logger.info("*-* "*150)
-            file_size = len(self.file_name)
-            if file_size > 5242880:
-                raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
-            file_ext = self.adjunto.split('.')[-1].lower()
-            if file_ext not in ['png', 'jpg', 'pdf', 'xlsx', 'pptx']:
-                self.file_name = False
-                self.adjunto = False
-                return {
-                    'domain': {},
-                    'warning': {'title': "Formato incorrecto", 
-                                'message': "Solo puede cargar archivos de imagen(.png ó .jpg), PDF(.pdf), Excel (.xlsx) y power point (.pptx)"
-                            }
-                }
+        for record in self:
+            if record.adjunto:
+                _logger.info(len(record.file_name))
+                _logger.info("*-* "*150)
+                file_size = len(record.file_name)
+                if file_size > 5242880:
+                    raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
+                file_ext = record.adjunto.split('.')[-1].lower()
+                if file_ext not in ['png', 'jpg', 'pdf', 'xlsx', 'pptx']:
+                    record.file_name = False
+                    record.adjunto = False
+                    return {
+                        'domain': {},
+                        'warning': {'title': "Formato incorrecto", 
+                                    'message': "Solo puede cargar archivos de imagen(.png ó .jpg), PDF(.pdf), Excel (.xlsx) y power point (.pptx)"
+                                }
+                    }
 
 class TestReport(models.TransientModel):
     _name = 'error.adjunto'

@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                     <xpath expr="//tree/field[@name='name']" position="after">
                         <field name="stage_state" readonly="True" />
+						<field name="adjunto" string="ADJUNTOS"/>
                     </xpath>
             </field>
         </record>

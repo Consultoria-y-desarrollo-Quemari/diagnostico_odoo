@@ -1794,7 +1794,7 @@ class CrmLead(models.Model):
         adjunto = fields.Binary(attachment=False,
                             max_size=5242880,
                             )
-        name  = fields.Char(string="Descripción")
+        name  = fields.Char(string="Descripción") 
 
         @api.onchange('adjunto')
         def onchange_field(self):

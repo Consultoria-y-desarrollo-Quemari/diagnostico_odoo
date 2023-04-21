@@ -274,7 +274,21 @@
                                 <field name="project_id" invisible="1"/>
                                 <field name="company_id" invisible="1"/>
                             </tree>
- 
+                            <form  string="Timesheet Activities">
+                                <sheet>
+                                    <group>
+                                        <field name="date"/>
+                                        <field name="user_id" invisible="1"/>
+                                        <field name="employee_id" required="1"/>
+                                        <field name="name"/>
+                                        <field name="stage_state"/>
+                                        <field name="unit_amount" widget="timesheet_uom"/>
+                                        <field name="adjunto"/>
+                                        <field name="project_id" invisible="1"/>
+                                        <field name="company_id" invisible="1"/>
+                                    </group>
+                                </sheet>
+                            </form>
                         </field>
                         <group >
                             <group class="oe_subtotal_footer oe_right" name="project_hours">

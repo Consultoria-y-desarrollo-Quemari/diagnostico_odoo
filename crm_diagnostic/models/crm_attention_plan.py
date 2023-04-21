@@ -333,14 +333,14 @@ class CrmAttentionPlanLines(models.Model):
     def onchange_field(self):
         for record in self:
             if record.adjunto:
-                _logger.info(len(record.adjunto))
-                _logger.info("*-* "*150)
                 file_size = len(record.adjunto)
                 if file_size > 5242880:
                     record.adjunto = False
+                    record.file_name = False
                     raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
                 file_ext = record.file_name.split('.')[-1].lower()
                 if file_ext not in ['png', 'jpg', 'pdf', 'xlsx', 'pptx']:
+                    record.adjunto = False
                     record.file_name = False
                     return {
                         'domain': {},
@@ -410,14 +410,14 @@ class CrmAttentionPlanLinesBitacora(models.Model):
     def onchange_field(self):
         for record in self:
             if record.adjunto:
-                _logger.info(len(record.adjunto))
-                _logger.info("*-* "*150)
                 file_size = len(record.adjunto)
                 if file_size > 5242880:
                     record.adjunto = False
+                    record.file_name = False
                     raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
                 file_ext = record.file_name.split('.')[-1].lower()
                 if file_ext not in ['png', 'jpg', 'pdf', 'xlsx', 'pptx']:
+                    record.adjunto = False
                     record.file_name = False
                     return {
                         'domain': {},

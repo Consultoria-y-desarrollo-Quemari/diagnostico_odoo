@@ -333,15 +333,15 @@ class CrmAttentionPlanLines(models.Model):
     def onchange_field(self):
         for record in self:
             if record.adjunto:
-                _logger.info(len(record.file_name))
+                _logger.info(len(record.adjunto))
                 _logger.info("*-* "*150)
-                file_size = len(record.file_name)
+                file_size = len(record.adjunto)
                 if file_size > 5242880:
+                    record.adjunto = False
                     raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
-                file_ext = record.adjunto.split('.')[-1].lower()
+                file_ext = record.file_name.split('.')[-1].lower()
                 if file_ext not in ['png', 'jpg', 'pdf', 'xlsx', 'pptx']:
                     record.file_name = False
-                    record.adjunto = False
                     return {
                         'domain': {},
                         'warning': {'title': "Formato incorrecto", 
@@ -410,15 +410,15 @@ class CrmAttentionPlanLinesBitacora(models.Model):
     def onchange_field(self):
         for record in self:
             if record.adjunto:
-                _logger.info(len(record.file_name))
+                _logger.info(len(record.adjunto))
                 _logger.info("*-* "*150)
-                file_size = len(record.file_name)
+                file_size = len(record.adjunto)
                 if file_size > 5242880:
+                    record.adjunto = False
                     raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
-                file_ext = record.adjunto.split('.')[-1].lower()
+                file_ext = record.file_name.split('.')[-1].lower()
                 if file_ext not in ['png', 'jpg', 'pdf', 'xlsx', 'pptx']:
                     record.file_name = False
-                    record.adjunto = False
                     return {
                         'domain': {},
                         'warning': {'title': "Formato incorrecto", 

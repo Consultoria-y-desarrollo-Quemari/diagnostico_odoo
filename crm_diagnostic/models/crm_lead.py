@@ -1791,5 +1791,7 @@ class CrmLead(models.Model):
             required = False
             )
 
-        adjunto = fields.Binary(attachment=False,max_size=5242880)
+        adjunto = fields.Binary(attachment=False,
+                            max_size=5242880,
+                            )
         name  = fields.Char(string="Descripción")

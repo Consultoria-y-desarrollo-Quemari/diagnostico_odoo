@@ -1806,12 +1806,4 @@ class CrmLead(models.Model):
                         record.file_name = False
                         raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
                     file_ext = record.file_name.split('.')[-1].lower()
-                    if file_ext not in ['png', 'jpg', 'pdf', 'xlsx', 'pptx']:
-                        record.adjunto = False
-                        record.file_name = False
-                        return {
-                            'domain': {},
-                            'warning': {'title': "Formato incorrecto", 
-                                        'message': "Solo puede cargar archivos de imagen(.png ó .jpg), PDF(.pdf), Excel (.xlsx) y power point (.pptx)"
-                                    }
-                        }
+                    

@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 from odoo import models, fields, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from lxml import etree
 import json
 import datetime
@@ -332,19 +332,17 @@ class CrmAttentionPlanLines(models.Model):
     @api.onchange('adjunto')
     def onchange_field(self):
         if self.adjunto:
-            if ".pdf" not in self.file_name:
-                if ".xlsx" not in self.file_name:
-                    if ".pptx" not in self.file_name:
-                        if ".png" not in self.file_name:
-                            if ".jpg" not in self.file_name:
-                                self.file_name = False
-                                self.adjunto = False
-                                return {
-                                    'domain': {},
-                                    'warning': {'title': "Formato incorrecto", 
-                                                'message': "Solo puede cargar archivos de imagen(.png ó .jpg), PDF(.pdf), Excel (.xlsx) y power point (.pptx)"
-                                            }
-                                }
+            if (".pdf", ".xlsx", ".pptx", ".png", ".jpg") not in self.file_name:
+                self.file_name = False
+                self.adjunto = False
+                return {
+                    'domain': {},
+                    'warning': {'title': "Formato incorrecto", 
+                                'message': "Solo puede cargar archivos de imagen(.png ó .jpg), PDF(.pdf), Excel (.xlsx) y power point (.pptx)"
+                            }
+                    }
+            if self.file_name > 5242880:
+                raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
 
     def _kanban_state_attention_plan(self):
         print("este es el kan"*60)
@@ -405,19 +403,17 @@ class CrmAttentionPlanLinesBitacora(models.Model):
     @api.onchange('adjunto')
     def onchange_field(self):
         if self.adjunto:
-            if ".pdf" not in self.file_name:
-                if ".xlsx" not in self.file_name:
-                    if ".pptx" not in self.file_name:
-                        if ".png" not in self.file_name:
-                            if ".jpg" not in self.file_name:
-                                self.file_name = False
-                                self.adjunto = False
-                                return {
-                                    'domain': {},
-                                    'warning': {'title': "Formato incorrecto", 
-                                                'message': "Solo puede cargar archivos de imagen(.png ó .jpg), PDF(.pdf), Excel (.xlsx) y power point (.pptx)"
-                                            }
-                                }
+            if (".pdf", ".xlsx", ".pptx", ".png", ".jpg") not in self.file_name:
+                self.file_name = False
+                self.adjunto = False
+                return {
+                    'domain': {},
+                    'warning': {'title': "Formato incorrecto", 
+                                'message': "Solo puede cargar archivos de imagen(.png ó .jpg), PDF(.pdf), Excel (.xlsx) y power point (.pptx)"
+                            }
+                    }
+            if self.file_name > 5242880:
+                raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
 
 class TestReport(models.TransientModel):
     _name = 'error.adjunto'

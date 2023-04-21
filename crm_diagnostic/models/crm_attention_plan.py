@@ -332,7 +332,8 @@ class CrmAttentionPlanLines(models.Model):
     @api.onchange('adjunto')
     def onchange_field(self):
         if self.adjunto:
-            if self.file_name > 5242880:
+            file_size = len(self.file_name)
+            if file_size > 5242880:
                 raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
             if ".pdf" not in self.file_name:
                 if ".xlsx" not in self.file_name:
@@ -408,7 +409,8 @@ class CrmAttentionPlanLinesBitacora(models.Model):
     @api.onchange('adjunto')
     def onchange_field(self):
         if self.adjunto:
-            if self.file_name > 5242880:
+            file_size = len(self.file_name)
+            if file_size > 5242880:
                 raise ValidationError('El archivo adjunto debe ser menor o igual a 5MB.')
             if ".pdf" not in self.file_name:
                 if ".xlsx" not in self.file_name:

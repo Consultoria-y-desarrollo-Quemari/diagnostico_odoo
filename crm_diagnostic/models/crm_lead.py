@@ -514,6 +514,8 @@ class CrmLead(models.Model):
         elif self.current_user_orientador:
             if self.stage_id.name in ('Cuarto encuentro: Ejecución Plan de atención','Seguimiento', 'Pre Finalización'):
                 self.state_bool = False
+            else:
+                self.state_bool = True
         else:
             if self.stage_id.name not in ('Cuarto encuentro: Ejecución Plan de atención','Seguimiento', 'Pre Finalización'):
                 self.state_bool = True

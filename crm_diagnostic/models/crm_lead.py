@@ -511,6 +511,13 @@ class CrmLead(models.Model):
         some_data = '' 
         if self.current_user_facilitator:
             self.state_bool = True
+        elif self.current_user_orientador:
+            for data in self.timesheet_ids:
+                some_data = data
+            if some_data != '':
+                self.state_bool = False
+            else:
+                self.state_bool = True
         else:
             if self.stage_id.name not in ('Cuarto encuentro: Ejecución Plan de atención','Seguimiento', 'Pre Finalización'):
                 self.state_bool = True

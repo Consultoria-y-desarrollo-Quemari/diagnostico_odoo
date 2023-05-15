@@ -334,8 +334,6 @@ class CrmAttentionPlanLines(models.Model):
         for record in self:
             if record.adjunto:
                 file_size = len(record.adjunto)
-                _logger.info(file_size)
-                _logger.info(" - "*50)
                 if file_size > 5242880:
                     record.adjunto = False
                     record.file_name = False

@@ -1805,6 +1805,8 @@ class CrmLead(models.Model):
         def onchange_field(self):
             for record in self:
                 if record.adjunto:
+                    _logger.info(file_size)
+                    _logger.info(" - "*50)
                     file_size = len(record.adjunto)
                     if file_size > 5242880:
                         record.adjunto = False
